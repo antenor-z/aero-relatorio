@@ -1,0 +1,18 @@
+{
+    "latex-workshop.latex.recipe.default": "pdflatex -> bibtex -> pdflatex * 2",
+    "files.autoSave": "off",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "main.aux": true,
+        "main.bbl": true,
+        "main.blg": true,
+        "main.log": true,
+        "main.out": true,
+        "main.toc": true,
+        "main.lof": true,
+        "main.lol": true,
+        "main.lot": true,
+        "main.synctex.gz": true,
+    }
+}

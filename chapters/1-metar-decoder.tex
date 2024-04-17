@@ -1,0 +1,40 @@
+\chapter{Decodificação do METAR}
+
+O metar é um protocolo de transmissão de dados meteorologicos atuais de um aeroporto ou aeródromo.
+O metar é formado por uma string formado por itens separados por espaço. Cada item correponde a uma
+unidade mínima de informação meteorológica. A cada hora é publicado
+um novo METAR que vale para aquela hora. Em casos excepcionais quando o as condições de tempo 
+estiverem com mudanças repentinas um METAR pode ser atualizado a cada meia hora. \cite{metar-speci}
+
+O METAR no aeroporto Santos Dumont \cite{metar-sbrj}, no dia oito de abril de 2024 as oito e quarenta da noite foi
+\begin{verbatim}
+    SBRJ 082300Z 16003KT CAVOK 27/23 Q1012
+\end{verbatim}
+Logo as unidades de informação separadas são:
+["SBRJ", "082300Z", "16003KT", "CAVOK", "27/23", "Q1012"], explico agora o signicado de cada unidade.
+
+"SBRJ" se refere ao código ICAO (International Civil Aviation Organization ) do aeroporto, não
+confudir com o código IATA (International Air Transport Association) que é formado por três letras.
+Santos Dumont possui o IATA SDU, o público geral parece conhecer mais este código, mas na aviação
+costumasse usar mais o código ICAO pois todo aeródromo possui um, enquanto o IATA só aparece em 
+aeroportos em que é necessário o processamento de bagagem \cite{iata-codes} \cite{icao-codes}. 
+A América do Sul possui o prefixo "S",
+o Brasil possui o prefixo "SB", por isso que o Aeroporto do Galeão, Guarulhos e Fortaleza possuem 
+os códigos SBGL, SBGR e SBFZ, respecitvamente. Cada um iniciando com "SB",
+
+"082300Z" significa que este METAR se refere ao dia 08 as 23 horas e zero minuto zulu. Horário
+zulu é simplemente no fuso horário da longitude de zero grau e um minuto, chamado de hora UTC ou 
+Coordinated Universal Time. Para que não haja confusões com os horários, a aviação internacionalmente
+usa o horário UTC. Este METAR, caso não haja uma atualização as 23:30 UTC, será válido até as 23:59,
+quando será substituído pelo metar iniciando com "SBRJ 090000Z".
+
+"16003KT" se refere a velocidade e direção do vento, os três primeiros algarismos a direção, em graus,
+de onde o vento sopra e os últimos dois algarismos do módulo da velocidade do vento em nós (milhas
+náuticas por hora). Neste caso o vento sopra da direção 160 graus com velocidade de três nós.
+
+"CAVOK" significa "Ceiling and Visibility OK". Sem nuvens e visibilidade ilimitada (maior ou igual a
+10km).
+
+"27/23" Temperatura 27°C e ponto de orvalho 23°C.
+
+"Q1012" O altímetro do aviação deve ser referenciado para 1012 hecto pascal.

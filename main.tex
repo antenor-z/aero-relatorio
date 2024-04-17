@@ -1,0 +1,211 @@
+%% -*- coding: utf-8; -*-
+
+% Use 'digital' option to enable back references. This option is recommended for digital pdf version
+%\documentclass[phd,american,digital]{thesispuc}%english thesis
+%\documentclass[mscr,american]{thesispuc}%english dissertation
+%\documentclass[phd,brazilian]{thesispuc}%tese em portugês
+\documentclass[msc,brazilian]{thesispuc}%disseretação em portuguŝ
+
+
+%%%
+%%% Additional Packages
+%%%
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{colortbl}
+\usepackage[%
+    dvipsnames,
+    svgnames,
+    x11names,
+    fixpdftex,
+    table
+]{xcolor}
+\usepackage{numprint}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{amssymb}
+% ABNT reference style package. The current style is the alphabetical order, if you need
+% change to citation order, change in the line above 'alf' to 'num', also at the end replace
+% bibliographystyle with the commented version.
+\usepackage[num]{abntex2cite}
+%\usepackage{tikz}
+%\usepackage[linesnumbered, ruled, vlined]{algorithm2e}
+%\usepackage{pgfplots,pgfplotstable} 
+%\usepackage{array}
+
+
+%% numprint 
+\npthousandsep{.}
+\npdecimalsign{,}
+
+%% ThesisPUC option
+%\tablesmode{fig} %% [nada, fig, tab ou figtab]
+%\algoritmsmode{none} %% [none ou use] %% Default is [use]
+%\codesmode{none} %% [none ou use] %% Default is [use]
+%\abreviationsmode{none} %% [none ou use] %% Default is [use]
+
+\tablesmode{figtab}
+
+\algorithmsmode{none}
+\codesmode{use}
+\abreviationsmode{none}
+
+% \makeatletter  \renewcommand\@biblabel[1]{#1}  \makeatother
+
+%%%
+%%% Counters
+%%%
+
+%% uncomment and change for other depth values
+\setcounter{tocdepth}{1}
+%\setcounter{lofdepth}{3}
+%\setcounter{lotdepth}{3}
+%\setcounter{secnumdepth}{3}
+
+%%%
+%%% Misc.
+%%%
+
+\usecolour{true}
+%% \graphicspath{ {./figuras/} }
+%% https://www.overleaf.com/learn/latex/Inserting_Images
+\citebrackets[]
+
+\renewcommand{\arraystretch}{1.5}
+
+
+%%%
+%%% Titulos
+%%%
+
+\autor{Antenor Moreira de Barros Leal}
+\autorR{Leal, Antenor Moreira de Barros}
+
+\advisor{Adriano Francisco Branco}{Prof.}
+\advisorR{Branco, Adriano Francisco}
+% If the advisor's department is different from author's department, uncomment the next line and type the correct name and acronym of advisor's institution.
+%\advisorInst{institution name}{acronym}
+
+%\coadvisor{Otávio da Fonseca Martins Gomes}{Dr.}
+%\coadvisorR{da Fonseca Martins Gomes, Otávio}
+%\coadvisorInst{Centro de Tecnologia Mineral}{CETEM/MCTI}
+
+\title{Aplicativo web de auxílio a navegação aérea}
+\titleuk{Aerial navigation aid web application}
+
+%%\subtitulo{Aqui vai o subtitulo caso precise}
+
+\day{16}
+\month{Abril}
+\year{2024}
+
+\city{Rio de Janeiro}
+\CDD{004} 
+\department{Informática}
+\program{\mbox{Engenharia} da \mbox{Computação}}
+\school{\mbox{Engenharia} da \mbox{Computação}}
+\university{Pontifícia Universidade Católica do Rio de Janeiro}
+\uni{PUC-Rio}
+
+
+%%%
+%%% Jury
+%%%
+
+\jury{%
+  \jurymember{xxxxxxxxxxxxxxxx}{Prof.}
+    {Departamento de Informática}{PUC-Rio}
+  \jurymember{xxxxxxxxxxxxxxx}{Prof.}
+    {Departamento de Informática}{PUC-Rio}
+   \jurymember{xxxxxxxxxxxxxxx}{Prof.}
+    {Departamento de Informática}{PUC-Rio}
+}
+
+
+%%%
+%%% Personal Resume
+%%%
+
+\resume{%
+% If it fit in one line use this command:
+\makebox[\textwidth][s]{Graduando em Engenharia da Computação na PUC - Rio}%
+% If not just type your resume without any special command 
+}
+
+
+%%%
+%%% Catalog prekeywords
+%%%
+
+\catalogprekeywords{%
+  \catalogprekey{Informática}%
+}
+
+%%%
+%%% Keywords - Don't use % at the end of /key dfinition
+%%%
+
+\keywords{%
+    \key{Aviação}
+    \key{Navegação}
+    \key{Aplicativo}
+    \key{Algoritmo}
+}
+
+\keywordsuk{%
+    \key{Aviation}
+    \key{Navigation}
+    \key{Application}
+    \key{Algoritm}
+}
+
+
+%%%
+%%% Abstract
+%%%
+
+\abstract{%
+Trata-se de um aplicativo web de código aberto para auxiliar usuários de simuladores de voo que não possuem
+acesso à ferramenta (Electronic Flight Bag) que um piloto de linha aérea teria. Ao entrar no aplicativo, o usuário
+se depara com a lista de aeroportos cadastrados e, ao escolher um, são exibidas informações da pista,
+frequências do aeroporto (torre, solo, ATIS, etc.), e frequências de navegação (ILS, VOR, etc.). Também são
+apresentadas as informações das condições meteorológicas atuais do aeródromo (vento, visibilidade,
+temperatura, etc.), tanto no formato oficial (METAR), obtidas a cada hora de uma API externa, como em um texto
+em linguagem natural para melhor entendimento do jogador iniciante. Um usuário com permissão de
+administrador pode adicionar e editar aeroportos. A partir de informação do vento, a pista em uso é calculada.
+} 
+
+\abstractuk{%
+xxxxxx
+}
+
+
+%%%
+%%% Dedication
+%%%
+
+\dedication{%
+  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+}
+
+%%%
+%%% Epigraph
+%%%
+
+\epigraph{%
+}
+\epigraphauthor{xxxxxxxxxxxxxxxx}
+\epigraphbook{xxxxxxxxxxxxxxxxxxepígrafex}
+
+
+\begin{document}
+  \input{chapters/1-metar-decoder}
+  \input{chapters/2-modelo-dados}
+  
+  \arial
+  \bibliographystyle{abnt-num} % \bibliographystyle{abnt-alf}
+  \bibliography{main} 
+\end{document}
