@@ -1561,7 +1561,7 @@
   %% \puc@showacknowledgment%   %% ALTERACAO %%
   \if@brazilianlanguage
     \puc@showabstract%
-    \puc@showabstractuk%        %% PRECISA MESMO? %%
+    \puc@showabstractuk%       
     \selectlanguage{brazilian}%
   \else
     \puc@showabstract%
@@ -1569,8 +1569,8 @@
     \selectlanguage{american}%
   \fi
   \puc@showtables%
-  %% \if@pucepigraph
-  %%  \puc@showepigraph   %% ALTERACAO %%
+   \if@pucepigraph
+    \puc@showepigraph   %% ALTERACAO %%
   \puc@setmargins@text%
   \if@puctight
   \else

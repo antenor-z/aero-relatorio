@@ -23,6 +23,14 @@ Já na relação \texttt{Aerodrome} com \texttt{Runway}, um aeródromo deve ter 
     \end{center}
 \end{figure}
 
+Note que as tabelas "CommunicationType", "ILSCategory" e "PavementType" poderiam ser substituídas
+por colunas enum nas tabelas "Communication", "ILS" e "Runway", porém a manutenção seria difícil
+\cite{table-enum},
+pois teríamos que alterar a estrutura das tabelas (possívelmente tirando o sistema do ar) caso 
+fosse necessário adicionar um tipo novo
+de comunicação, por exemplo. Fazendo com uma tabela externa é necessário apenas adicionar uma nova
+linha.
+
 \section{TABELA: City}
 \subsection{CityName (PK)}
 
