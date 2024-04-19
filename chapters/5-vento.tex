@@ -1,0 +1,46 @@
+\chapter{Decodificação do METAR}
+\section{Introdução}
+Primeiramente em aviação falamos de duas velocidades: a velocidade do avião
+ em relação a um ponto fixo no solo é a velocidade de solo (ground speed).
+Com ela podemos calcular quanto tempo uma viagem demora. Mas, para efeitos de 
+sustentação do avião e o que importa é a velocidade em relação ao ar (air speed). 
+
+É importante saber a direção do vento para operações de decolagem e pouso,
+pois o vento pode ajudar ou atrapalhar nestas fases críticas de voo.
+O melhor cenário possível é vento vindo de frente (vento de proa) pois
+será necessário menos velocidade em relação ao solo para decolagem ou 
+pouso.
+
+A velocidade do avião em relação do solo no caso do vetor vento 
+paralelo ao vetor velocidade será:
+
+\begin{align}
+    V_{solo} = V_{ar} + V_{vento} \\
+    V_{ar} = V_{solo} - V_{vento}
+\end{align}
+
+Sendo $V_{aviao}$ definido com sempre positivo, se o vento está 
+contra o avião, o sinal de $V_{vento}$ do vento
+será negativo, portanto a velociade em relação ao ar fica maior para
+uma mesma velociade com o solo.
+
+No caso oposto, com o vento de cauda, o avião precisa manter uma
+velocidade em relação ao solo maior para compensar. Para o 
+pouso será necessária mais distância para a parada da aeronave.
+Já para a decolagem, o avião terá que usar mais pista até que
+consiga levantar voo.
+
+Contudo, normalmente o vento nunca estará perfeitamente paralelo
+com a aeronave: é preciso calcular a componente do vetor vento 
+paralela e perpendicular à aeronave.
+
+Sendo V o vetor do vento, $\theta$ o menor ângulo entre o vetor 
+do vento e o vetor com direção da proa da aeronave.
+
+
+\begin{equation}
+V = (V_x, V_y)
+V_paralelo = V * cos(\theta)
+V_perpendicular = V * sen(\theta)
+\end{equation}
+

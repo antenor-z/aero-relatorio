@@ -1,0 +1,24 @@
+\chapter{A Proposta}
+É implementado um sistema de auxílio da navegação aérea para intusiastas da
+simulação. Pelo fato de aviação necessitar ter um ambiente seguro, considerando
+que meu projeto é apenas um protótipó, prefiri restrigir o caso de uso apenas
+para jogadores de simuladores de voo que desejam que a simulação seja parecida
+com o real. Nas páginas do sistema conterá um aviso que o sistema \textbf{não
+deve ser usado para um voo real}.
+
+Dito isto, o sistema é possui backend escrito na linguagem Python fazendo uso
+da biblioteca Flask. A renderização de página é server-side, usando os templates
+do Flask junto com a biblioteca Jinja2.
+
+O usuário tem acesso a informações de frequência da torre, solo, tráfego, rampa
+e operações como também das frequências e dados para VOR, um sistema de radionavegação
+e ILS, sistema de pouso por instrumentos. Estas infomações ficaram guardadas
+em um banco de dados relacional e neste trabalho será mostrado a Organização
+e relação entre as tabelas.
+
+Através de uma API do serviço americano National Weather Service é coletada 
+as informações atuais de metereologia, estas informações (que vem em um formato
+chamadao METAR) são processadas pelo backend e mostradas ao usuário de uma forma 
+fácil de entender.
+
+
