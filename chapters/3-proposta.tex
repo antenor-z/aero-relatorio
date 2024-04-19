@@ -1,24 +1,40 @@
 \chapter{A Proposta}
-É implementado um sistema de auxílio da navegação aérea para intusiastas da
-simulação. Pelo fato de aviação necessitar ter um ambiente seguro, considerando
-que meu projeto é apenas um protótipó, prefiri restrigir o caso de uso apenas
+A ideia do trabalho seria unir as funcionalidades do METAR-TAF com o AISWEB
+de forma que o usuário iniciante consiga usar sem dificuldades.
+
+Pelo fato de aviação necessitar ter um ambiente seguro e bastante regulado, considerando
+que meu projeto é apenas um protótipo, prefiro restringir o caso de uso apenas
 para jogadores de simuladores de voo que desejam que a simulação seja parecida
-com o real. Nas páginas do sistema conterá um aviso que o sistema \textbf{não
+com o real. Nas páginas do sistema conterá um aviso de que o sistema \textbf{não
 deve ser usado para um voo real}.
 
-Dito isto, o sistema é possui backend escrito na linguagem Python fazendo uso
-da biblioteca Flask. A renderização de página é server-side, usando os templates
-do Flask junto com a biblioteca Jinja2.
+Dito isto, o sistema possui backend escrito na linguagem Python fazendo uso
+da biblioteca Flask. A renderização de página é server-side, usando a funcionalidades
+de templates do Flask junto com a biblioteca Jinja2.
+
+No segundo semestre de 2023 comecei a fazer um projeto para uso próprio.
+O código está disponível em \url{https://github.com/antenor-z/aero}. Atualmente o
+projeto funciona, mas a arquitetura foi feita sem muito planejamento, as
+informações do aeroporto são hardcoded.
 
 O usuário tem acesso a informações de frequência da torre, solo, tráfego, rampa
-e operações como também das frequências e dados para VOR, um sistema de radionavegação
-e ILS, sistema de pouso por instrumentos. Estas infomações ficaram guardadas
-em um banco de dados relacional e neste trabalho será mostrado a Organização
-e relação entre as tabelas.
+e operações, bem como das frequências e dados para VOR (um sistema de radionavegação
+por antenas no solo), ILS (sistema de pouso por instrumentos) e informações
+de pista. Neste trabalho quero, armazenar estas
+em um banco de dados relacional com uma arquitetura bem planejada. Farei testes
+de desempenho simulando uma alta taxa de acesso e, dependendo dos resultados,
+fazer uso de um banco em memória como intermediário. 
 
-Através de uma API do serviço americano National Weather Service é coletada 
-as informações atuais de metereologia, estas informações (que vem em um formato
-chamadao METAR) são processadas pelo backend e mostradas ao usuário de uma forma 
-fácil de entender.
+Os aerodromos podem ao longo do tempo mudarem alguma frequência e outras
+informações como o número da pista mudam a depender da variação do norte magnético,
+uma pista pode ser ampliada etc.
+Atualmente o código precisa ser alterado para atualizar as informações.
+Desejo implementar um sistema diretamente no site, com uma autenticação por
+senha e TOTP, para que seja possível mudar qualquer informação no banco.
 
-
+Através de uma API do serviço americano National Weather Service, são coletadas 
+as informações atuais de meteorologia. Estas informações (que vêm em um formato
+chamado METAR) são processadas pelo backend e mostradas ao usuário de uma forma 
+fácil de entender. Esta parte em específico possui um código de difícil manutenção,
+desejo refatorar esta parte e adicionar suporte para a maior parte de códigos
+da especificação do METAR.
