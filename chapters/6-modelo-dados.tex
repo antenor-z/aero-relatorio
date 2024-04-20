@@ -51,7 +51,7 @@ linha.
     \endlastfoot
         CityName (PK)
         & Nome da cidade escrito em Português com a primeira letra maiúscula
-        & VARCHAR
+        & VARCHAR (50)
         \\ \hline
 \end{longtable}
 
@@ -72,33 +72,33 @@ linha.
     \endlastfoot
         ICAO (PK)
         & O código ICAO do aeródromo emitido pela Organização Internacional de Aviação Civil (ICAO).
-        & VARCHAR
+        & VARCHAR(4)
         \\ \hline
 
         AerodromeName
         & O nome do aeródromo conforme definido pelo AISWEB, sistema nacional de informações aeronáuticas.
-        & VARCHAR 
+        & VARCHAR(50) 
         \\ \hline
 
         City (FK)
         & Nome da cidade escrito em Português. A primeira letra é maiúscula. Chave estrangeira para a tabela \texttt{City}.
-        & FK 
+        & VARCHAR(30) 
         \\ \hline
 
         Latitude 
         & A latitude do aeroporto em graus no formato de graus decimais (DD, Decimal Degrees). Três dígitos para 
         representar a parte inteira e seis dígitos para a fracionária.
-        &
+        & DECIMAL(9, 6)
         \\ \hline
         
         Longitude 
         & A longitude do aeroporto, seguindo o mesmo formato da latitude. 
-        & 
+        & DECIMAL(9, 6)
         \\ \hline
         
         METAR 
         & O METAR válido atualmente para este aeródromo. 
-        &
+        & VARCHAR(100)
         \\ \hline
 
 \end{longtable}
@@ -122,14 +122,14 @@ contexto de planejamento de voo, os METARs anteriores não possuem muita servent
     \hline
     \endlastfoot
 
-        Code 
+        Code (PK)
         & O código (em Inglês) do tipo de pavimento usado. É formado por três letras maiúsculas.
-        & VARCHAR(5)
+        & VARCHAR(3)
         \\ \hline
 
         Material 
         & O nome do pavimento em Português, com a primeira letra maiúscula.
-        & VARCHAR(5)
+        & VARCHAR(20)
         \\ \hline
 
 
@@ -173,28 +173,33 @@ externos ficarão para fora da área da pista, sobre o gramado.
         ICAO (FK e PK) 
         & O código ICAO do aeródromo ao qual a pista está associada, utilizado como chave estrangeira 
         fazendo a ligação com a tabela 'Aerodrome'.
-        & VARCHAR(5)
+        & VARCHAR(4)
         \\ \hline
 
         Head1 (PK) 
         & Número e possível letra que identifica uma das cabeceiras da pista. Um aeroporto nunca terá
         cabeceiras repetidas, então ICAO e Head1 formam uma chave primária mínima.
-        & VARCHAR(5)
+        & VARCHAR(3)
+        \\ \hline
+
+        Head2 (PK) 
+        & O mesmo, mas para o outra cabeceira.
+        & VARCHAR(3)
         \\ \hline
 
         RunwayLength
         & Comprimento da pista em metros.
-        & VARCHAR(5)
+        & INTEGER
         \\ \hline
 
         RunwayWidth
         & Largura da pista em metros.
-        & VARCHAR(5)
+        & INTEGER
         \\ \hline
 
         PavementCode (FK)
         & O tipo de pavimento da pista, referenciando a tabela 'PavementType'.
-        & VARCHAR(5)
+        & VARCHAR(3)
         \\ \hline
 
 \end{longtable}
@@ -236,7 +241,8 @@ L, C e R. C para a pista central.
 
         CommType (PK)
         & O tipo de comunicação, podendo ser "Torre", "Solo", "ATIS", "Tráfego" ou "Operação".
-        & VARCHAR(5)
+        Mais adiante outros tipos podem ser adicionados.
+        & VARCHAR(10)
         \\ \hline
 
 \end{longtable}
@@ -257,22 +263,22 @@ L, C e R. C para a pista central.
     \hline
     \endlastfoot
 
-        ICAO (FK e PK)
+        ICAO (PK e FK)
         & O código ICAO do aeródromo ao qual a frequência de comunicação está associada, utilizado 
         como chave estrangeira referenciando a tabela 'Aerodrome'.
-        & VARCHAR(5)
+        & VARCHAR(4)
         \\ \hline
 
         Frequency (PK)
         & A frequência em MHz. ICAO e frequency formam chave primária. Note que uma frequência,
         não é única em todo o país, para distâncias longas, onde não há risco de interferência,
         é possível haverem frequências repetidas.
-        & VARCHAR(5)
+        & DECIMAL(6, 3)
         \\ \hline
 
         CommType (FK)
         & O tipo de comunicação, chave estrangeira para 'CommunicationType'.
-        & VARCHAR(5)
+        & VARCHAR(20)
         \\ \hline
 
 \end{longtable}
@@ -297,9 +303,9 @@ Esta tabela lista as diferentes categorias de Sistema de Pouso por Instrumentos
     \endlastfoot
 
     Category (PK)
-    & A categoria de ILS, sendo "CAT I", "CAT II", "CATIIIA", "CATIIIB" ou
+    & A categoria de ILS, sendo "CAT I", "CAT II", "CAT IIIA", "CAT IIIB" ou
     "CAT IIIC". Será explicado melhor em "Minimus" na tabela "ILS".
-    & VARCHAR(5)
+    & VARCHAR(10)
     \\ \hline
 
 \end{longtable}
@@ -319,33 +325,40 @@ Esta tabela lista as diferentes categorias de Sistema de Pouso por Instrumentos
     \hline
     \endlastfoot
 
-    ICAO (FK e PK)
+    ICAO (PK e FK)
     & O código ICAO do aeródromo ao qual o sistema de pouso está associado, utilizado 
     como chave estrangeira referenciando a tabela 'Aerodrome'.
-    & VARCHAR(5)
+    & VARCHAR(4)
     \\ \hline
 
     Ident (PK)
     & Identificação de três letras maisculas única do ILS para aquele aeródromo.
+    Aparece na carta aérea do procedimento ILS.
     Junto com ICAO formam a chave primária. Como no caso da comunicação, é
     possível haverem duas Ident iguas desde que não estejam próximas.
-    & VARCHAR(5)
+    & VARCHAR(3)
+    \\ \hline
+
+
+    RunwayHead (PK)
+    & Para qual pista este ILS se refere. Junto com ICAO forma chave primária.
+    & VARCHAR(3)
     \\ \hline
 
     Frequency
     & A frequência de operação do ILS em MHz.
-    & VARCHAR(5)
+    & DECIMAL(6, 3)
     \\ \hline
 
     Category (FK)
     & A categoria do ILS, referenciando a tabela 'ILSCategory'.
-    & VARCHAR(5)
+    & VARCHAR(10)
     \\ \hline
 
     CRS
     & A referência do curso de aproximação do ILS. É a proa final que a aeronave deve 
     manter para o correto alinhamento nesta cabeceira.
-    & VARCHAR(5)
+    & INTEGER
     \\ \hline
 
     Minimum
@@ -357,7 +370,7 @@ Esta tabela lista as diferentes categorias de Sistema de Pouso por Instrumentos
     Quando maior a categoria do ILS, maior a precisão do sistema, portanto a Minimus 
     será mais baixa. Uma "CAT IIIC" (pronuncia-se cat três charlie), possui Minimus zero, 
     portanto a aeronave pode pousar de forma totalmente automática.
-    & VARCHAR(5)
+    & INTEGER
     \\ \hline
 
 \end{longtable}
@@ -384,25 +397,18 @@ está caíndo em desuso.
         ICAO (PK e FK)
         & O código ICAO do aeródromo ao qual o VOR/DME está associado, utilizado como 
         chave estrangeira referenciando a tabela 'Aerodrome'.
-        & VARCHAR(5)
+        & VARCHAR(4)
         \\ \hline
 
         Ident (PK)
         & Identificação única do VOR/DME para aquele aeródromo. Forma chave primária
         junto com ICAO.
-        & VARCHAR(5)
-        \\ \hline
-
-        Ident (PK)
-        & Identificação de três letras maisculas única do ILS para aquele aeródromo.
-        Junto com ICAO formam a chave primária. Como no caso da comunicação, é
-        possível haverem duas Ident iguas desde que não estejam próximas.
-        & VARCHAR(5)
+        & VARCHAR(3)
         \\ \hline
 
         Frequency
         & A frequência de operação do VOR/DME em MHz.
-        & VARCHAR(5)
+        & DECIMAL(6, 3)
         \\ \hline
 
 \end{longtable}
