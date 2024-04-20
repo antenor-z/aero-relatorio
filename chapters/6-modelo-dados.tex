@@ -31,52 +31,109 @@ fosse necessário adicionar um tipo novo
 de comunicação, por exemplo. Fazendo com uma tabela externa é necessário apenas adicionar uma nova
 linha.
 
-\section{TABELA: City}
-\subsection{CityName (PK)}
 
-Nome da cidade escrito em Português com a primeira letra maiúscula.
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{City} \\
+    \hline
+    \textbf{Nome} & \textbf{Descrição} & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome} & \textbf{Descrição} & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+        CityName (PK)
+        & Nome da cidade escrito em Português com a primeira letra maiúscula
+        & VARCHAR
+        \\ \hline
+\end{longtable}
 
 
-\section{TABELA: Aerodrome}
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{Aerodrome} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição} & \textbf{Tipo}  \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição} & \textbf{Tipo}  \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+        ICAO (PK)
+        & O código ICAO do aeródromo emitido pela Organização Internacional de Aviação Civil (ICAO).
+        & VARCHAR
+        \\ \hline
 
-A tabela central para todas as outras, contém informações sobre o aeroporto ou aeródromo. 
-Já que o segundo termo é mais geral que o primeiro, preferi usar este.
+        AerodromeName
+        & O nome do aeródromo conforme definido pelo AISWEB, sistema nacional de informações aeronáuticas.
+        & VARCHAR 
+        \\ \hline
 
-\subsection{ICAO (PK)}
-O código ICAO do aeródromo emitido pela Organização Internacional de Aviação Civil 
-(International Civil Aviation Organization). Por ser único, pode ser usado como chave primária.
+        City (FK)
+        & Nome da cidade escrito em Português. A primeira letra é maiúscula. Chave estrangeira para a tabela \texttt{City}.
+        & FK 
+        \\ \hline
 
-\subsection{AerodromeName}
-O nome do aeródromo conforme definido pelo AISWEB, sistema nacional de informações aeronáuticas.
+        Latitude 
+        & A latitude do aeroporto em graus no formato de graus decimais (DD, Decimal Degrees). Três dígitos para 
+        representar a parte inteira e seis dígitos para a fracionária.
+        &
+        \\ \hline
+        
+        Longitude 
+        & A longitude do aeroporto, seguindo o mesmo formato da latitude. 
+        & 
+        \\ \hline
+        
+        METAR 
+        & O METAR válido atualmente para este aeródromo. 
+        &
+        \\ \hline
 
-\subsection{City}
-Nome da cidade escrito em Português. A primeira letra é maiúscula.
-Chave estrangeira para a tabela \texttt{City}.
+\end{longtable}
 
-\subsection{Latitude}
-A latitude do aeroporto em graus no formato de graus decimais (DD, Decimal Degrees). Três dígitos 
-para representar a parte inteira e seis dígitos para a fracionária.
-
-\subsection{Longitude}
-A longitude do aeroporto, seguindo o mesmo formato da latitude.
-
-\subsection{METAR}
-O METAR válido atualmente para este aeródromo. Considerei colocar o METAR como tabela separada
+Considerei colocar o METAR como tabela separada
 com chave estrangeira para o aerodrómo para, deste modo, ter o METAR histórico. Mas, no 
 contexto de planejamento de voo, os METARs anteriores não possuem muita serventia.
 
-\section{TABELA: PavementType}
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{PavementType} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
 
-Material da superfície da pista, como asfalto, concreto, brita e outros.
+        Code 
+        & O código (em Inglês) do tipo de pavimento usado. É formado por três letras maiúsculas.
+        & VARCHAR(5)
+        \\ \hline
 
-\subsection{Code}
-O código (em Inglês) do tipo de pavimento usado. É formado por três letras maiúsculas.
+        Material 
+        & O nome do pavimento em Português, com a primeira letra maiúscula.
+        & VARCHAR(5)
+        \\ \hline
 
-\subsection{Material}
-O nome do pavimento em Português, com a primeira letra maiúscula.
+
+\end{longtable}
 
 \begin{verbatim}
-Exemplo de tabela:
+Exemplo de siglas:
 
 Code    Material
 ASP     Asfalto
@@ -97,140 +154,254 @@ para operar nessa pista. Se uma pista for muito estreita, uma aeronave quadrimot
 como o Boeing 747 pode sofrer ingestão de materiais, já que os dois motores mais 
 externos ficarão para fora da área da pista, sobre o gramado.
 
-\subsection{ICAO (FK e PK)}
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{Runway} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
 
-O código ICAO do aeródromo ao qual a pista está associada, utilizado como chave estrangeira 
-fazendo a ligação com a tabela 'Aerodrome'.
+        ICAO (FK e PK) 
+        & O código ICAO do aeródromo ao qual a pista está associada, utilizado como chave estrangeira 
+        fazendo a ligação com a tabela 'Aerodrome'.
+        & VARCHAR(5)
+        \\ \hline
 
-\subsection{Head1 (PK)}
+        Head1 (PK) 
+        & Número e possível letra que identifica uma das cabeceiras da pista. Um aeroporto nunca terá
+        cabeceiras repetidas, então ICAO e Head1 formam uma chave primária mínima.
+        & VARCHAR(5)
+        \\ \hline
 
-Número e possível letra que identifica uma das cabeceiras da pista. Um aeroporto nunca terá
-cabeceiras repetidas, então ICAO e Head1 formam uma chave primária mínima.
+        RunwayLength
+        & Comprimento da pista em metros.
+        & VARCHAR(5)
+        \\ \hline
+
+        RunwayWidth
+        & Largura da pista em metros.
+        & VARCHAR(5)
+        \\ \hline
+
+        PavementCode (FK)
+        & O tipo de pavimento da pista, referenciando a tabela 'PavementType'.
+        & VARCHAR(5)
+        \\ \hline
+
+\end{longtable}
 
 Para cabeceiras paralelas, ou seja, que apontam para a mesma direção, temos:
 
-\subsubsection{Pista única}
+\subsection{Pista única}
 
 A proa em que a pista aponta, com divisão por 10 arredondada. Por exemplo, em Fortaleza,
 temos uma cabeceira com curso de 126 graus, dividindo por 10 temos 12,6, arredondando
 temos o número 13 da cabeceira.
 
-\subsubsection{Pista dupla}
+\subsection{Pista dupla}
 
 Para duas pistas paralelas, usamos L para a cabeceira da esquerda e R para a da direita.
 Por exemplo, no Santos Dumont, de costas para o Pão de Açúcar, temos as cabeceiras 02L 
 (na esquerda) e 02R (na direita).
 
-\subsubsection{Pista tripla}
+\subsection{Pista tripla}
 
 Não temos aeroportos com três pistas paralelas no Brasil, mas são usadas as letras
 L, C e R. C para a pista central.
 
-\subsection{Head2}
 
-Número e possível letra que identifica a outra cabeceira da mesma pista.
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{CommunicationType} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
 
-\subsection{RunwayLength}
+        CommType (PK)
+        & O tipo de comunicação, podendo ser "Torre", "Solo", "ATIS", "Tráfego" ou "Operação".
+        & VARCHAR(5)
+        \\ \hline
 
-Comprimento da pista em metros.
-
-\subsection{RunwayWidth}
-
-Largura da pista em metros.
-
-\subsection{PavementCode (FK)}
-
-O tipo de pavimento da pista, referenciando a tabela 'PavementType'.
-
-
-\section{TABELA: CommunicationType}
-
-Esta tabela define os diferentes tipos de comunicação disponíveis em um aeródromo.
-
-\subsection{CommType}
-O tipo de comunicação, podendo ser "Torre", "Solo", "ATIS", "Tráfego" ou "Operação".
-
-
-\section{TABELA: Communication}
-
-Esta tabela guarda as frequências de comunicação utilizadas em um aeródromo. As 
-freqências de radionavegação são colocadas nas tabelas "ILS" e "VOR".
-
-\subsection{ICAO (FK e PK)}
-O código ICAO do aeródromo ao qual a frequência de comunicação está associada, utilizado 
-como chave estrangeira referenciando a tabela 'Aerodrome'.
-
-\subsection{Frequency (PK)}
-A frequência em MHz. ICAO e frequency formam chave primária. Note que uma frequência,
-não é única em todo o país, para distâncias longas, onde não há risco de interferência,
-é possível haverem frequências repetidas.
-
-\subsection{CommType (FK)}
-O tipo de comunicação, chave estrangeira para 'CommunicationType'.
+\end{longtable}
 
 
-\section{TABELA: ILSCategory}
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{Communication} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+
+        ICAO (FK e PK)
+        & O código ICAO do aeródromo ao qual a frequência de comunicação está associada, utilizado 
+        como chave estrangeira referenciando a tabela 'Aerodrome'.
+        & VARCHAR(5)
+        \\ \hline
+
+        Frequency (PK)
+        & A frequência em MHz. ICAO e frequency formam chave primária. Note que uma frequência,
+        não é única em todo o país, para distâncias longas, onde não há risco de interferência,
+        é possível haverem frequências repetidas.
+        & VARCHAR(5)
+        \\ \hline
+
+        CommType (FK)
+        & O tipo de comunicação, chave estrangeira para 'CommunicationType'.
+        & VARCHAR(5)
+        \\ \hline
+
+\end{longtable}
+
 
 Esta tabela lista as diferentes categorias de Sistema de Pouso por Instrumentos
  (Instrument Landing System).
 
-\subsection{Category}
+ \begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{ILSCategory} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
 
-A categoria de ILS, sendo "CAT I", "CAT II", "CATIIIA", "CATIIIB" ou
- "CAT IIIC". Será explicado melhor em "Minimus" na tabela "ILS".
+    Category (PK)
+    & A categoria de ILS, sendo "CAT I", "CAT II", "CATIIIA", "CATIIIB" ou
+    "CAT IIIC". Será explicado melhor em "Minimus" na tabela "ILS".
+    & VARCHAR(5)
+    \\ \hline
 
-\section{TABELA: ILS}
+\end{longtable}
 
-Esta tabela descreve os Sistemas de Pouso por Instrumentos (Instrument
-Landing System) disponíveis no aeródromo.
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{ILS} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
 
-\subsection{ICAO (FK e PK)}
+    ICAO (FK e PK)
+    & O código ICAO do aeródromo ao qual o sistema de pouso está associado, utilizado 
+    como chave estrangeira referenciando a tabela 'Aerodrome'.
+    & VARCHAR(5)
+    \\ \hline
 
-O código ICAO do aeródromo ao qual o sistema de pouso está associado, utilizado 
-como chave estrangeira referenciando a tabela 'Aerodrome'.
+    Ident (PK)
+    & Identificação de três letras maisculas única do ILS para aquele aeródromo.
+    Junto com ICAO formam a chave primária. Como no caso da comunicação, é
+    possível haverem duas Ident iguas desde que não estejam próximas.
+    & VARCHAR(5)
+    \\ \hline
 
-\subsection{Ident (PK)}
+    Frequency
+    & A frequência de operação do ILS em MHz.
+    & VARCHAR(5)
+    \\ \hline
 
-Identificação de três letras maisculas única do ILS para aquele aeródromo.
-Junto com ICAO formam a chave primária. Como no caso da comunicação, é
-possível haverem duas Ident iguas desde que não estejam próximas.
+    Category (FK)
+    & A categoria do ILS, referenciando a tabela 'ILSCategory'.
+    & VARCHAR(5)
+    \\ \hline
 
-\subsection{Frequency}
+    CRS
+    & A referência do curso de aproximação do ILS. É a proa final que a aeronave deve 
+    manter para o correto alinhamento nesta cabeceira.
+    & VARCHAR(5)
+    \\ \hline
 
-A frequência de operação do ILS em MHz.
+    Minimum
+    & A altura mínima de decisão em pés para operação do ILS. A partir desta altura, é
+    desligado o piloto automático e o resto da aproximação é feita manualmente.
+    Se a altitude da aeronave ficar abaixo deste valor e ainda não for possível 
+    ter visual da pista é obrigatória a arremetida.
+    
+    Quando maior a categoria do ILS, maior a precisão do sistema, portanto a Minimus 
+    será mais baixa. Uma "CAT IIIC" (pronuncia-se cat três charlie), possui Minimus zero, 
+    portanto a aeronave pode pousar de forma totalmente automática.
+    & VARCHAR(5)
+    \\ \hline
 
-\subsection{Category (FK)}
-
-A categoria do ILS, referenciando a tabela 'ILSCategory'.
-
-\subsection{CRS}
-
-A referência do curso de aproximação do ILS. É a proa final que a aeronave deve 
-manter para o correto alinhamento nesta cabeceira.
-
-\subsection{Minimum}
-
-A altura mínima de decisão em pés para operação do ILS. A partir desta altura, é
-desligado o piloto automático e o resto da aproximação é feita manualmente.
-Se a altitude da aeronave ficar abaixo deste valor e ainda não for possível 
-ter visual da pista é obrigatória a arremetida.
-
-Quando maior a categoria do ILS, maior a precisão do sistema, portanto a Minimus 
-será mais baixa. Uma "CAT IIIC" (pronuncia-se cat três charlie), possui Minimus zero, 
-portanto a aeronave pode pousar de forma totalmente automática.
-
-\section{TABELA: VOR}
+\end{longtable}
 
 Esta tabela registra os sistemas de navegação VOR/DME disponíveis em um aeródromo.
 Não foi incluída uma tabela para as frequências de NDB porque este sistema
 está caíndo em desuso.
 
-\subsection{Ident}
-Identificação única do VOR/DME para aquele aeródromo.
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{VOR} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição}                                                                                          & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
 
-\subsection{ICAO}
-O código ICAO do aeródromo ao qual o VOR/DME está associado, utilizado como 
-chave estrangeira referenciando a tabela 'Aerodrome'.
+        ICAO (PK e FK)
+        & O código ICAO do aeródromo ao qual o VOR/DME está associado, utilizado como 
+        chave estrangeira referenciando a tabela 'Aerodrome'.
+        & VARCHAR(5)
+        \\ \hline
 
-\subsection{Frequency}
-A frequência de operação do VOR/DME em MHz.
+        Ident (PK)
+        & Identificação única do VOR/DME para aquele aeródromo. Forma chave primária
+        junto com ICAO.
+        & VARCHAR(5)
+        \\ \hline
+
+        Ident (PK)
+        & Identificação de três letras maisculas única do ILS para aquele aeródromo.
+        Junto com ICAO formam a chave primária. Como no caso da comunicação, é
+        possível haverem duas Ident iguas desde que não estejam próximas.
+        & VARCHAR(5)
+        \\ \hline
+
+        Frequency
+        & A frequência de operação do VOR/DME em MHz.
+        & VARCHAR(5)
+        \\ \hline
+
+\end{longtable}
