@@ -270,10 +270,11 @@ L, C e R. C para a pista central.
         \\ \hline
 
         Frequency (PK)
-        & A frequência em MHz. ICAO e frequency formam chave primária. Note que uma frequência,
-        não é única em todo o país, para distâncias longas, onde não há risco de interferência,
+        & A frequência em MHz multiplicada por 1000. Já que as frequências de comunicação possui três digitos decimais, multiplicamos por mil 
+        para armazenar em inteiro de ponto fixo. ICAO e frequency formam chave primária e usar um DECIMAL para uma PK, não é muito eficiente.
+        Note que uma frequência, não necessariamente é única em todo o país, para distâncias longas, onde não há risco de interferência,
         é possível haverem frequências repetidas.
-        & DECIMAL(6, 3)
+        & INTEGER
         \\ \hline
 
         CommType (FK)
@@ -331,23 +332,22 @@ Esta tabela lista as diferentes categorias de Sistema de Pouso por Instrumentos
     & VARCHAR(4)
     \\ \hline
 
-    Ident (PK)
+    Frequency (PK)
+    & A frequência de operação do ILS em MHz, multiplicado por 10. Fazemos isso para poder usar o tipo
+    INTEGER, já que um DECIMAL como chave primária não seria eficiente, como já explicado na tabela de
+    comunicação.
+    & INTEGER
+    \\ \hline
+
+    Ident
     & Identificação de três letras maisculas única do ILS para aquele aeródromo.
     Aparece na carta aérea do procedimento ILS.
-    Junto com ICAO formam a chave primária. Como no caso da comunicação, é
-    possível haverem duas Ident iguas desde que não estejam próximas.
     & VARCHAR(3)
     \\ \hline
 
-
-    RunwayHead (PK)
-    & Para qual pista este ILS se refere. Junto com ICAO forma chave primária.
+    RunwayHead
+    & Para qual pista este ILS se refere.
     & VARCHAR(3)
-    \\ \hline
-
-    Frequency
-    & A frequência de operação do ILS em MHz.
-    & DECIMAL(6, 3)
     \\ \hline
 
     Category (FK)
@@ -400,15 +400,15 @@ está caíndo em desuso.
         & VARCHAR(4)
         \\ \hline
 
-        Ident (PK)
+        Frequency (PK)
+        & A frequência de operação do VOR/DME em MHz multiplicada por 10.
+        & INTEGER
+        \\ \hline
+
+        Ident 
         & Identificação única do VOR/DME para aquele aeródromo. Forma chave primária
         junto com ICAO.
         & VARCHAR(3)
-        \\ \hline
-
-        Frequency
-        & A frequência de operação do VOR/DME em MHz.
-        & DECIMAL(6, 3)
         \\ \hline
 
 \end{longtable}

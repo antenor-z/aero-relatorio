@@ -14,23 +14,6 @@ com as atualizações constantes.
     \end{center}
 \end{figure}
 
-\section{Flask/Guinicorn}
-
-Já que o Guinicorn é o serviço principal: o servidor onde o backend implementado em Flask roda,
-fiz um Dockerfile próprio iniciando a partir de uma imagem do Alpine, devido ser lightweight.
-O Python e as dependencias do projeto são instaladas automaticamente pelo Dockerfile e por
-fim o arquivo de entrada \texttt{server.py} é executado usando o servidor Guinicorn. As configurações
-dele ficam no arquivo \texttt{gunicorn\_config.py} é apenas configura a porta para 5000 e usa três workers.
-
-A documentação do Guinicorn informa a seguinte fórmula para determinar a quantidade de workers. \cite{number-work}
-
-\begin{equation} 
-    \begin{split}
-        N_{worker} = 2 * N_{cores} + 1 \\
-        N_{worker} = 2 * 1 + 1 = 3 
-    \end{split}
-\end{equation}
-
 \section{Docker Network}
 A porta 5000 do Guinicorn não estará disponível para todos os serviços. Por segurança, é usada a função de
 "network". Observe no diagram que a proxy NGINX compartilha com o Guinicorn a rede "net", para o NGINX,
@@ -65,10 +48,56 @@ modificações já que o Redis possui sistema-chave valor, não sendo relacional
 \subsection{Proxy NGINX}
 Faz o HTTPS funcionar, dá suporte ao HTTP/2 e ao header HTTP keep-alive. O Guinicorn só tem suporte
 ao primeiro. De qualquer caso a documentação do Guinicorn não recomenda que ele esteja diretamente
-ligado a Intenet \cite{nginx-gunicorn}. Já que tenho outros projetos na mesma máquina, uso subdomínios, caso o subdomínio 
-seja aero.a4barros.com, o NGINX realiza uma proxy pass para a "https://aero:5000".
+ligado a Intenet \cite{nginx-gunicorn}. Já que tenho outros projetos na mesma máquina, uso subdomínios.
+Na configuração do NGINX o server block com hostname aero.a4barros.com é redirecionado para 
+o endereço interno "https://aero:5000".
+
+\section{Flask/Guinicorn}
+
+Já que o Guinicorn é o serviço principal: o servidor onde o backend implementado em Flask roda,
+fiz um Dockerfile próprio iniciando a partir de uma imagem do Alpine, devido ser lightweight.
+O Python e as dependencias do projeto são instaladas automaticamente pelo Dockerfile e por
+fim o arquivo de entrada \texttt{server.py} é executado usando o servidor Guinicorn. As configurações
+dele ficam no arquivo \texttt{gunicorn\_config.py} é apenas configura a porta para 5000 e usa três workers.
+
+A documentação do Guinicorn informa a seguinte fórmula para determinar a quantidade de workers. \cite{number-work}
+
+\begin{equation} 
+    \begin{split}
+        N_{worker} = 2 * N_{cores} + 1 \\
+        N_{worker} = 2 * 1 + 1 = 3 
+    \end{split}
+\end{equation}
+
+\section{Produção}
+O site se encontra no produção no endereço https://aero.a4barros.com. Ele está hospedado em uma VPS
+com as seguintes características:
+
+\begin{itemize}
+    \item \textbf{CPU:} AMD EPYC 7713 (1 core disponível) @ 2GHz
+    \item \textbf{RAM:} 1GB
+    \item \textbf{Armazenamento:} 25GB
+    \item \textbf{SO:} Ubuntu 22.04.4 LTS
+\end{itemize}
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=400pt]{img/prod-idle.png}
+    \caption{Uso do sistema em baixa demanda}
+    \label{fig:prod-idle}
+    \end{center}
+\end{figure}
 
 
+Mesmo com uma configuração bastante modesta, o sistema roda sete containers Docker usando 
+aproximadamente metade da memória primária (RAM) em idle.
 
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=400pt]{img/containers.png}
+    \caption{Containers Docker em execução}
+    \label{fig:containers}
+    \end{center}
+\end{figure}
 
 
