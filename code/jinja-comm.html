@@ -1,0 +1,9 @@
+<div class="line">
+    {% for comm in info.communication %}
+    <div class="box-rounded box-outlined">
+        <div class="box-name">{{comm.CommType}}</div>
+        <div class="box-value"><b>
+        {{"{:,.3f}".format(comm.Frequency/1000)}}</b></div>
+    </div>
+    {% endfor %}
+</div>
