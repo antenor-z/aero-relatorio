@@ -3,7 +3,7 @@
     <div class="box-rounded box-outlined">
         <div class="box-name">{{comm.CommType}}</div>
         <div class="box-value">
-            {{ comm.Frequency }}
+            {{"{:,.3f}".format(comm.Frequency/1000)}}
         </div>
     </div>
     {% endfor %}

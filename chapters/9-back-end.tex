@@ -1,8 +1,27 @@
 \chapter{Rotas do back-end}
 
-\section{/}
+\section{Rota raiz}
 
-\section{/info/\{ICAO\}}
+Página inicial, apresenta a lista de aeródromos para que o usuário escolha um. 
+Internamente, por meio do ORM, é feita a seleção dos campos \texttt{AerodromeName},
+\texttt{ICAO} e \texttt{City} e o resultado é posto em uma lista para cada um dos aeródromos e enviado
+para a ferramenta de template criar a página.
 
-\section{/wind/\{ICAO\}}
+Exemplo do resultado do banco:
+\begin{verbatim}
+[
+    ('Presidente Juscelino Kubitschek', 'SBBR', 'Brasília'), 
+    ('Tancredo Neves', 'SBCF', 'Belo Horizonte'), 
+    ('Afonso Pena', 'SBCT', 'Curitiba'), 
+    ('Pinto Martins', 'SBFZ', 'Fortaleza'), 
+    ...
+]
+\end{verbatim}
+
+\section{Rota: /info/\{ICAO\}}
+
+Retorna informações de um aeródromo com o ICAO especificado na URL.
+xxxxxxxxxxxxxxxxxxxxxxx
+
+\section{Rota: /wind/\{ICAO\}}
 
