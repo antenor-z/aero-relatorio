@@ -2,8 +2,8 @@
 
 \section{Introdução}
 A arquitetura foi pensada para ser implementada com o Docker e Docker Compose. Cada
-programa que precisa ser executado é rodado em um serviço separado. Exceto, o Guinicorn,
-todos os outros serviços usaram imagens prontas do Docker Hub o que oferece mais segurança
+programa que precisa ser executado é rodado em um serviço separado. Exceto o Gunicorn,
+todos os outros serviços usaram imagens prontas do Docker Hub, o que oferece mais segurança
 com as atualizações constantes.
 
 \begin{figure}[ht]
@@ -15,52 +15,43 @@ com as atualizações constantes.
 \end{figure}
 
 \section{Docker Network}
-A porta 5000 do Guinicorn não estará disponível para todos os serviços. Por segurança, é usada a função de
-"network". Observe no diagram que a proxy NGINX compartilha com o Guinicorn a rede "net", para o NGINX,
-o Guinicorn não pode ser acessado por \texttt{localhost:5000} e sim por \texttt{http://aero:5000}, "aero"
+A porta 5000 do Gunicorn não estará disponível para todos os serviços. Por segurança, é usada a função de
+"network". Observe no diagrama que a proxy NGINX compartilha com o Gunicorn a rede "net", para o NGINX,
+o Gunicorn não pode ser acessado por \texttt{localhost:5000}, e sim por \texttt{http://aero:5000}, "aero"
 sendo o nome do serviço no Docker Compose.
 
-Já o banco de dados em memória Redis e o banco relacional MariaDB compartilham a rede Docker "aeronet".
-Apenas eles dois e o Guinicorn possuem acesso a ela, isto é necessário para que o servidor consiga ler
-e escrever valores nas tabelas do banco e ler e escrever chaves-valor no Redis. Porém o NGINX não possui
-acesso aos dois bancos, por mais que os bancos tenham senhas, é uma barreira a mais contra uma invasão.
 
 \section{Docker Secrets}
 
-Para aumentar a segurança de acesso aos dois banco é usada a função "secrets". Nela, no Docker Compose,
+Para aumentar a segurança de acesso ao banco, é usada a função "secrets". Nela, no Docker Compose,
 você informa um arquivo de texto no host onde estará uma senha, uma senha por arquivo. No mesmo Compose,
-você informa quais serviços tem acesso a cada senha, na execução dos containers, as senhas são
-guardadas dentro de arquivos montados no caminho "/run/secret/algum-nome.txt" em que "algum-nome" é
+você informa quais serviços têm acesso a cada senha. Na execução dos containers, as senhas são
+guardadas dentro de arquivos montados no caminho "/run/secret/algum-nome.txt", em que "algum-nome.txt" é
 o mesmo nome do arquivo que estava no host.
-Tanto os bancos como o servidor Guinicorn usam este método para terem acessos às senhas dos bancos.
+Tanto os bancos como o servidor Gunicorn usam este método para terem acesso às senhas dos bancos.
 
 \section{Serviços}
 
 \subsection{MariaDB}
-Este banco de dados relacional guarda toda a informação mais ou menos fixa sobre os aerodromos
+Este banco de dados relacional guarda toda a informação mais ou menos fixa sobre os aeródromos,
 conforme explicado no capítulo de modelo de dados.
 
-\subsection{Redis}
-O Redis é um banco de acesso mais rápido por estar com as informações salvas em memória em vez
-de disco rígido/SSD. Ele é um espelho do que existe no banco relacional, claro que com as devidas
-modificações já que o Redis possui sistema-chave valor, não sendo relacional.
-
 \subsection{Proxy NGINX}
-Faz o HTTPS funcionar, dá suporte ao HTTP/2 e ao header HTTP keep-alive. O Guinicorn só tem suporte
-ao primeiro. De qualquer caso a documentação do Guinicorn não recomenda que ele esteja diretamente
-ligado a Intenet \cite{nginx-gunicorn}. Já que tenho outros projetos na mesma máquina, uso subdomínios.
-Na configuração do NGINX o server block com hostname aero.a4barros.com é redirecionado para 
+Faz o HTTPS funcionar, dá suporte ao HTTP/2 e ao header HTTP keep-alive. O Gunicorn só tem suporte
+ao primeiro. De qualquer caso, a documentação do Gunicorn não recomenda que ele esteja diretamente
+ligado à Internet \cite{nginx-gunicorn}. Já que tenho outros projetos na mesma máquina, uso subdomínios.
+Na configuração do NGINX, o server block com hostname aero.a4barros.com é redirecionado para 
 o endereço interno "https://aero:5000".
 
-\section{Flask/Guinicorn}
+\section{Flask/Gunicorn}
 
-Já que o Guinicorn é o serviço principal: o servidor onde o backend implementado em Flask roda,
-fiz um Dockerfile próprio iniciando a partir de uma imagem do Alpine, devido ser lightweight.
-O Python e as dependencias do projeto são instaladas automaticamente pelo Dockerfile e por
-fim o arquivo de entrada \texttt{server.py} é executado usando o servidor Guinicorn. As configurações
-dele ficam no arquivo \texttt{gunicorn\_config.py} é apenas configura a porta para 5000 e usa três workers.
+Já que o Gunicorn é o serviço principal: o servidor onde o backend implementado em Flask roda,
+fiz um Dockerfile próprio iniciando a partir de uma imagem do Alpine, devido a ser lightweight.
+O Python e as dependências do projeto são instaladas automaticamente pelo Dockerfile e, por
+fim, o arquivo de entrada \texttt{server.py} é executado usando o servidor Gunicorn. As configurações
+dele ficam no arquivo \texttt{gunicorn\_config.py} e apenas configura a porta para 5000 e usa três workers.
 
-A documentação do Guinicorn informa a seguinte fórmula para determinar a quantidade de workers. \cite{number-work}
+A documentação do Gunicorn informa a seguinte fórmula para determinar a quantidade de workers. \cite{number-work}
 
 \begin{equation} 
     \begin{split}
@@ -70,7 +61,7 @@ A documentação do Guinicorn informa a seguinte fórmula para determinar a quan
 \end{equation}
 
 \section{Produção}
-O site se encontra no produção no endereço https://aero.a4barros.com. Ele está hospedado em uma VPS
+O site se encontra em produção no endereço https://aero.a4barros.com. Ele está hospedado em uma VPS
 com as seguintes características:
 
 \begin{itemize}
@@ -88,8 +79,7 @@ com as seguintes características:
     \end{center}
 \end{figure}
 
-
-Mesmo com uma configuração bastante modesta, o sistema roda sete containers Docker usando 
+Mesmo com uma configuração bastante modesta, o sistema roda sete containers Docker, usando 
 aproximadamente metade da memória primária (RAM) em idle.
 
 \begin{figure}[ht]
@@ -100,4 +90,32 @@ aproximadamente metade da memória primária (RAM) em idle.
     \end{center}
 \end{figure}
 
+\section{Diagrama de Tempo}
 
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=0.5\linewidth]{img/diagrama-tempo.png}
+    \caption{Diagrama de tempo}
+    \label{fig:tempo}
+    \end{center}
+\end{figure}
+
+\begin{enumerate}
+\item O usuário realiza uma requisição para a rota raiz ou "/info/\{icao\}".
+\item Um servidor NGINX funcionando como proxy realiza o limite de requisições por segundo
+e bloqueia user-agents que aparentem ser robôs. Caso a requisição passe pelo filtro, é
+realizado um proxy-pass para o servidor Gunicorn.
+\item Para a rota raiz, é feito um SELECT no banco para pegar informações de todos os
+aeroportos. Na rota "/info/\{icao\}", é feito um SELECT-WHERE para buscar apenas um aeroporto.
+A ORM é usada para isto, portanto os comandos SQL não aparecem diretamente no código.
+\item O banco de dados responde à requisição. Para a rota "/info/\{icao\}", é verificado 
+se o METAR existente no banco é válido para aquela hora. Se for, o sistema vai para o passo 8;
+se não, continua para o passo 5.
+\item É feita uma requisição para a API do Aviation Weather pedindo o METAR para o 
+aeroporto em questão.
+\item A API responde.
+\item O METAR atualizado é gravado no banco.
+\item O servidor envia as informações necessárias ao Jinja2 para a geração da página.
+\item A página HTML é gerada.
+\item O usuário recebe esta página.
+\end{enumerate}
