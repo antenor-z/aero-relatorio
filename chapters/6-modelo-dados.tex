@@ -28,7 +28,7 @@ Já na relação \texttt{Aerodrome} com \texttt{Runway}, um aeródromo deve ter 
 Note que as tabelas "CommunicationType", "ILSCategory" e "PavementType" poderiam ser substituídas
 por colunas enum nas tabelas "Communication", "ILS" e "Runway", porém a manutenção seria difícil
 \cite{table-enum},
-pois teríamos que alterar a estrutura das tabelas (possívelmente tirando o sistema do ar) caso 
+pois teríamos que alterar a estrutura das tabelas (possivelmente tirando o sistema do ar) caso 
 fosse necessário adicionar um tipo novo
 de comunicação, por exemplo. Fazendo com uma tabela externa é necessário apenas adicionar uma nova
 linha.
@@ -270,10 +270,11 @@ L, C e R. C para a pista central.
         \\ \hline
 
         Frequency (PK)
-        & A frequência em MHz multiplicada por 1000. Já que as frequências de comunicação possui três digitos decimais, multiplicamos por mil 
-        para armazenar em inteiro de ponto fixo. ICAO e frequency formam chave primária e usar um DECIMAL para uma PK, não é muito eficiente.
-        Note que uma frequência, não necessariamente é única em todo o país, para distâncias longas, onde não há risco de interferência,
-        é possível haverem frequências repetidas.
+        & A frequência em MHz multiplicada por 1000. Já que as frequências de comunicação possuem 
+        três digitos decimais, multiplicamos por mil para armazenar em inteiro de ponto fixo. 
+        ICAO e frequency formam chave primária e usar um DECIMAL para uma PK, não é muito eficiente. 
+        Note que uma frequência, não necessariamente é única em todo o país, para distâncias longas, 
+        onde não há risco de interferência, é possível haver frequências repetidas.
         & INTEGER
         \\ \hline
 
@@ -377,7 +378,7 @@ Esta tabela lista as diferentes categorias de Sistema de Pouso por Instrumentos
 
 Esta tabela registra os sistemas de navegação VOR/DME disponíveis em um aeródromo.
 Não foi incluída uma tabela para as frequências de NDB porque este sistema
-está caíndo em desuso.
+está caindo em desuso.
 
 \begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
     \caption{VOR} \\

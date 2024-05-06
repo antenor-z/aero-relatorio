@@ -3,7 +3,7 @@
 \section{Introdução}
 A arquitetura foi pensada para ser implementada com o Docker e Docker Compose. Cada
 programa que precisa ser executado é rodado em um serviço separado. Exceto o Gunicorn,
-todos os outros serviços usaram imagens prontas do Docker Hub, o que oferece mais segurança
+todos os outros serviços usam imagens prontas do Docker Hub, o que oferece mais segurança
 com as atualizações constantes.
 
 \begin{figure}[ht]
@@ -23,11 +23,11 @@ sendo o nome do serviço no Docker Compose.
 
 \section{Docker Secrets}
 
-Para aumentar a segurança de acesso ao banco, é usada a função "secrets". Nela, no Docker Compose,
+Para aumentar a segurança de acesso ao banco, é usada a funcionalidade "secrets". Nela, no Docker Compose,
 você informa um arquivo de texto no host onde estará uma senha, uma senha por arquivo. No mesmo Compose,
-você informa quais serviços têm acesso a cada senha. Na execução dos containers, as senhas são
-guardadas dentro de arquivos montados no caminho "/run/secret/algum-nome.txt", em que "algum-nome.txt" é
-o mesmo nome do arquivo que estava no host.
+você informa quais serviços têm acesso a cada senha. Caso o serviço de banco de dados, por exemplo, tenha
+acesso a senha db-password.txt, será feito um bind do arquivo db-password.txt no host para o "/run/secret/db-password.txt"
+no guest.
 Tanto os bancos como o servidor Gunicorn usam este método para terem acesso às senhas dos bancos.
 
 \section{Serviços}
@@ -38,7 +38,7 @@ conforme explicado no capítulo de modelo de dados.
 
 \subsection{Proxy NGINX}
 Faz o HTTPS funcionar, dá suporte ao HTTP/2 e ao header HTTP keep-alive. O Gunicorn só tem suporte
-ao primeiro. De qualquer caso, a documentação do Gunicorn não recomenda que ele esteja diretamente
+ao primeiro. De qualquer forma, a documentação do Gunicorn não recomenda que ele esteja diretamente
 ligado à Internet \cite{nginx-gunicorn}. Já que tenho outros projetos na mesma máquina, uso subdomínios.
 Na configuração do NGINX, o server block com hostname aero.a4barros.com é redirecionado para 
 o endereço interno "https://aero:5000".
@@ -47,7 +47,7 @@ o endereço interno "https://aero:5000".
 
 Já que o Gunicorn é o serviço principal: o servidor onde o backend implementado em Flask roda,
 fiz um Dockerfile próprio iniciando a partir de uma imagem do Alpine, devido a ser lightweight.
-O Python e as dependências do projeto são instaladas automaticamente pelo Dockerfile e, por
+O Python e as dependências do projeto são instalados automaticamente pelo Dockerfile e, por
 fim, o arquivo de entrada \texttt{server.py} é executado usando o servidor Gunicorn. As configurações
 dele ficam no arquivo \texttt{gunicorn\_config.py} e apenas configura a porta para 5000 e usa três workers.
 
@@ -112,7 +112,7 @@ A ORM é usada para isto, portanto os comandos SQL não aparecem diretamente no 
 se o METAR existente no banco é válido para aquela hora. Se for, o sistema vai para o passo 8;
 se não, continua para o passo 5.
 \item É feita uma requisição para a API do Aviation Weather pedindo o METAR para o 
-aeroporto em questão.
+aeroporto em questão. O sistema vai para o passo 3.
 \item A API responde.
 \item O METAR atualizado é gravado no banco.
 \item O servidor envia as informações necessárias ao Jinja2 para a geração da página.
