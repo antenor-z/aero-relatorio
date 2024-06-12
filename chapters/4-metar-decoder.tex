@@ -20,8 +20,8 @@ enquanto o IATA só é presente em aeroportos onde há processamento de bagagem 
 
 O ICAO é formado por quatro letras em que a primeira é o prefixo da região. A América do Sul possui o prefixo "S", 
 o Brasil possui o prefixo "SB", por isso que o Aeroporto de Fortaleza, Santos Dumont e Galeão possuem os códigos 
-SBFZ, SBRJ e SBGL, respectivamente. Países com muitos aeroportos, como os EUA, possuem como prefixo a letra K, 
-logo as três letras ficam livres, podendo assim ter mais códigos para uso.
+SBFZ, SBRJ e SBGL, respectivamente. Países com muitos aeroportos, apenas uma letra, 
+logo as três últimas letras ficam livres, podendo assim terem mais códigos para uso.
 
 \texttt{171300Z} significa que este METAR se refere ao dia 17 às 13 horas e zero minuto zulu. Horário zulu é 
 simplesmente o fuso horário da longitude de zero grau, chamado de hora UTC ou Coordinated Universal Time \cite{UTC}. 
@@ -34,7 +34,7 @@ Note que a seguinte expressão regular com três grupos de captura consegue extr
 ([0-9]{2})([0-9]{2})([0-9]{2})Z
 \end{verbatim}
 
-Com o METAR supracitado, os grupos serão:
+Com o METAR supracitado, os grupos de captura serão:
 
 \begin{itemize}
 \item Grupo 1 (dia): 17
@@ -84,7 +84,7 @@ não é exaustivo; foi dada preferência a fenômenos que podem ocorrer no Brasi
 O algoritmo deve separar a string do METAR pelo caractere de espaço. Para cada item separado, cada expressão regular 
 é testada. Caso uma combinação ocorra, os grupos de captura são interpolados em uma string que explica aquele item. 
 
-Por exemplo, se o item "27008G16KT" é encontrado pela expressão 
+Semdo "\$1" o primeiro grupo de captura e "\$2" o segundo, se o item "27008G16KT" é encontrado pela expressão 
 \begin{verbatim}
   ([0-9]\{3\})([0-9]\{2\})G([0-9]\{2\})KT
 \end{verbatim}
@@ -97,4 +97,45 @@ o algorítmo interpola a frase:
 
 com os grupos de captura do regex supracitado. Então será gerada uma tupla
 \texttt{(27008G16KT, Vento 270° com 8 nós e rajadas de até 16 nós)}. O retorno do 
-algorítmo será uma lista de tuplas que serão enviadas para o front-end.
+algorítmo será uma lista de tuplas que será enviada a ferramenta de templating
+de página Jinja.
+
+\section{Complexidade temporal}
+Considerando que todos as expressões usadas são simples, isto é não leva a backtracking, 
+a complexidade temporal para fazer uma execução da função \texttt{re.findall()} do Python
+é
+
+\begin {math}
+O_{findall}(m + n)
+\end {math}
+
+\begin {verbatim}
+m := número de caracteres da expressão regex
+n := número de caracteres da string a ser analisada
+\end {verbatim}
+
+Se temos que testar todas as expressões para cada item do METAR, a complexidade será
+\begin {math}
+O_{decode}(p * q * (m + n))
+\end {math}
+
+\begin {verbatim}
+m := número de caracteres da expressão regex
+n := número de caracteres da string do METAR a ser analisado
+p := número de items do METAR
+q := número de expressões regex no programa
+\end {verbatim}
+
+
+A maior expressão regex no decoder é \texttt{([A-Z]{3})(\d{3})(CB|TCU)*} com 26 caracteres.
+Para efeitos práticos este é um valor muito pequeno então podemos assumir m constante.
+
+Sabemos que o número de expressões é 11, também um valor que pode ser assumindo contante, logo
+q é igual à 1, portanto.
+
+\begin {math}
+O_{decode}(p * 1 * (1 + n))
+O{decode}(p * n)
+\end {math}
+
+Apenas as variáveis "p" e "n" dependem de valores externos. 
