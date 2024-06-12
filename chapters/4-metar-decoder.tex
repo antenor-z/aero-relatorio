@@ -92,7 +92,7 @@ Semdo "\$1" o primeiro grupo de captura e "\$2" o segundo, se o item "27008G16KT
 o algorítmo interpola a frase:
 
 \begin{verbatim}
-  \texttt{Vento \$1° com \$2 nós e rajadas de até \$3 nós}, 
+  Vento \$1° com \$2 nós e rajadas de até \$3 nós
 \end{verbatim}
 
 com os grupos de captura do regex supracitado. Então será gerada uma tupla
@@ -105,26 +105,23 @@ Considerando que todos as expressões usadas são simples, isto é não leva a b
 a complexidade temporal para fazer uma execução da função \texttt{re.findall()} do Python
 é
 
-\begin {math}
-O_{findall}(m + n)
-\end {math}
+$$ O_{findall}(m + n) $$
 
-\begin {verbatim}
-m := número de caracteres da expressão regex
-n := número de caracteres da string a ser analisada
-\end {verbatim}
+\begin{verbatim}
+m := quantidade de caracteres da expressão regex
+n := quantidade de caracteres da string a ser analisada
+\end{verbatim}
 
 Se temos que testar todas as expressões para cada item do METAR, a complexidade será
-\begin {math}
-O_{decode}(p * q * (m + n))
-\end {math}
 
-\begin {verbatim}
-m := número de caracteres da expressão regex
-n := número de caracteres da string do METAR a ser analisado
-p := número de items do METAR
-q := número de expressões regex no programa
-\end {verbatim}
+$$ O_{decode}(p * q * (m + n)) $$
+
+\begin{verbatim}
+m := quantidade de caracteres da expressão regex
+n := quantidade de caracteres da string do METAR a ser analisado
+p := quantidade de items do METAR
+q := quantidade de expressões regex no programa
+\end{verbatim}
 
 
 A maior expressão regex no decoder é \texttt{([A-Z]{3})(\d{3})(CB|TCU)*} com 26 caracteres.
@@ -133,9 +130,7 @@ Para efeitos práticos este é um valor muito pequeno então podemos assumir m c
 Sabemos que o número de expressões é 11, também um valor que pode ser assumindo contante, logo
 q é igual à 1, portanto.
 
-\begin {math}
-O_{decode}(p * 1 * (1 + n))
-O{decode}(p * n)
-\end {math}
+$$ O_{decode}(p * 1 * (1 + n)) $$
+$$ O_{decode}(p * n) $$
 
 Apenas as variáveis "p" e "n" dependem de valores externos. 
