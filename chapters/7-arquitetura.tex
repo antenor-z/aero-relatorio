@@ -1,6 +1,5 @@
 \chapter{Arquitetura}
 
-\section{Introdução}
 A arquitetura foi pensada para ser implementada com o Docker e Docker Compose. Cada
 programa que precisa ser executado é rodado em um serviço separado. Exceto o Gunicorn,
 todos os outros serviços usam imagens prontas do Docker Hub, o que oferece mais segurança
@@ -90,12 +89,12 @@ aproximadamente metade da memória primária (RAM) em idle.
     \end{center}
 \end{figure}
 
-\section{Diagrama de Tempo}
+\section{Diagrama de sequência}
 
 \begin{figure}[ht]
     \begin{center}
     \includegraphics[width=0.5\linewidth]{img/diagrama-tempo.png}
-    \caption{Diagrama de tempo}
+    \caption{Diagrama de sequência}
     \label{fig:tempo}
     \end{center}
 \end{figure}

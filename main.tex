@@ -52,7 +52,7 @@
 
 \algorithmsmode{none}
 \codesmode{use}
-\abreviationsmode{none}
+\abreviationsmode{use}
 
 % \makeatletter  \renewcommand\@biblabel[1]{#1}  \makeatother
 
@@ -82,6 +82,7 @@
 %%% Titulos
 %%%
 
+\tituloglossario{Lista de Abreviaturas}
 \autor{Antenor Moreira de Barros Leal}
 \autorR{Leal, Antenor Moreira de Barros}
 
@@ -178,9 +179,10 @@ acesso à ferramenta (Electronic Flight Bag) que um piloto de linha aérea teria
 se depara com a lista de aeroportos cadastrados e, após escolher um, são exibidas as informações da pista,
 frequências do aeroporto (torre, solo, ATIS, etc.), e frequências de navegação (ILS, VOR, etc.). Também são
 apresentadas as informações das condições meteorológicas atuais do aeródromo (vento, visibilidade,
-temperatura, etc.), tanto no formato oficial (METAR), obtidas a cada hora de uma API externa, como em um texto
+temperatura, etc.), tanto no formato oficial (\abrev METAR), obtidas a cada hora de uma API externa, como em um texto
 em linguagem natural para melhor entendimento do jogador iniciante. Um usuário com permissão de
-administrador pode adicionar e editar aeroportos. A partir de informação atual vento, a pista em uso é calculada.
+administrador pode adicionar e editar aeroportos. Módulos adicionais estão disponíveis como o cálculo da pista
+em uso (a partir de informações do vento) e do perfil de descida.
 } 
 
 \abstractuk{%
@@ -191,7 +193,8 @@ encounter the list of registered airports and, after choosing one, runway inform
 meteorological conditions of the aerodrome (wind, visibility, temperature, etc.), both in the official 
 format (METAR), obtained hourly from an external API, and in natural language text for better 
 understanding by novice players. An administrator user can add and edit airports. Based on the 
-current wind information, the active runway is calculated.
+current wind information, the active runway is calculated. Additional modules are available such as calculation 
+of the runway in use (from wind information) and the descent profile.
 }
 
 
@@ -233,7 +236,7 @@ current wind information, the active runway is calculated.
   \input{chapters/2-situacao-atual}
   \input{chapters/3-proposta}
   \input{chapters/4-cronograma}
-  \input{chapters/4-metar-decoder}
+  \input{chapters/5-metar-decoder}
   % \input{chapters/5-vento}
   \input{chapters/6-modelo-dados}
   \input{chapters/7-arquitetura}
