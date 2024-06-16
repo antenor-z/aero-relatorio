@@ -19,13 +19,13 @@ código, mas na aviação costuma-se usar mais o código ICAO, pois \textit{todo
 enquanto o IATA só é presente em aeroportos onde há processamento de bagagem \cite{iata-codes} \cite{icao-codes}.
 
 O ICAO é formado por quatro letras em que a primeira é o prefixo da região. A América do Sul possui o prefixo "S", 
-o Brasil possui o prefixo "SB", por isso que o Aeroporto de Fortaleza, Santos Dumont e Galeão possuem os códigos 
+o Brasil possui o prefixo "SB", por isso que os aeroporto de Fortaleza, Santos Dumont e Galeão possuem os códigos 
 SBFZ, SBRJ e SBGL, respectivamente. Países com muitos aeroportos, apenas uma letra, 
-logo as três últimas letras ficam livres, podendo assim terem mais códigos para uso.
+logo as três últimas letras ficam livres, podendo assim ter mais códigos para uso.
 
 \texttt{171300Z} significa que este METAR se refere ao dia 17 às 13 horas e zero minuto zulu. Horário zulu é 
 simplesmente o fuso horário da longitude de zero grau, chamado de hora UTC ou Coordinated Universal Time \cite{UTC}. 
-Para que não haja confusões com os horários, a aviação internacionalmente usa o horário UTC. Este METAR será 
+Para que não haja confusão com os horários, a aviação internacionalmente usa o horário UTC. Este METAR será 
 válido até às 13:59, quando será substituído pelo METAR iniciando com "SBFZ 171400Z".
 
 Note que a seguinte expressão regular com três grupos de captura consegue extrair o dia, a hora e o minuto:
@@ -118,7 +118,7 @@ $$ O_{decode}(p * q * (m + n)) $$
 \begin{verbatim}
 m := quantidade de caracteres da expressão regex
 n := quantidade de caracteres da string do METAR a ser analisado
-p := quantidade de items do METAR
+p := quantidade de itens do METAR
 q := quantidade de expressões regex no programa
 \end{verbatim}
 
