@@ -1,8 +1,8 @@
 all:
-	pdflatex main
+	pdflatex  --shell-escape main
 	bibtex main
-	pdflatex main
-	pdflatex main
+	pdflatex  --shell-escape main
+	pdflatex  --shell-escape main
 
 
 clean:

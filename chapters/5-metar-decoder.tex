@@ -1,12 +1,12 @@
 \chapter{Decodificação do METAR}
 
-\section{Introdução}
 O METAR é um protocolo de transmissão de dados meteorológicos de um aeroporto ou aeródromo. Não se trata de 
 uma previsão do tempo, mas sim de uma visualização atual. O METAR é formado por itens separados por espaço. 
 Cada item corresponde a uma unidade mínima de informação meteorológica. Com os dados de sensores instalados 
 no aeródromo \cite{metar-weather-gov}, a cada hora é publicado um novo METAR que é válido para aquela hora. 
 Em casos excepcionais, quando as condições de tempo estiverem mudando repentinamente, um METAR pode ser atualizado 
-a cada meia hora \cite{METAR-speci}.
+a cada meia hora \cite{METAR-speci}. Nas próximas seções será apresentado um exemplo de METAR e sua 
+decodificação.
 
 \section{Exemplo}
 O METAR no aeroporto de Fortaleza \cite{METAR-sbfz}, no dia 17 de abril de 2024 às 10:54 foi
@@ -123,8 +123,13 @@ q := quantidade de expressões regex no programa
 \end{verbatim}
 
 
-A maior expressão regex no decoder é \texttt{([A-Z]{3})(\d{3})(CB|TCU)*} com 26 caracteres.
-Para efeitos práticos este é um valor muito pequeno então podemos assumir m constante.
+A maior expressão regex no decoder é 
+
+\[
+\texttt{([A-Z]\{3\})(\textbackslash d\{3\})(CB|TCU)*}
+\] 
+
+com 26 caracteres. Para efeitos práticos este é um valor muito pequeno então podemos assumir m constante.
 
 Sabemos que o número de expressões é 11, também um valor que pode ser assumindo contante, logo
 q é igual à 1, portanto.
