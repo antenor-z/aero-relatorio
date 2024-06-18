@@ -118,7 +118,7 @@ linha.
     \endfoot
     \hline
     \endlastfoot
-        Aerodrome (FK)
+        Aerodrome (PK) (FK)
         & Chave estrangeira para qual aeródromo este METAR se refere
         & VARCHAR(4)
         \\ \hline
@@ -128,7 +128,7 @@ linha.
         & VARCHAR(100)
         \\ \hline
 
-        ValidOn
+        ValidOn (PK)
         & Timestamp com o momento que este metar é válido. É construído a
         partir do item do metar "ddhhmmZ" em que "dd" é o dia e "hhmm" é
         a hora zulu (UTC). O mês e ano são o mês e ano atuais do sistema.
