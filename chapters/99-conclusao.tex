@@ -1,19 +1,36 @@
-\section{Conclusão e Próximos Passos}
+\chapter{Conclusão e Próximos Passos}
 
-Como dito na introdução, para o próximo semestre é planejado implementar o módulo que
-informa a pista ativa. É mais seguro para o voo se a decolagem for realizada a 
-partir da cabeceira em que o vento está soprando contra o sentido da movimentação
-do avião. Por isto que em um momento os procedimentos estão sendo realizados em
-um lado na pista e na outra hora pelo outro lado.
+O desenvolvimento deste projeto busca juntar as funcionalidades comumente usadas na 
+simulação de voo em uma plataforma acessível e amigável, buscando promover um 
+maior nível de realismo na simulação de voo.
 
-Nem sempre a direção do vento estará paralela com a pista, mas, mesmo assim,
+A arquitetura implementada, utilizando Docker e Docker Compose, garante uma 
+implementação modular, segura e, com o uso do Git, de fácil deploy caso seja 
+necessário trocar o ISP no futuro. O uso de um banco de dados como
+o MariaDB e Docker Secrets para armazenadas suas senhas, proporciona um 
+ambiente robusto para o projeto.
+O uso de uma VPS modesta para hospedagem do projeto em produção demonstra a 
+viabilidade do sistema em ambientes com recursos limitados.
+
+Para o próximo semestre está planejado implementar o 
+módulo que informa a pista ativa. É mais seguro para o voo se a decolagem for 
+realizada a partir da cabeceira em que o vento está soprando contra o sentido 
+da movimentação do avião. Por isso, em um momento os procedimentos estão sendo 
+realizados em um lado da pista e em outro momento pelo outro lado.
+
+Nem sempre a direção do vento estará paralela com a pista, mas, mesmo assim, 
 tenta-se decolar e pousar no sentido que a componente paralela ao sentido do 
 movimento da aeronave fique com sentido contrário.
 
-A pista ativa normalmente é informada pela torre de controle, mas é interessante
-o piloto se antecipar.
+A pista ativa normalmente é informada pela torre de controle, mas é 
+interessante o piloto se antecipar.
 
-Outro módulo que será implementado é do cálculo do perfil de descida. Para que o 
-avião chegue no procendimento da aproximação com a altitude expressa na carta de
-aproximação, é necessário calcular uma razão de descida em pés por minuto, a partir
-da altitude atual, da altitude que se quer chegar e da velocidade atual.
+Outro módulo que será implementado é o cálculo do perfil de descida. Para que 
+o avião chegue no procedimento de aproximação com a altitude expressa na 
+carta de aproximação, é necessário calcular uma razão de descida em pés por 
+minuto, a partir da altitude atual, da altitude que se quer chegar e da 
+velocidade atual.
+
+É interessante poder adicionar e editar aeródromos sem precisar estar logado
+na máquina de produção via SSH. Será feito uma seção do site protegida por
+nome de usuário e senha que disponibilizará uma interface para estas mudanças.
