@@ -42,18 +42,26 @@ não é fácil para um humano entender, mas o navegador consegue fazer o parsing
 com menor tamanho, a transferência servidor para cliente é terminada mais rápido, logo a experiência
 para o usuário torna-se mais agradável, já que as páginas carregam mais rápido.
 
-A coluna "Tamanho" refere-se a quantidade de bytes transferidos (com compactação gzip) e não ao 
+\begin{itemize}
+\item A
+\item B
+\item C
+\item D
+\end {itemize}
+
+O "Tamanho" refere-se a quantidade de bytes transferidos (com compactação gzip) e não ao 
 tamanho do arquivo após a compactação já que isto é feito no lado do usuário pelo navegador.
 
-\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
-    \caption{Sem minifying} \\
+
+\begin{longtable}{|p{4cm}|p{2.15cm}|p{2.15cm}|p{2.15cm}|p{2.15cm}|}
+    \caption{Com e Sem minifying} \\
     \hline
-    \textbf{Arquivo} & \textbf{Tamanho} & \textbf{Tempo de transferência} \\ \hline
+    \textbf{Arquivo} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\ \hline
     \endfirsthead
     \multicolumn{3}{c}%
     {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
     \hline
-    \textbf{Arquivo} & \textbf{Tamanho} & \textbf{Tempo de transferência} \\ \hline
+    \textbf{Arquivo} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\ \hline
     \endhead
     \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
     \endfoot
@@ -62,56 +70,30 @@ tamanho do arquivo após a compactação já que isto é feito no lado do usuár
         SBGR
         & 5,88 kB
         & 130 ms
-        \\ \hline
-        style.css
-        & 3,45 kB
-        & 68 ms
-        \\ \hline
-        tooltip.css
-        & 960 B
-        & 67 ms
-        \\ \hline
-        rwy.css
-        & 590 B
-        & 36 ms
-        \\ \hline
-        copy.js
-        & 475 B
-        & 62 ms
-        \\ \hline
-\end{longtable}
-
-\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
-    \caption{Com minifying} \\
-    \hline
-    \textbf{Arquivo} & \textbf{Tamanho} & \textbf{Tempo de transferência} \\ \hline
-    \endfirsthead
-    \multicolumn{3}{c}%
-    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
-    \hline
-    \textbf{Arquivo} & \textbf{Tamanho} & \textbf{Tempo de transferência} \\ \hline
-    \endhead
-    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
-    \endfoot
-    \hline
-    \endlastfoot
-        SBGR
         & 4,93
         & 57 ms
         \\ \hline
         style.css
+        & 3,45 kB
+        & 68 ms
         & 2,49 kB
         & 33 ms
         \\ \hline
         tooltip.css
+        & 960 B
+        & 67 ms
         & 831 B
         & 24 ms
         \\ \hline
         rwy.css
+        & 590 B
+        & 36 ms
         & 518 B
         & 38 ms
         \\ \hline
         copy.js
+        & 475 B
+        & 62 ms
         & 440 B
         & 44 ms
         \\ \hline
