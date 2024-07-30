@@ -2,8 +2,10 @@
     {% for comm in info.communication %}
     <div class="box-rounded box-outlined">
         <div class="box-name">{{comm.CommType}}</div>
-        <div class="box-value">
-            {{ comm.Frequency }}
+        <div class="box-value"><b>{{comm.Frequency | frequency3 }}</b>
+            {% if isAdmin %}
+            <a href="/area/restrita/{{icao}}/communication/{{ comm.Frequency }}/edit" class="button-admin">Editar</a>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

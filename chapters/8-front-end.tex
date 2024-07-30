@@ -19,22 +19,22 @@ Um página template é um arquivo HTML com \textit{placeholders} que serão subs
 possa ser repetido usando valores da lista. E, no caso de dicionários, é fácil acessar 
 os valores. Neste projeto, para exibir a lista de frequência, o seguinte código é usado.
 
-\lstinputlisting[label=cod:jinja-comm-old,title={Formatação Antiga},caption={Formatação Antiga},language=SQL]{code/jinja-comm-old.html}
-
 Note que é possível fazer operações e formatações simples no Jinja2. Já que a frequência 
 é armazenada no banco como um inteiro de ponto fixo (como dito no capítulo de modelo de dados), 
-aqui eu poderia dividir o valor por mil e formatar com três casas decimais para que, caso 
-uma frequência termine com zeros à direita, sempre tenhamos três dígitos decimais, que 
-é o padrão para frequências de comunicação.
+foi criado o filtro "frequency3" para exibir o número corretamente. Um "filtro" no Jinja 
+é apenas uma função que recebe e retorna
+uma string. O filtro é "chamado" usando a sintaxe "\{\{variavel | funcao\}\}". Para os que tem
+experiência com Linux é parecido com a ideia do operador "pipe".
 
-Porém, para não misturar a \textit{view} com o \textit{controller}, deixei este processamento 
-de dados para uma função dentro do controlador.
+\lstinputlisting[label=cod:jinja-comm,title={Template de comunicação com o Jinja},caption={Template de comunicação com o Jinja},language=SQL]{code/jinja-comm.html}
 
-\lstinputlisting[label=cod:jinja-comm,title={Formatação Atual},caption={Formatação Atual},language=SQL]{code/jinja-comm.html}
+Note que caso a variável "isAdmin" seja definida, um botão de alterar a frequência aparece. Este
+e outros botões de adição e edição são mostrados quando o login é feito para que o administrador
+consiga editar um aeródromo.
 
 No código do projeto, na pasta 'templates', é possível ver todos os templates usados.
 
-\subchapter{Diminuição de arquivos}
+\section{Minification}
 
 Removendo os espaços e caracteres de nova linha é possível diminuir o tamanho dos arquivos enviados
 para o usuário. Após este processo cada arquivo html, css js etc fica com apenas uma linha, obviamente
@@ -42,11 +42,15 @@ não é fácil para um humano entender, mas o navegador consegue fazer o parsing
 com menor tamanho, a transferência servidor para cliente é terminada mais rápido, logo a experiência
 para o usuário torna-se mais agradável, já que as páginas carregam mais rápido.
 
+Para a tabela abaixo cada tamanho em kB e cada tempo em ms se refere a média simples dos valores 
+encontrados na aba "rede" das ferramentas de desenvolvedor do navegador Firefox em cinco 
+carregamentos da página. A opção de desabilitar cache foi usada.
+
 \begin{itemize}
-\item A
-\item B
-\item C
-\item D
+\item \textbf{A:} Tamanho do arquivo sem minification
+\item \textbf{B:} Tempo de carregamento deste arquivo
+\item \textbf{C:} Tamanho do arquivo com minification
+\item \textbf{D:} Tempo de carregamento deste arquivo
 \end {itemize}
 
 O "Tamanho" refere-se a quantidade de bytes transferidos (com compactação gzip) e não ao 
@@ -54,23 +58,23 @@ tamanho do arquivo após a compactação já que isto é feito no lado do usuár
 
 
 \begin{longtable}{|p{4cm}|p{2.15cm}|p{2.15cm}|p{2.15cm}|p{2.15cm}|}
-    \caption{Com e Sem minifying} \\
+    \caption{Com e Sem minification} \\
     \hline
     \textbf{Arquivo} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\ \hline
     \endfirsthead
-    \multicolumn{3}{c}%
+    \multicolumn{5}{c}%
     {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
     \hline
     \textbf{Arquivo} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\ \hline
     \endhead
-    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \hline \multicolumn{5}{|r|}{{Continua na próxima página}} \\ \hline
     \endfoot
     \hline
     \endlastfoot
         SBGR
         & 5,88 kB
         & 130 ms
-        & 4,93
+        & 4,93 kB
         & 57 ms
         \\ \hline
         style.css
@@ -91,11 +95,11 @@ tamanho do arquivo após a compactação já que isto é feito no lado do usuár
         & 518 B
         & 38 ms
         \\ \hline
-        copy.js
-        & 475 B
-        & 62 ms
-        & 440 B
-        & 44 ms
+        \texttt{Total}
+        & 11.35 kB
+        & 363 ms
+        & 9.21 kB
+        & 196 ms
         \\ \hline
 \end{longtable}
 
