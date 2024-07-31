@@ -34,11 +34,12 @@ consiga editar um aeródromo.
 
 No código do projeto, na pasta 'templates', é possível ver todos os templates usados.
 
-\section{Minification}
+\section{Minificação}
 
 Removendo os espaços e caracteres de nova linha é possível diminuir o tamanho dos arquivos enviados
-para o usuário. Após este processo cada arquivo html, css js etc fica com apenas uma linha, obviamente
-não é fácil para um humano entender, mas o navegador consegue fazer o parsing sem problemas. E os arquivos
+para o usuário. Após este processo, cada arquivo html, js etc fica com apenas uma linha, os menos linhas
+no caso dos css, obviamente não é fácil para um humano entender, mas o navegador consegue fazer o 
+parsing sem problemas. Isto é chamado de \em{minification} ou minificação. Com os arquivos
 com menor tamanho, a transferência servidor para cliente é terminada mais rápido, logo a experiência
 para o usuário torna-se mais agradável, já que as páginas carregam mais rápido.
 
@@ -46,6 +47,7 @@ Para a tabela abaixo cada tamanho em kB e cada tempo em ms se refere a média si
 encontrados na aba "rede" das ferramentas de desenvolvedor do navegador Firefox em cinco 
 carregamentos da página. A opção de desabilitar cache foi usada.
 
+Legenda para a tabela abaixo
 \begin{itemize}
 \item \textbf{A:} Tamanho do arquivo sem minification
 \item \textbf{B:} Tempo de carregamento deste arquivo
@@ -55,7 +57,6 @@ carregamentos da página. A opção de desabilitar cache foi usada.
 
 O "Tamanho" refere-se a quantidade de bytes transferidos (com compactação gzip) e não ao 
 tamanho do arquivo após a compactação já que isto é feito no lado do usuário pelo navegador.
-
 
 \begin{longtable}{|p{4cm}|p{2.15cm}|p{2.15cm}|p{2.15cm}|p{2.15cm}|}
     \caption{Com e Sem minification} \\
