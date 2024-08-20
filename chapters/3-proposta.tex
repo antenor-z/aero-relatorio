@@ -8,9 +8,25 @@ para jogadores de simuladores de voo que desejam que a simulação seja parecida
 com o real. Nas páginas do sistema conterá um aviso de que o sistema \textbf{não
 deve ser usado para um voo real}.
 
-Dito isto, o sistema possui backend escrito na linguagem Python fazendo uso
-da biblioteca Flask. A renderização de página é server-side, usando a funcionalidades
-de templates do Flask junto com a biblioteca Jinja2.
+Dito isto, o sistema possui backend escrito na linguagem Python, fazendo uso da 
+framework FastAPI. Até a entrega do Projeto I, o backend era feito com Flask. 
+A escolha foi feita pela minha familiaridade com a framework. Porém, depois, 
+descobri a framework FastAPI no meu trabalho. Normalmente, ela não é usada para fullstack, mas 
+sim para fazer APIs REST, que retornam JSON na resposta de uma requisição. Um 
+frontend feito em alguma framework de JavaScript faria a requisição e atualizaria a página.
+
+Contudo, é possível retornar qualquer tipo de dado no FastAPI, inclusive páginas HTML. 
+Como prefiro fazer a renderização de páginas server-side, continuei usando a funcionalidade 
+de templates da biblioteca Jinja2.
+
+A substituição da framework deu-se pelos seguintes motivos:
+
+\begin{itemize}
+\item Projeto mais maduro, continuamente mantido.
+\item Documentação bem mais detalhada do que a do Flask, com vários tutoriais sobre assuntos comumente usados, como autenticação e sessão de usuário.
+\item Servidor embutido (Uvicorn) extremamente fácil de configurar e suficiente para produção \cite{fast-api-prod}.
+\item Assíncrono, permitindo o uso junto com bibliotecas que utilizam asyncio.
+\end{itemize}
 
 No segundo semestre de 2023 comecei a fazer um projeto para uso próprio.
 O código está disponível em \url{https://github.com/antenor-z/aero}. Atualmente o

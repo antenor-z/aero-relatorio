@@ -35,36 +35,32 @@ Tanto os bancos como o servidor Gunicorn usam este método para terem acesso às
 Este banco de dados relacional guarda toda a informação mais ou menos fixa sobre os aeródromos,
 conforme explicado no capítulo de modelo de dados.
 
+\section{FastAPI}
+
+O site foi construído com a framework FastAPI tanto para desenvolvimento quanto para produção, 
+utilizando o servidor embutido do FastAPI, o Uvicorn.
+
+Diferentemente do Flask, em que era necessário usar um servidor externo (o Gunicorn no caso 
+deste projeto), o servidor do FastAPI (Uvicorn \cite{uvicorn}), com a configuração padrão, é 
+suficiente para produção. Usando o comando \texttt{uvicorn server:app --host 0.0.0.0 --port 5000}, 
+o servidor é iniciado em modo de produção.
+
 \subsection{Proxy NGINX}
-Faz o HTTPS funcionar, dá suporte ao HTTP/2 e ao header HTTP keep-alive. O Gunicorn só tem suporte
-ao primeiro. De qualquer forma, a documentação do Gunicorn não recomenda que ele esteja diretamente
-ligado à Internet \cite{nginx-gunicorn}. Já que tenho outros projetos na mesma máquina, uso subdomínios.
-Na configuração do NGINX, o server block com hostname aero.a4barros.com é redirecionado para 
-o endereço interno "https://aero:5000".
-
-\section{Flask/Gunicorn}
-
-Já que o Gunicorn é o serviço principal: o servidor onde o backend implementado em Flask roda,
-fiz um Dockerfile próprio iniciando a partir de uma imagem do Alpine, devido a ser lightweight.
-O Python e as dependências do projeto são instalados automaticamente pelo Dockerfile e, por
-fim, o arquivo de entrada \texttt{server.py} é executado usando o servidor Gunicorn. As configurações
-dele ficam no arquivo \texttt{gunicorn\_config.py} e apenas configura a porta para 5000 e usa três workers.
-
-A documentação do Gunicorn informa a seguinte fórmula para determinar a quantidade de workers. \cite{number-work}
-
-\begin{equation} 
-    \begin{split}
-        N_{worker} = 2 * N_{cores} + 1 \\
-        N_{worker} = 2 * 1 + 1 = 3 
-    \end{split}
-\end{equation}
+O NGINX faz o HTTPS funcionar, dá suporte ao HTTP/2 e ao cabeçalho HTTP keep-alive. Quando
+utilizava o Gunicorn, ele só tinha suporte ao primeiro, e a documentação do Gunicorn não
+recomendava que ele estivesse diretamente ligado à Internet \cite{nginx-gunicorn}. O Uvicorn,
+no momento em que este texto foi escrito, não suporta HTTP/2, mas suporta o keep-alive. No
+entanto, como tenho outros projetos na mesma máquina, utilizo subdomínios. Todos os subdomínios
+resolvem para a mesmo IP/máquina via "A RECORD", mas na configuração
+do NGINX, o bloco de servidor com o hostname aero.a4barros.com é redirecionado para o
+endereço interno "http://aero:5000".
 
 \section{Produção}
 O site se encontra em produção no endereço https://aero.a4barros.com. Ele está hospedado em uma VPS
-com as seguintes características:
+da Oracle Cloud Infrastructure com as seguintes características de hardware:
 
 \begin{itemize}
-    \item \textbf{CPU:} AMD EPYC 7713 (1 core disponível) @ 2GHz
+    \item \textbf{CPU:} AMD EPYC 7551 (2 cores) @ 1.996GHz
     \item \textbf{RAM:} 1GB
     \item \textbf{Armazenamento:} 25GB
     \item \textbf{SO:} Ubuntu 22.04.4 LTS
