@@ -444,3 +444,43 @@ está caindo em desuso.
         \\ \hline
 
 \end{longtable}
+
+\section{Adicionado no Projeto II}
+
+A tabela a seguir foi adicionada na segunda parte do Projeto. Ela serve para a autenticação
+de usuário com senha e TOTP bem com gerenciar as permissões de cada usuário. 
+
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{Usuário} \\
+    \hline
+    \textbf{Nome} & \textbf{Descrição} & \textbf{Tipo} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome} & \textbf{Descrição} & \textbf{Tipo} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+
+    Name (PK) & Nome do usuário. Usado no login. & VARCHAR(30) \\ \hline
+
+    PasswordHash & Hash com salt da senha do usuário. A biblioteca bcrypt é usada
+    para criação do hash e autenticação. & VARCHAR(60) \\ \hline
+
+    TwoFactorKey & Chave privada para geração de código temporário de 6 dígitos
+    comparado com o código digitado pelo usuário no momento do login. Pode ser nulo,
+    caso não tenha sido cadastrada a autenticação de dois fatores, então essa
+    verificação não é feita. & VARCHAR(32) \\ \hline
+
+    CanEditAirportsList & Lista separada por vírgulas dos ICAOs dos aeroportos que
+    este usuário tem permissão de alterar. Entenda "alterar" por criar, editar e
+    apagar informações internas de um aeroporto: pistas, frequências de rádios e
+    de navegação. & VARCHAR(32) \\ \hline
+
+    IsSuper & Indica se o usuário pode criar e apagar aeroportos. Se verdadeiro,
+    este usuário pode editar qualquer aeroporto, ignorando a lista CanEditAirportsList. 
+    & Boolean \\ \hline
+\end{longtable}
