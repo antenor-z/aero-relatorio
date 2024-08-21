@@ -1,140 +1,97 @@
 \chapter{Decodificação do TAF}
 
-O METAR é um protocolo de transmissão de dados meteorológicos de um aeroporto ou aeródromo. Não se trata de 
-uma previsão do tempo, mas sim de uma visualização atual. O METAR é formado por itens separados por espaço. 
-Cada item corresponde a uma unidade mínima de informação meteorológica. Com os dados de sensores instalados 
-no aeródromo \cite{metar-weather-gov}, a cada hora é publicado um novo METAR que é válido para aquela hora. 
-Em casos excepcionais, quando as condições de tempo estiverem mudando repentinamente, um METAR pode ser atualizado 
-a cada meia hora \cite{METAR-speci}. Nas próximas seções será apresentado um exemplo de METAR e sua 
-decodificação bem como uma descrição e complexidade temporal do algorítmo.
+O TAF (Terminal Aerodrome Forecast) é uma informação meteorológica que fornece
+previsões para aeroportos, sendo uma ferramenta crucial para a aviação. Diferente
+do METAR, que relata as condições meteorológicas atuais, o TAF projeta o que se
+espera para as próximas horas e/ou dias. Ele é composto por diversas seções,
+cada uma contendo informações específicas sobre as condições previstas para o
+período. Uma diferença em relação ao METAR é que o TAF se entende por várias linhas.
+A partir da segunda linhas temos os grupos temporais. Tudo que está em uma linha
+são condições que irão ocorrer dentro de uma faixa de tempo. 
+
+Neste capítulo, será apresentado um exemplo de TAF, sua decodificação,
+e uma análise da complexidade temporal do algoritmo utilizado.
 
 \section{Exemplo}
-O METAR no aeroporto de Fortaleza \cite{METAR-sbfz}, no dia 17 de abril de 2024 às 10:54 foi
-\texttt{171300Z 15010KT 9999 BKN019 SCT025 FEW030TCU BKN100 30/25 Q1011}.
-
-"SBFZ" se refere ao código ICAO (International Civil Aviation Organization) do aeroporto, não confundir 
-com o código IATA (International Air Transport Association) que é formado por três letras. O aeroporto Pinto 
-Martins possui o código IATA FOR, o Santos Dumont SDU e o Galeão GIG. O público geral parece conhecer mais este 
-código, mas na aviação costuma-se usar mais o código ICAO, pois \textit{todos} os aeródromos possuem um, 
-enquanto o IATA só é presente em aeroportos onde há processamento de bagagem \cite{iata-codes} \cite{icao-codes}.
-
-O ICAO é formado por quatro letras em que a primeira é o prefixo da região. A América do Sul possui o prefixo "S", 
-o Brasil possui o prefixo "SB", por isso que os aeroporto de Fortaleza, Santos Dumont e Galeão possuem os códigos 
-SBFZ, SBRJ e SBGL, respectivamente. Países com muitos aeroportos, apenas uma letra, 
-logo as três últimas letras ficam livres, podendo assim ter mais códigos para uso.
-
-\texttt{171300Z} significa que este METAR se refere ao dia 17 às 13 horas e zero minuto zulu. Horário zulu é 
-simplesmente o fuso horário da longitude de zero grau, chamado de hora UTC ou Coordinated Universal Time \cite{UTC}. 
-Para que não haja confusão com os horários, a aviação internacionalmente usa o horário UTC. Este METAR será 
-válido até às 13:59, quando será substituído pelo METAR iniciando com "SBFZ 171400Z".
-
-Note que a seguinte expressão regular com três grupos de captura consegue extrair o dia, a hora e o minuto:
+O TAF emitido para o aeroporto de Tancredo Neves (SBCF) no dia 21 de abril de 2024 às 07:00Z foi:
 
 \begin{verbatim}
-([0-9]{2})([0-9]{2})([0-9]{2})Z
+TAF SBCF 210700Z 2112/2212 00000KT 7000 NSC TX31/2119Z TN15/2209Z 
+  BECMG 2112/2114 11005KT 
+  PROB30 2117/2121 04005KT 
+  BECMG 2201/2203 00000KT RMK PGF
 \end{verbatim}
 
-Com o METAR supracitado, os grupos de captura serão:
+Vamos decodificar este TAF passo a passo:
 
-\begin{itemize}
-\item Grupo 1 (dia): 17
-\item Grupo 2 (hora): 13
-\item Grupo 3 (minuto): 00
-\end{itemize}
+Data e Hora de Emissão:
+\texttt{210905Z} indica que o TAF foi emitido no dia 21 às 09:05Z.
 
-\texttt{15010KT} se refere à velocidade e direção do vento. Os três primeiros algarismos informam a direção, 
-em graus, de onde o vento sopra, e os últimos dois algarismos informam a velocidade do vento em nós (milhas náuticas por hora). 
-Neste caso, o vento vem da direção 150 graus com velocidade de dez nós. Com a expressão abaixo extraímos essas duas informações:
+Período de Validade:
+\texttt{2112/2124} indica que o TAF é válido do dia 21 às 12:00Z até o dia 21 às 24:00Z.
 
-\begin{verbatim}
-([0-9]{3})([0-9]{2})KT
-\end{verbatim}
+Condições Iniciais:
+\texttt{34005KT 7000 SCT015} descreve as condições previstas para o início
+do período de validade. \texttt{34005KT} significa que o vento estará vindo
+da direção 340° com uma velocidade de 5 nós. \texttt{7000} indica visibilidade
+de 7 km, e \texttt{SCT015} significa que haverá nuvens dispersas a 1500 pés.
 
-A informação de vento pode também conter a letra G (gust) para rajadas e a letra V em um item separado para o 
-caso de haver variação de direção. Por exemplo, um METAR com os itens \texttt{10016G21KT 080V120} informa que 
-há rajadas de até 21 kt e a direção do vento pode variar de 80 a 120 graus. Existem outros aeroportos que podem 
-usar outras unidades para a velocidade do vento, mas no Brasil só é usado nós (kt). Para obter essas informações 
-usamos o regex \texttt{([0-9]{3}[0-9]{2}G{[0-9]{2}})} e \texttt{([0-9]{3})V([0-9]{3})}.
+Temperatura Mínima e Máxima:
+\texttt{TN21/2112Z TX25/2116Z} indica que a temperatura mínima prevista é de 21°C
+às 12:00Z do dia 21, e a máxima será de 25°C às 16:00Z do dia 21.
 
-\texttt{9999} significa visibilidade ilimitada (maior ou igual a 10 km). Se fosse 6000, a visibilidade seria de 
-6 km. Por ser sempre quatro algarismos, o regex \texttt{([0-9]{4})} consegue capturar essa informação.
+A partir de agora começam os grupos separados por linha que comentei na introdução deste
+capítulo.
 
-\texttt{30/25} Temperatura 30°C e ponto de orvalho 25°C. Caso a temperatura seja negativa, a letra M é adicionada 
-antes do número. M2/M5 significa temperatura -2°C e ponto de orvalho -5°C \cite{METAR-help}.
+Mudança Prevista (\texttt{BECMG}):
+\texttt{BECMG 2113/2115 9999 FEW015} indica que entre 13:00Z e 15:00Z do dia 21,
+a visibilidade aumentará para 10 km ou mais (\texttt{9999}), e haverá poucas nuvens
+a 1500 pés (\texttt{FEW015}).
 
-\texttt{Q1012} O altímetro do avião deve ser referenciado para 1012 hectopascal. Também pode ser usada a unidade 
-polegadas de mercúrio (mmHg), mas no Brasil esta não é usada no METAR.
+Nova Mudança Prevista:
+\texttt{BECMG 2116/2118 16010KT CAVOK} sugere que entre 16:00Z e 18:00Z do dia 21,
+o vento mudará para 160° com uma velocidade de 10 nós, e as condições se tornarão
+"CAVOK" (Ceiling and Visibility OK), indicando que a visibilidade e o teto de nuvens
+estão dentro dos limites favoráveis para operações de voo.
 
-\texttt{SCT025} Nuvens espalhadas (3/8 a 4/8 do céu com nuvens) em 2500 pés de altitude. 025 se refere ao nível 
-de voo (Flight Level), que é a altitude acima do nível médio do mar com divisão exata por 100.
-
-\texttt{FEW030TCU} Poucas nuvens (1/8 a 2/8 do céu com nuvens) em 3000 pés de altitude. O sufixo TCU significa 
-que há nuvens convectivas significativas \cite{decea-mil}.
-
-\texttt{BKN100} Nuvens broken (5/8 a 7/8 do céu com nuvens) em 10000 pés de altitude.
-
-Existe também o tipo OVC (overcast) que se refere a totalmente encoberto.
+Observação:
+\texttt{RMK PHD} adiciona uma observação, é algo específico dos TAFs brasileiros.
+O trigrama PHD representa a indentificação do previsor que gerou este TAF \cite{trigrama-taf}.
 
 \section{Algoritmo}
 
-O objetivo do módulo de decoder é dar uma explicação semelhante a esta para qualquer tipo de METAR de aeroportos 
-no Brasil. O módulo usa várias expressões regulares para decodificar uma grande quantidade de informações, porém 
-não é exaustivo; foi dada preferência a fenômenos que podem ocorrer no Brasil \cite{decea-mil}.
+O algoritmo para lidar com um TAF é semelhante ao utilizado para o METAR, porém adaptado
+para as especificidades das previsões temporais. O TAF é segmentado em diversas
+partes, cada uma sendo processada individualmente por expressões regulares para extrair as
+informações relevantes.
 
-O algoritmo deve separar a string do METAR pelo caractere de espaço. Para cada item separado, cada expressão regular 
-é testada. Caso uma combinação ocorra, os grupos de captura são interpolados em uma string que explica aquele item. 
+Para cada item do TAF, o algoritmo tenta associar a string correspondente a uma descrição
+detalhada utilizando expressões regulares pré-definidas. Por exemplo, a expressão
+\texttt{\d4/\d4\d4/\d4} é usada para identificar os períodos de tempo, enquanto a expressão
+\texttt{(\d{3})(\d{2})KT} é utilizada para extrair a direção e velocidade do vento.
 
-Semdo "\$1" o primeiro grupo de captura e "\$2" o segundo, se o item "27008G16KT" é encontrado pela expressão 
-\begin{verbatim}
-  ([0-9]\{3\})([0-9]\{2\})G([0-9]\{2\})KT
-\end{verbatim}
-
-o algorítmo interpola a frase:
-
-\begin{verbatim}
-  Vento \$1° com \$2 nós e rajadas de até \$3 nós
-\end{verbatim}
-
-com os grupos de captura do regex supracitado. Então será gerada uma tupla
-\texttt{(27008G16KT, Vento 270° com 8 nós e rajadas de até 16 nós)}. O retorno do 
-algorítmo será uma lista de tuplas que será enviada a ferramenta de templating
-de página Jinja.
+Assim como no METAR, as informações são organizadas em tuplas que contêm a string original
+e sua decodificação correspondente. Essas tuplas são então enviadas para um sistema de
+templating Jinja2, para a geração da página HTML.
 
 \section{Complexidade Temporal}
-Considerando que todas as expressões usadas são simples, isto é, não levam a backtracking, 
-a complexidade temporal para executar a função \texttt{re.findall()} do Python é
 
-$$ O_{findall}(m + n) $$
+A complexidade temporal da decodificação de um TAF segue um padrão similar ao do METAR.
+A função \texttt{re.findall()} é utilizada para identificar e extrair informações, e a
+complexidade temporal desta operação depende do número de caracteres da expressão regular
+(m) e da string do TAF a ser analisada (n).
+
+Considerando que as expressões regulares utilizadas no TAF também são simples, a complexidade
+temporal de decodificação de um TAF pode ser representada por:
+
+$$ O_{decode_TAF}(p * n)$$
+
+Onde:
 
 \begin{verbatim}
-m := quantidade de caracteres da expressão regex
-n := quantidade de caracteres da string a ser analisada
+p := Quantidade de itens do TAF.
+n := Quantidade de caracteres da string do TAF.
 \end{verbatim}
 
-Se temos que testar todas as expressões para cada item do METAR, a complexidade será
-
-$$ O_{decode}(p * q * (m + n)) $$
-
-\begin{verbatim}
-m := quantidade de caracteres da expressão regex
-n := quantidade de caracteres da string do METAR a ser analisado
-p := quantidade de itens do METAR
-q := quantidade de expressões regex no programa
-\end{verbatim}
-
-
-A maior expressão regex no decoder é 
-
-\[
-\texttt{([A-Z]\{3\})(\textbackslash d\{3\})(CB|TCU)*}
-\] 
-
-com 26 caracteres. Para efeitos práticos este é um valor muito pequeno então podemos assumir m constante.
-
-Sabemos que o número de expressões é 11, também um valor que pode ser assumindo contante, logo
-q é igual à 1, portanto.
-
-$$ O_{decode}(p * 1 * (1 + n)) $$
-$$ O_{decode}(p * n) $$
-
-Apenas as variáveis "p" e "n" dependem de valores externos. 
+Como no caso do METAR, as variáveis "p" e "n" são as que influenciam diretamente a
+complexidade do algoritmo.
