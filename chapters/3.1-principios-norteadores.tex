@@ -1,0 +1,37 @@
+\chapter{Principios norteadores}
+
+Para este projeto segui os seguintes princípios por ordem de prioridade.
+
+\begin {enumerate}
+\item Corretude da informação apesentada
+\item Rapidez de carregamento das páginas
+\item Facilidade de uso do sistema
+\end {enumerate}
+
+\section{Corretude da informação apesentada}
+Não podem haver erros na explicação do METAR, TAF e nas informações do aeródromo.
+
+\section{Rapidez de carregamento das páginas}
+Não são coletados externamente nenhum
+arquivo como .js, .css, .ttf, etc. Os arquivos estáticos são se encontram no servidor.
+A geração de página é feita no lado do servidor. O que
+precisa rodar no lado do cliente como pesquisa e tooltips são implementadas com JavaScript puro.
+
+Os plots com informações históricas são construídos assincronamente, os dados de METAR e TAF
+são coletados da API do Aviation Weather e inseridos no banco também assincronamente. então
+quando o usuário carrega a página estas informações já estão prontas para o envio.
+
+\section{Facilidade de uso do sistema}
+A diagramação das páginas e feita tendo em mente que um usuário que não possui um conhecimento
+avançado em aviação, mas deseja saber todas as informações de um aeródromo. Porém estas
+informações são separadas em três páginas para cada aeródromo para que não fique visualmente
+sobrecarregado.
+
+Por exemplo, para o aeroporto do Galeão no Rio de Janeiro, temos as paginas:
+
+\begin{itemize}
+\item https://aero.a4barros.com/info/SBGL: Informações de pista, frequências e METAR explicado
+\item https://aero.a4barros.com/taf/SBGL: TAF explicado
+\item https://aero.a4barros.com/info/SBGL/history: Plots com informações históricas
+\end{itemize}
+
