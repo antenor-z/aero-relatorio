@@ -129,7 +129,40 @@ linha.
         \\ \hline
 
         ValidOn (PK)
-        & Timestamp com o momento que este metar é válido. É construído a
+        & Timestamp com o momento que este METAR é válido. É construído a
+        partir do item do metar "ddhhmmZ" em que "dd" é o dia e "hhmm" é
+        a hora zulu (UTC). O mês e ano são o mês e ano atuais do sistema.
+        & DATETIME
+
+        \\ \hline
+\end{longtable}
+
+\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+    \caption{TAF} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição} & \textbf{Tipo}  \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Nome}       & \textbf{Descrição} & \textbf{Tipo}  \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+        ICAO (PK) (FK)
+        & Chave estrangeira para qual aeródromo este TAF se refere
+        & VARCHAR(4)
+        \\ \hline
+
+        TAF
+        & O TAF em si
+        & VARCHAR(100)
+        \\ \hline
+
+        ValidOn (PK)
+        & Timestamp com o momento que este TAF é válido. É construído a
         partir do item do metar "ddhhmmZ" em que "dd" é o dia e "hhmm" é
         a hora zulu (UTC). O mês e ano são o mês e ano atuais do sistema.
         & DATETIME
