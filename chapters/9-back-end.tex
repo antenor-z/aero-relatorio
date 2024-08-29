@@ -20,8 +20,66 @@ Exemplo do resultado do banco:
 
 \section{Rota: /info/\{ICAO\}}
 
-Retorna informações de um aeródromo com o ICAO especificado na URL.
-xxxxxxxxxxxxxxxxxxxxxxx
+Retorna informações de um aeródromo com o ICAO especificado na URL. São exibidos,
+além da explicação do METAR atual:
 
-\section{Rota: /wind/\{ICAO\}}
+\begin{itemize}
+    \item Pista
+        \begin {itemize}
+        \item Cabeceiras
+        \item Comprimento
+        \item Largura.
+        \end {itemize}
+    \item Frequências do aeródromo (nem todos os items a seguir poderão estar disponíveis)
+    \begin{itemize}
+        \item Torre
+        \item Solo
+        \item Operações
+        \item Rampa
+        \item Tráfego
+        \item ATIS
+    \end{itemize}
+    \item Frequências de navegação (nem todos os items a seguir poderão estar disponíveis)
+    \begin{itemize}
+        \item ILS
+            \begin{itemize}
+                \item Qual pista este ILS se refere
+                \item Frequência
+                \item Direção final de aproximação
+                \item Identificador
+            \end{itemize}
+        \item VOR
+            \begin{itemize}
+                \item Frequência
+                \item Identificador
+            \end{itemize}
+    \end{itemize}
+
+\end{itemize}
+
+\section{Rota: /history/\{ICAO\}}
+Para um aeródromo retorna informações dos dez últimos METARs em três
+gráficos com o eixo horizonal sendo o tempo.
+
+\begin{itemize}
+    \item Gráfico 1
+    \begin{itemize}
+        \item Temperature (graus Célsius)
+        \item Ponto de orvalho (graus Célsius)
+    \end{itemize}
+    \item Gráfico 2
+    \begin{itemize}
+        \item Velocidade do vento (milhas náuticas por hora)
+        \item Direção do vento (graus)
+    \end{itemize}
+    \item Gráfico 3
+    \begin{itemize}
+        \item Ajuste altímetro (hectopascal)
+        \item Visibilidade (metro)
+    \end{itemize}
+\end{itemize}
+
+\section{Rota: /taf/\{ICAO\}}
+Retorna o próximo TAF válido para este aeródromo com a explicação de cada item.
+
 
