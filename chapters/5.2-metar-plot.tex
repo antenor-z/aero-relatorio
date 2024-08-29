@@ -1,40 +1,48 @@
 \chapter{Plotagem do METAR Histórico}
 
-Conseguir ter as informações históricas pode ajudar o aeronauta a ter uma ideia
-das condições futuras. Este módulo exibe um gráfico de linha com informações dos
-seguintes items:
+Para o aeronauta, é fundamental acessar informações meteorológicas históricas, pois essas informações auxiliam 
+na previsão de condições futuras. A meteorologia tende a seguir padrões; por exemplo, uma queda na pressão 
+atmosférica geralmente indica que as temperaturas podem diminuir posteriormente. Assim, visualizar essas 
+informações em gráficos facilita a análise e a tomada de decisões.
 
-\begin{enumerate}
-	\item Temperatura
-	\item Ponto de orvalho
-	\item Velocidade do vento
-	\item Direção do vento
-	\item Ajuste Altímetro
-	\item Visibilidade
-\end{enumerate}
+Os dados meteorológicos (METARs) coletados de um aeroporto são armazenados em uma tabela dedicada, possibilitando
+o armazenamento de múltiplos registros para um único aeródromo. A partir dessa tabela, é realizada uma consulta 
+(\textit{query}) que obtém os 10 últimos registros de METAR de cada aeródromo. Desse conjunto de dados, são extraídas 
+seis informações: temperatura, ponto de orvalho, velocidade do vento, direção do vento, ajuste altímetro e visibilidade.
 
-São mostrados três gráficos com as informações agrupadas de dois em dois como
-mostra a figura abaixo.
+Os resultados da consulta são transformados em uma lista de dicionários, onde cada dicionário contém essas seis 
+informações.
+
+\begin{verbatim}
+    metar_data = [
+        {
+            "temperature": 20 ,
+            "dew_point": 15,
+            "wind_speed": 12,
+            "wind_direction": 120,
+            "qnh": 1030,
+            "visibility": 9999,
+        },
+        ...
+    ]
+\end{verbatim}
+
+
+Essa lista é então passada para a biblioteca \texttt{matplotlib}, que gera três gráficos em um estilo 
+personalizado para combinar com o tema escuro da página. Cada gráfico combina duas informações. 
+Os gráficos são salvos como arquivos SVG na pasta de arquivos estáticos.
+
+As imagens de plot seguem um padrão, o código ICAO do aeroporto e os dados específicos são utilizados na geração 
+do nome do arquivo SVG ("icao-dado1-dado2.svg"). Ao carregar a página, as imagens 
+são exibidas diretamente por meio de tags \texttt{<img src="">}, que apontam para os gráficos salvos na pasta estática.
+
+Como na consulta do METAR e TAF, estas tarefas são realizadas assincronamente nos minutos 0, 15, 30 e 45 (vide capítulo
+de arquitetura). Desta forma quando o usuário carrega a página as plotagens já encontram-se prontas.
 
 \begin{figure}[ht]
     \begin{center}
-    \includesvg[width=\linewidth]{img/plots.png}
-    \caption{Plots para o aeroporto do Galeão}
-    \label{fig:plot-sbgl}
+    \includegraphics[width=400pt]{img/plots-SBRF.png}
+    \caption{Gráficos do aeroporto Aeroporto Internacional do Recife do dia 28 de agosto de 2024}
+    \label{fig:sbrf-plot}
     \end{center}
 \end{figure}
-
-
-\section{Funcionamento}
-\subsection{Coleta dos METARs históricos}
-Usando a ORM uma query é executada filtrando um aerodromo na tabela METAR coletando
-os dez últimos.
-
-\subsection{Conversão para dicionário}
-
-\subsection{Criação dos gráficos}
-A biblioteca matplotlib recebe a lista de informações para um aeroporto
-
-\subsection{Exibição}
-Na página \texttt{https://aero.a4barros.com/history\{ICAO\}} as plotagens SVG
-são exibidas com uma simples tag HTML <img>.
