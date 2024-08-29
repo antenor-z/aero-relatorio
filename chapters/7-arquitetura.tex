@@ -37,13 +37,9 @@ conforme explicado no capítulo de modelo de dados.
 
 \section{FastAPI}
 
-O site foi construído com a framework FastAPI tanto para desenvolvimento quanto para produção, 
-utilizando o servidor embutido do FastAPI, o Uvicorn.
-
-Diferentemente do Flask, em que era necessário usar um servidor externo (o Gunicorn no caso 
-deste projeto), o servidor do FastAPI (Uvicorn \cite{uvicorn}), com a configuração padrão, é 
-suficiente para produção. Usando o comando \texttt{uvicorn server:app --host 0.0.0.0 --port 5000}, 
-o servidor é iniciado em modo de produção.
+O site foi construído com a framework FastAPI. Tanto para desenvolvimento quanto para produção, 
+é utilizado o servidor embutido do FastAPI, o Uvicorn. A configuração padrão funcionou bem ao
+longo do tempo.
 
 \subsection{Proxy NGINX}
 O NGINX faz o HTTPS funcionar, dá suporte ao HTTP/2 e ao cabeçalho HTTP keep-alive. Quando
