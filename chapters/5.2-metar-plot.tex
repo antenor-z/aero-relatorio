@@ -1,3 +1,40 @@
 \chapter{Plotagem do METAR Histórico}
 
-...
+Conseguir ter as informações históricas pode ajudar o aeronauta a ter uma ideia
+das condições futuras. Este módulo exibe um gráfico de linha com informações dos
+seguintes items:
+
+\begin{enumerate}
+	\item Temperatura
+	\item Ponto de orvalho
+	\item Velocidade do vento
+	\item Direção do vento
+	\item Ajuste Altímetro
+	\item Visibilidade
+\end{enumerate}
+
+São mostrados três gráficos com as informações agrupadas de dois em dois como
+mostra a figura abaixo.
+
+\begin{figure}[ht]
+    \begin{center}
+    \includesvg[width=\linewidth]{img/plots.png}
+    \caption{Plots para o aeroporto do Galeão}
+    \label{fig:plot-sbgl}
+    \end{center}
+\end{figure}
+
+
+\section{Funcionamento}
+\subsection{Coleta dos METARs históricos}
+Usando a ORM uma query é executada filtrando um aerodromo na tabela METAR coletando
+os dez últimos.
+
+\subsection{Conversão para dicionário}
+
+\subsection{Criação dos gráficos}
+A biblioteca matplotlib recebe a lista de informações para um aeroporto
+
+\subsection{Exibição}
+Na página \texttt{https://aero.a4barros.com/history\{ICAO\}} as plotagens SVG
+são exibidas com uma simples tag HTML <img>.
