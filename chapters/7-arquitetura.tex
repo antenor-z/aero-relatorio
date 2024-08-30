@@ -51,6 +51,15 @@ resolvem para a mesmo IP/máquina via "A RECORD", mas na configuração
 do NGINX, o bloco de servidor com o hostname aero.a4barros.com é redirecionado para o
 endereço interno "http://aero:5000".
 
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=400pt]{img/arquit.png}
+    \caption{Diagrama do funcionamento de vários subdomínios resolvendo no mesmo IP. Com o NGINX funcionando como proxy.}
+    \label{fig:sbrf-plot}
+    \end{center}
+\end{figure}
+
 \section{Produção}
 O site se encontra em produção no endereço https://aero.a4barros.com. Ele está hospedado em uma VPS
 da Oracle Cloud Infrastructure com as seguintes características de hardware:
