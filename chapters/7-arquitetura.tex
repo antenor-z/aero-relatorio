@@ -1,7 +1,7 @@
 \chapter{Arquitetura}
 
 A arquitetura foi pensada para ser implementada com o Docker e Docker Compose. Cada
-programa que precisa ser executado é rodado em um serviço separado. Exceto o Gunicorn,
+programa que precisa ser executado é rodado em um serviço separado. Exceto o Uvicorn,
 todos os outros serviços usam imagens prontas do Docker Hub, o que oferece mais segurança
 com as atualizações constantes.
 
@@ -14,9 +14,9 @@ com as atualizações constantes.
 \end{figure}
 
 \section{Docker Network}
-A porta 5000 do Gunicorn não estará disponível para todos os serviços. Por segurança, é usada a função de
+A porta 5000 do Uvicorn não estará disponível para todos os serviços. Por segurança, é usada a função de
 "network". Observe no diagrama que a proxy NGINX compartilha com o Gunicorn a rede "net", para o NGINX,
-o Gunicorn não pode ser acessado por \texttt{localhost:5000}, e sim por \texttt{http://aero:5000}, "aero"
+o Uvicorn não pode ser acessado por \texttt{localhost:5000}, e sim por \texttt{http://aero:5000}, "aero"
 sendo o nome do serviço no Docker Compose.
 
 
@@ -32,8 +32,8 @@ Tanto os bancos como o servidor Gunicorn usam este método para terem acesso às
 \section{Serviços}
 
 \subsection{MariaDB}
-Este banco de dados relacional guarda toda a informação mais ou menos fixa sobre os aeródromos,
-conforme explicado no capítulo de modelo de dados.
+Este banco de dados relacional guarda toda a informação fixa sobre os aeródromos e as dinâmicas
+como o METAR e TAF conforme explicado no capítulo de modelo de dados.
 
 \section{FastAPI}
 
@@ -96,14 +96,14 @@ Existem operações que ocorrem quando o usuário acessa uma página e outras qu
 ocorrem de tempos em tempos independetemente dos acessos (assíncronas). Fiz
 esta separação para garantir que as APIs externas (METAR e TAF) sejam acessadas 
 apenas quando
-necessário sem que uma quantidade grande de acessos sobrecarregue as APIs.
+necessário sem que uma quantidade grande de acessos ao meu site sobrecarregue as estas APIs.
 
 O desenho dos plots com dados histórico é uma operação que demora aproximadamente
 3 segundos por aeródromo, então faço esta operação em background e deixo o 
 arquivo .svg já pronto em uma pasta específica.
 
-A seguir esta descrito quando ocorre estas operações assíncronas. Note que elas são
-feita com mais frequencia que o necessário para ter certeza que uma informação não
+A seguir esta descrito quando ocorre estas operações assíncronas. Note que são
+feita com mais frequencia que o necessário para se ter certeza que uma informação não
 ficará muito tempo desatualizada caso ocorra algum atraso para atualização do METAR/TAF.
 
 \begin{longtable}{|p{3cm}|p{4cm}|p{4cm}|}
@@ -123,14 +123,9 @@ ficará muito tempo desatualizada caso ocorra algum atraso para atualização do
         update\_metars
         & Nos minutos 0, 15, 30 e 45
         & Normalmente um novo METAR é disponibilizado em cada hora, mas é possível ter um METAR a cada meia hora
-        ou até menos. Para cada ICAO presente na tabela Aerodrome cria um novo registro na tabela METAR
-        com o novo METAR obtido, caso este seja mais novo que o último presente no banco (é
+        ou até menos. Para cada ICAO presente na tabela Aerodrome, cria-se um novo registro na tabela METAR
+        com o novo METAR obtido caso este seja mais novo que o último presente no banco (é
         verificada a coluna updatedOn).
-        \\ \hline
-        
-        update\_images
-        & Nos minutos 0, 15, 30 e 45
-        & Criação dos plots. Obviamente precisa ter a mesma frequência da atualização de METAR.
         \\ \hline
 
         update\_tafs
@@ -138,6 +133,12 @@ ficará muito tempo desatualizada caso ocorra algum atraso para atualização do
         & O mesmo só que para os TAFs. Os TAFs são atualizados com menos frequência que os METARs, Normalmente nos
         horários 00:00, 06:00, 12:00 e 18:00 UTC.
         \\ \hline
+
+        update\_images
+        & Nos minutos 0, 15, 30 e 45
+        & Criação dos plots. Obviamente precisa ter a mesma frequência da atualização de METAR.
+        \\ \hline
+
 \end{longtable}
 
 \section{Diagrama de sequência}
@@ -155,10 +156,10 @@ ficará muito tempo desatualizada caso ocorra algum atraso para atualização do
 ou "/history/\{icao\}"
 \item Um servidor NGINX funcionando como proxy realiza o limite de requisições por segundo
 e bloqueia user-agents que aparentem serem robôs. Caso a requisição passe pelo filtro, é
-realizado um proxy-pass para o servidor Gunicorn.
+realizado um proxy-pass psara o servidor Uvicorn.
 \item Para a rota raiz, é feito um SELECT no banco para pegar informações de todos os
-aeroportos. Na rota "/info/\{icao\}", é feito um SELECT-WHERE na tabela METAR,
-na rota "/taf/\{icao\}" é feito o mesmo, mas na tabela TAF. Para a rota "/history/\{icao\}"
+aeroportos. Na rota "/info/\{icao\}", é feito um SELECT-WHERE na tabela METAR, ILS, Communication, Runway...
+Na rota "/taf/\{icao\}" é feito o mesmo, mas na tabela TAF. Para a rota "/history/\{icao\}"
 não há acesso ao banco.
 A ORM é usada para isto, portanto os comandos SQL não aparecem diretamente no código.
 \item O banco de dados responde à requisição.
@@ -167,7 +168,7 @@ A ORM é usada para isto, portanto os comandos SQL não aparecem diretamente no 
 \item O usuário recebe esta página.
 \end{enumerate}
 
-Para atualizar os METARs e TAFs os seguintes passos acontecem.
+No momento de atualizar os METARs e TAFs os seguintes passos acontecem.
 
 \begin{enumerate}
 \item É feita uma requisição para a API do Aviation Weather pedindo o METAR para os aeroportos
@@ -180,6 +181,6 @@ O mesmo é feito com outra rota desta API que responde com os TAFs.
 Para gerar as plotagens com informações históricas os seguintes passos acontecem.
 \begin{enumerate}
     \item É feito um query para o banco pedir os 10 últimos METARs de cada aeródromo.
-    \item O banco responde. A biblioteca matplotlib é usada para criar os plots que são salvo como svgs 
+    \item O banco responde. A biblioteca matplotlib é usada para criar os plots que são salvo como SVGs 
     no path /static/plots.
 \end{enumerate}

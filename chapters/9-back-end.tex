@@ -1,6 +1,6 @@
 \chapter{Rotas do back-end}
 
-A seguir são listadas e explicadas todas as rotas do backend.
+A seguir são listadas, explicadas e mostrados exemplo de resultados de todas as rotas do backend.
 
 \section{Rota raiz}
 
@@ -9,16 +9,32 @@ Internamente, por meio do ORM, é feita a seleção dos campos \texttt{Aerodrome
 \texttt{ICAO} e \texttt{City} e o resultado é posto em uma lista de tuplas que é 
 enviada para o template.
 
-Exemplo do resultado do banco:
+Exemplo do resultado enviado à ferramenta de template:
+\begin{smaller}
 \begin{verbatim}
-[
-    ('Presidente Juscelino Kubitschek', 'SBBR', 'Brasília'), 
-    ('Tancredo Neves', 'SBCF', 'Belo Horizonte'), 
-    ('Afonso Pena', 'SBCT', 'Curitiba'), 
-    ('Pinto Martins', 'SBFZ', 'Fortaleza'), 
-    ...
+{
+  "airports": [
+  [
+    "Presidente Juscelino Kubitschek",
+    "SBBR",
+    "Bras\u00edlia"
+  ],
+  [
+    "Tancredo Neves",
+    "SBCF",
+    "Belo Horizonte"
+  ],
+  [
+    "Afonso Pena",
+    "SBCT",
+    "Curitiba"
+  ],
+  ...
 ]
+}
 \end{verbatim}
+\end{smaller}
+
 
 \section{Rota: /info/\{ICAO\}}
 
@@ -57,6 +73,89 @@ além da explicação do METAR atual:
             \end{itemize}
     \end{itemize}
 
+Exemplo do resultado enviado à ferramenta de template para o aeroporto do Galeão
+\begin{smaller}
+\begin{verbatim}
+{
+    "info":{
+        "AerodromeName":"Antônio Carlos Jobim",
+        "Latitude":-22.806812,
+        "Longitude":-43.236409,
+        "runways":[
+            {
+                "Head1":"10",
+                "Head2":"28",
+                "RunwayLength":4000,
+                "RunwayWidth":45,
+                "PavementCode":"ASP"
+            },
+            {
+                "Head1":"15",
+                "Head2":"33",
+                "RunwayLength":3180,
+                "RunwayWidth":47,
+                "PavementCode":"ASP"
+            }
+        ],
+        "ils":[
+            {
+                "Ident":"ITB",
+                "RunwayHead":"10",
+                "Frequency":1093,
+                "Category":"II",
+                "CRS":97,
+                "Minimum":100
+            },
+            {
+                "Ident":"IJB",
+                "RunwayHead":"15",
+                "Frequency":1105,
+                "Category":"I",
+                "CRS":149,
+                "Minimum":217
+            },
+            ...
+        ],
+        "vor":[
+            {
+                "Ident":"CXI",
+                "Frequency":1123
+            },
+            {
+                "Ident":"PCX",
+                "Frequency":1146
+            }
+        ],
+        "communication":[
+            {
+                "Frequency":118000,
+                "CommType":"Torre"
+            },
+            ...
+        ],
+        "City":["Rio de Janeiro",
+        ]
+    },
+    "icao":"SBGL",
+    "metar":"312000Z 10005KT 9000 NSC 24/18 Q1019",
+    "decoded":[
+        ["312000Z",
+        "METAR válido para dia 31 as 20:00 (UTC)"],
+        ["10005KT",
+        "Vento proa <b>100</b>° com velocidade <b>05</b> nós (kt)."],
+        ["9000",
+        "Visibilidade 9000 metros."],
+        ["NSC",
+        "No Significant Cloud, podem haver algumas nuvens, mas nenhuma está abaixo de 5000 pés ou dentro de 10 quilômetros."],
+        ["24/18",
+        "Temperatura <b>24</b>°C e ponto de orvalho <b>18</b>°C."],
+        ["Q1019",
+        "O altímetro deve ser ajustado para <b>1019</b> hPa (30.09 inHg)"]
+    ],
+}
+\end{verbatim}
+\end{smaller}
+
 \end{itemize}
 
 \section{Rota: /history/\{ICAO\}}
@@ -83,5 +182,87 @@ gráficos com o eixo horizonal sendo o tempo.
 
 \section{Rota: /taf/\{ICAO\}}
 Retorna o próximo TAF válido para este aeródromo com a explicação de cada item.
+
+Exemplo do resultado enviado à ferramenta de template para o aeroporto do Galeão.
+
+\begin{smaller}
+\begin{verbatim}
+{
+   "icao":"SBGL",
+   "taf":"251600Z 2518/2624 23012KT 8000 BKN020 BKN030 TN16/2609Z TX20/2615Z \n  TEMPO 2518/2521 23012G25KT 5000 DZ BR BKN015 BKN020 \n  TEMPO 2521/2524 25010KT 4000 RA BR BKN010 BKN020 \n  TEMPO 2600/2612 22008KT 3100 RA BR BKN007 BKN015 \n  BECMG 2612/2614 26007KT 7000 BKN016 BKN023 \n  BECMG 2618/2620 32005KT BKN017 RMK PGA",
+   "decoded":[
+      ["251600Z",
+      "Disponibilizado em 16:00Z no dia 25"],
+      ["2518/2624",
+      "Válido do dia 25 as 18:00Z até dia 26 as 24:00Z"],
+      ["23012KT",
+      "Vento proa <b>230</b>° com velocidade <b>12</b> nós (kt)."],
+      ["8000",
+      "Visibilidade 8000 metros"],
+      ["BKN020",
+      "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> pés de altitude. "],
+      ["BKN030",
+      "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>3000</b> pés de altitude. "],
+      ["TN16/2609Z",
+      "A temperatura mínima é de 16°C prevista de ocorrer dia 26 as 09:00 (UTC)"],
+      ["TX20/2615Z",
+      "A temperatura máxima é de 20°C prevista de ocorrer dia 26 as 15:00 (UTC)"],
+      [
+         ["TEMPO 2518/2521",
+         "Condições temporárias previstas do dia 25 as 18:00 (UTC) até dia 25 as 21:00 (UTC)"],
+         ["23012G25KT",
+         "Vento proa 230° com velocidade 12 nós (kt) e <b>rajadas</b> de 25 nós."],
+         ["5000",
+         "Visibilidade 5000 metros"],
+         ["DZ",
+         "Chuvisco moderada."],
+         ["BR",
+         "Névoa úmida moderada."],
+         ["BKN015",
+         "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>1500</b> pés de altitude. "],
+         ["BKN020",
+         "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> pés de altitude. "]
+      ],
+      [
+         ["TEMPO 2521/2524",
+         "Condições temporárias previstas do dia 25 as 21:00 (UTC) até dia 25 as 24:00 (UTC)"],
+         ["25010KT",
+         "Vento proa <b>250</b>° com velocidade <b>10</b> nós (kt)."],
+         ["4000",
+         "Visibilidade 4000 metros"],
+         ["RA",
+         "Chuva moderada."],
+         ["BR",
+         "Névoa úmida moderada."],
+         ["BKN010",
+         "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>1000</b> pés de altitude. "],
+         ["BKN020",
+         "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> pés de altitude. "]
+      ],
+      ...
+   ]
+}
+\end{verbatim}
+\end{smaller}
+
+Perceba que os grupos TEMPO e BECMG são
+agrupados para que no front-end o usuário possa exibir ou ocultar cada grupo. Conforme mostram
+as imagens abaixo.
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=400pt]{img/BECMG-oculto.png}
+    \caption{Grupo BECMG oculto}
+    \label{fig:becmg-oculto}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=400pt]{img/BECMG-exibido.png}
+    \caption{Grupo BECMG exibido}
+    \label{fig:becmg-exibido}
+    \end{center}
+\end{figure}
 
 
