@@ -1,8 +1,12 @@
 \chapter{Front-end}
 
-Como falado no capítulo da arquitetura, a página é gerada server-side, então o que 
+Como falado no capítulo da arquitetura, a página é gerada no lado do servidor, então o que 
 é retornado para cada rota é um HTML já pronto. Acredito que, para o meu caso, é mais 
 performático fazer assim do que usar páginas com Javascript que fazem requisição para uma API REST.
+Além disso o desenvolvimento é mais rápido já que não é necessário codificar o front-end.
+Para um projeto individual isto tem funcionado bem, mas claro que, para um projeto com
+mais pessoas, seria melhor fazer uma API REST já teríamos um time para back-end e outro
+para front-end.
 
 De todo modo, no final da execução de uma rota, um dicionário Python é gerado, algo que 
 poderia ser facilmente convertido para um JSON usando a função \texttt{dumps()} da 
@@ -13,103 +17,26 @@ que podem ter qualquer tipo serializável, incluindo dicionários.
 
 Perceba que não há problema de acoplamento fazendo deste modo, pois não há código HTML sendo 
 escrito dentro do backend. Como já dito, o que é passado para o Jinja é algo equivalente a JSON.
+Transformar este backend em uma API REST não seria muito difícil.
 
 Um página template é um arquivo HTML com \textit{placeholders} que serão substituídos pelos 
 \textit{kwargs} de mesmo nome. O Jinja2 tem estruturas de repetição para que um código HTML 
-possa ser repetido usando valores da lista. E, no caso de dicionários, é fácil acessar 
+possa ser repetido usando valores da lista. E, no caso de dicionários e listas, é fácil acessar 
 os valores. Neste projeto, para exibir a lista de frequência, o seguinte código é usado.
-
-Note que é possível fazer operações e formatações simples no Jinja2. Já que a frequência 
-é armazenada no banco como um inteiro de ponto fixo (como dito no capítulo de modelo de dados), 
-foi criado o filtro "frequency3" para exibir o número corretamente. Um "filtro" no Jinja 
-é apenas uma função que recebe e retorna
-uma string. O filtro é "chamado" usando a sintaxe "\{\{variavel | funcao\}\}". Para os que tem
-experiência com Linux é parecido com a ideia do operador "pipe".
 
 \lstinputlisting[label=cod:jinja-comm,title={Template de comunicação com o Jinja},caption={Template de comunicação com o Jinja},language=HTML]{code/jinja-comm.html}
 
+É possível fazer operações e formatações simples no Jinja2. Já que a frequência 
+é armazenada no banco como um inteiro de ponto fixo (como dito no capítulo de modelo de dados), 
+foi criado o filtro "frequency3" para exibir o número corretamente. Um "filtro" no Jinja 
+é apenas uma função que recebe e retorna
+uma string. O filtro é chamado usando a sintaxe "\{\{variavel | funcao\}\}". Para os que tem
+experiência com Linux é parecido com a ideia do operador "pipe".
+
+
 Note que caso a variável "isAdmin" seja definida, um botão de alterar a frequência aparece. Este
-e outros botões de adição e edição são mostrados quando o login é feito para que o administrador
+e outros botões de adição e edição são mostrados quando existe uma seção de usuário aberta para que o administrador
 consiga editar um aeródromo.
 
 No código do projeto, na pasta 'templates', é possível ver todos os templates usados.
-
-\section{Minificação}
-
-Removendo os espaços e caracteres de nova linha é possível diminuir o tamanho dos arquivos enviados
-para o usuário. Após este processo, cada arquivo html, js etc fica com apenas uma linha, os menos linhas
-no caso dos css, obviamente não é fácil para um humano entender, mas o navegador consegue fazer o 
-parsing sem problemas. Isto é chamado de {\em minification} ou minificação. Com os arquivos
-com menor tamanho, a transferência servidor para cliente é terminada mais rápido, logo a experiência
-para o usuário torna-se mais agradável, já que as páginas carregam mais rápido.
-
-Para a tabela abaixo cada tamanho em kB e cada tempo em ms se refere a média simples dos valores 
-encontrados na aba "rede" das ferramentas de desenvolvedor do navegador Firefox em cinco 
-carregamentos da página. A opção de desabilitar cache foi usada.
-
-Legenda para a tabela abaixo
-\begin{itemize}
-\item \textbf{A:} Tamanho do arquivo sem minification
-\item \textbf{B:} Tempo de carregamento deste arquivo
-\item \textbf{C:} Tamanho do arquivo com minification
-\item \textbf{D:} Tempo de carregamento deste arquivo
-\end {itemize}
-
-O "Tamanho" refere-se a quantidade de bytes transferidos (com compactação gzip) e não ao 
-tamanho do arquivo após a compactação já que isto é feito no lado do usuário pelo navegador.
-
-\begin{longtable}{|p{4cm}|p{2.15cm}|p{2.15cm}|p{2.15cm}|p{2.15cm}|}
-    \caption{Com e Sem minification} \\
-    \hline
-    \textbf{Arquivo} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\ \hline
-    \endfirsthead
-    \multicolumn{5}{c}%
-    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
-    \hline
-    \textbf{Arquivo} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\ \hline
-    \endhead
-    \hline \multicolumn{5}{|r|}{{Continua na próxima página}} \\ \hline
-    \endfoot
-    \hline
-    \endlastfoot
-        SBGR
-        & 5,88 kB
-        & 130 ms
-        & 4,93 kB
-        & 57 ms
-        \\ \hline
-        style.css
-        & 3,45 kB
-        & 68 ms
-        & 2,49 kB
-        & 33 ms
-        \\ \hline
-        tooltip.css
-        & 960 B
-        & 67 ms
-        & 831 B
-        & 24 ms
-        \\ \hline
-        rwy.css
-        & 590 B
-        & 36 ms
-        & 518 B
-        & 38 ms
-        \\ \hline
-        \texttt{Total}
-        & 11.35 kB
-        & 363 ms
-        & 9.21 kB
-        & 196 ms
-        \\ \hline
-\end{longtable}
-
-Fazendo
-
-\[
-\text{x\%} = \frac{x_{\text{initial}} - x_{\text{final}}}{x_{\text{initial}}} \times 100\%
-\]
-
-É possível ver uma economia de 18,9\% na quantidade de informações enviadas. E um tempo de resposta
-46,0\% menor.
 

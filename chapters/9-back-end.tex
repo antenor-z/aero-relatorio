@@ -1,11 +1,13 @@
 \chapter{Rotas do back-end}
 
+A seguir são listadas e explicadas todas as rotas do backend.
+
 \section{Rota raiz}
 
 Página inicial, apresenta a lista de aeródromos para que o usuário escolha um. 
 Internamente, por meio do ORM, é feita a seleção dos campos \texttt{AerodromeName},
-\texttt{ICAO} e \texttt{City} e o resultado é posto em uma lista para cada um dos aeródromos e enviado
-para a ferramenta de template criar a página.
+\texttt{ICAO} e \texttt{City} e o resultado é posto em uma lista de tuplas que é 
+enviada para o template.
 
 Exemplo do resultado do banco:
 \begin{verbatim}
@@ -30,7 +32,7 @@ além da explicação do METAR atual:
         \item Comprimento
         \item Largura.
         \end {itemize}
-    \item Frequências do aeródromo (nem todos os items a seguir poderão estar disponíveis)
+    \item Frequências do aeródromo (nem todos os items a seguir poderão estar disponíveis). Visualmente cada item contém o tipo a que se refere e a frequência em si.
     \begin{itemize}
         \item Torre
         \item Solo
@@ -43,15 +45,15 @@ além da explicação do METAR atual:
     \begin{itemize}
         \item ILS
             \begin{itemize}
-                \item Qual pista este ILS se refere
+                \item Qual cabeceira este ILS se refere
                 \item Frequência
-                \item Direção final de aproximação
-                \item Identificador
+                \item Direção final de aproximação (CRS)
+                \item Identificador (um código de três letras que este ILS é identificado nas cartas aeronauticas)
             \end{itemize}
         \item VOR
             \begin{itemize}
                 \item Frequência
-                \item Identificador
+                \item Identificador (um código de três letras que este VOR é identificado nas cartas aeronauticas)
             \end{itemize}
     \end{itemize}
 
