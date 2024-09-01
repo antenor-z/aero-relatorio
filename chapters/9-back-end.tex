@@ -1,6 +1,6 @@
 \chapter{Rotas do back-end}
 
-A seguir são listadas, explicadas e mostrados exemplo de resultados de todas as rotas do backend.
+A seguir são listadas e explicadas todas as rotas do backend.
 
 \section{Rota raiz}
 
@@ -73,92 +73,6 @@ além da explicação do METAR atual:
                 \item Identificador (um código de três letras que este VOR é identificado nas cartas aeronauticas)
             \end{itemize}
     \end{itemize}
-
-Exemplo do resultado enviado à ferramenta de template para o aeroporto do Galeão
-\begin{smaller}
-\setstretch{0.8} 
-\begin{verbatim}
-{
-    "info":{
-        "AerodromeName":"Antônio Carlos Jobim",
-        "Latitude":-22.806812,
-        "Longitude":-43.236409,
-        "runways":[
-            {
-                "Head1":"10",
-                "Head2":"28",
-                "RunwayLength":4000,
-                "RunwayWidth":45,
-                "PavementCode":"ASP"
-            },
-            {
-                "Head1":"15",
-                "Head2":"33",
-                "RunwayLength":3180,
-                "RunwayWidth":47,
-                "PavementCode":"ASP"
-            }
-        ],
-        "ils":[
-            {
-                "Ident":"ITB",
-                "RunwayHead":"10",
-                "Frequency":1093,
-                "Category":"II",
-                "CRS":97,
-                "Minimum":100
-            },
-            {
-                "Ident":"IJB",
-                "RunwayHead":"15",
-                "Frequency":1105,
-                "Category":"I",
-                "CRS":149,
-                "Minimum":217
-            },
-            ...
-        ],
-        "vor":[
-            {
-                "Ident":"CXI",
-                "Frequency":1123
-            },
-            {
-                "Ident":"PCX",
-                "Frequency":1146
-            }
-        ],
-        "communication":[
-            {
-                "Frequency":118000,
-                "CommType":"Torre"
-            },
-            ...
-        ],
-        "City":["Rio de Janeiro",
-        ]
-    },
-    "icao":"SBGL",
-    "metar":"312000Z 10005KT 9000 NSC 24/18 Q1019",
-    "decoded":[
-        ["312000Z",
-        "METAR válido para dia 31 as 20:00 (UTC)"],
-        ["10005KT",
-        "Vento proa <b>100</b>° com velocidade <b>05</b> nós (kt)."],
-        ["9000",
-        "Visibilidade 9000 metros."],
-        ["NSC",
-        "No Significant Cloud, podem haver algumas nuvens, mas nenhuma está 
-        abaixo de 5000 pés ou dentro de 10 quilômetros."],
-        ["24/18",
-        "Temperatura <b>24</b>°C e ponto de orvalho <b>18</b>°C."],
-        ["Q1019",
-        "O altímetro deve ser ajustado para <b>1019</b> hPa (30.09 inHg)"]
-    ],
-}
-\end{verbatim}
-\end{smaller}
-
 \end{itemize}
 
 \section{Rota: /history/\{ICAO\}}

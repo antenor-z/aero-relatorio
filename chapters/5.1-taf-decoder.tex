@@ -13,50 +13,43 @@ Neste capítulo, será apresentado um exemplo de TAF, sua decodificação,
 e uma análise da complexidade temporal do algoritmo utilizado.
 
 \section{Exemplo}
-O TAF emitido para o aeroporto de Tancredo Neves (SBCF) no dia 21 de abril de 2024 às 07:00Z foi:
+O TAF emitido para o aeroporto de Pinto Martins (SBFZ) no dia 31 de agosto 
+de 2024 às 09:00Z foi:
 
 \begin{verbatim}
-TAF SBCF 210700Z 2112/2212 00000KT 7000 NSC TX31/2119Z TN15/2209Z 
-  BECMG 2112/2114 11005KT 
-  PROB30 2117/2121 04005KT 
-  BECMG 2201/2203 00000KT RMK PGF
+310900Z 3112/0112 15010KT CAVOK TX31/3115Z TN24/0108Z 
+  BECMG 3115/3117 11015KT FEW025 
+  BECMG 0104/0106 15010KT RMK PHD
 \end{verbatim}
 
 Vamos decodificar este TAF passo a passo:
+310900Z significa que este TAF foi gerado dia 31 às 09:00 ou seis da manhã em 
+horário local. 3112/0112 diz o período válido desta informação: do dia 31 às 
+12 horas até dia primeiro às 12 horas. 15010KT indica um vento de 10 nós vindo 
+da direção 150 graus. Não há nuvens e a visualidade é máxima é usado o acrônimo 
+CAVOK (Ceiling Altitude and Visibility OK) para indicar isto.
 
-Data e Hora de Emissão:
-\texttt{210905Z} indica que o TAF foi emitido no dia 21 às 09:05Z.
+A temperatura mínima será de 24 graus dia 01 às 08:00 (UTC) e a máxima será 
+de 31 graus no dia 31 as 15:00 (UTC).
 
-Período de Validade:
-\texttt{2112/2124} indica que o TAF é válido do dia 21 às 12:00Z até o dia 21 às 24:00Z.
+A seguir vem os grupos de previsão, cada um em uma linha.
 
-Condições Iniciais:
-\texttt{34005KT 7000 SCT015} descreve as condições previstas para o início
-do período de validade. \texttt{34005KT} significa que o vento estará vindo
-da direção 340° com uma velocidade de 5 nós. \texttt{7000} indica visibilidade
-de 7 km, e \texttt{SCT015} significa que haverá nuvens dispersas a 1500 pés.
+BECMG 3115/3117 11015KT FEW025: Dia 31 das 15 às 17 horas UTC terá vento de 
+15 nós com 110 graus. E haverá poucas nuvens na altitude no nível 025 ou 2500 pés.
 
-Temperatura Mínima e Máxima:
-\texttt{TN21/2112Z TX25/2116Z} indica que a temperatura mínima prevista é de 21°C
-às 12:00Z do dia 21, e a máxima será de 25°C às 16:00Z do dia 21.
+BECMG 0104/0106 15010KT RMK PHD : dia primeiro de setembro das 04:00 as 06:00, 
+o vento será de 10 nós com 150 graus.
 
-A partir de agora começam os grupos separados por linha que comentei na introdução deste
-capítulo.
+RMK adiciona uma observação (remark). O trigrama PHD representa a identificação 
+do previsor que
+gerou este TAF. É algo específico do Brasil [16].
 
-Mudança Prevista (\texttt{BECMG}):
-\texttt{BECMG 2113/2115 9999 FEW015} indica que entre 13:00Z e 15:00Z do dia 21,
-a visibilidade aumentará para 10 km ou mais (\texttt{9999}), e haverá poucas nuvens
-a 1500 pés (\texttt{FEW015}).
+É claro que há muitos outros itens possíveis dentro da especificação. PROB30 em 
+um grupo de previsão, por exemplo, informa que as informações nesta linha tem 
+30\% de chance de ocorrerem.
 
-Nova Mudança Prevista:
-\texttt{BECMG 2116/2118 16010KT CAVOK} sugere que entre 16:00Z e 18:00Z do dia 21,
-o vento mudará para 160° com uma velocidade de 10 nós, e as condições se tornarão
-"CAVOK" (Ceiling and Visibility OK), indicando que a visibilidade e o teto de nuvens
-estão dentro dos limites favoráveis para operações de voo.
+O objetivo do meu decodificador é explicar corretamente qualquer TAF brasileiro.
 
-Observação:
-\texttt{RMK PHD} adiciona uma observação, é algo específico dos TAFs brasileiros.
-O trigrama PHD representa a indentificação do previsor que gerou este TAF \cite{trigrama-taf}.
 
 \section{Algoritmo}
 
@@ -67,12 +60,80 @@ informações relevantes.
 
 Para cada item do TAF, o algoritmo tenta associar a string correspondente a uma descrição
 detalhada utilizando expressões regulares pré-definidas. Por exemplo, a expressão
-\texttt{\d4/\d4\d4/\d4} é usada para identificar os períodos de tempo, enquanto a expressão
-\texttt{(\d{3})(\d{2})KT} é utilizada para extrair a direção e velocidade do vento.
+\texttt{\\d\{4\}/\\d4\\d4/\\d4} é usada para identificar os períodos de tempo, enquanto a expressão
+\texttt{(\\d{3})(\\d{2})KT} é utilizada para extrair a direção e velocidade do vento.
 
 Assim como no METAR, as informações são organizadas em tuplas que contêm a string original
 e sua decodificação correspondente. Essas tuplas são então enviadas para um sistema de
 templating Jinja2, para a geração da página HTML.
+
+\section{Exemplo de Resposta}
+
+\begin{verbatim}
+[
+    ["251600Z",
+    "Disponibilizado em 16:00Z no dia 25"],
+    ["2518/2624",
+    "Válido do dia 25 as 18:00Z até dia 26 as 24:00Z"],
+    ["23012KT",
+    "Vento proa <b>230</b>° com velocidade <b>12</b> nós (kt)."],
+    ["8000",
+    "Visibilidade 8000 metros"],
+    ["BKN020",
+    "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> 
+    pés de altitude. "],
+    ["BKN030",
+    "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>3000</b> 
+    pés de altitude. "],
+    ["TN16/2609Z",
+    "A temperatura mínima é de 16°C prevista de ocorrer dia 26 
+    as 09:00 (UTC)"],
+    ["TX20/2615Z",
+    "A temperatura máxima é de 20°C prevista de ocorrer dia 26 
+    as 15:00 (UTC)"],
+    [
+        ["TEMPO 2518/2521",
+        "Condições temporárias previstas do dia 25 as 18:00 (UTC) 
+        até dia 25 as 
+        21:00 (UTC)"],
+        ["23012G25KT",
+        "Vento proa 230° com velocidade 12 nós (kt) e <b>rajadas
+        </b> de 25 nós."],
+        ["5000",
+        "Visibilidade 5000 metros"],
+        ["DZ",
+        "Chuvisco moderada."],
+        ["BR",
+        "Névoa úmida moderada."],
+        ["BKN015",
+        "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>1500</b> 
+        pés de altitude. "],
+        ["BKN020",
+        "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> 
+        pés de altitude. "]
+    ],
+    [
+        ["TEMPO 2521/2524",
+        "Condições temporárias previstas do dia 25 as 21:00 (UTC) 
+        até dia 25 as 24:00 
+        (UTC)"],
+        ["25010KT",
+        "Vento proa <b>250</b>° com velocidade <b>10</b> nós (kt)."],
+        ["4000",
+        "Visibilidade 4000 metros"],
+        ["RA",
+        "Chuva moderada."],
+        ["BR",
+        "Névoa úmida moderada."],
+        ["BKN010",
+        "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>1000</b> 
+        pés de altitude. "],
+        ["BKN020",
+        "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> 
+        pés de altitude. "]
+    ]
+]
+\end{verbatim}
 
 \section{Complexidade Temporal}
 
