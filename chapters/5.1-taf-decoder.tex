@@ -60,8 +60,18 @@ informações relevantes.
 
 Para cada item do TAF, o algoritmo tenta associar a string correspondente a uma descrição
 detalhada utilizando expressões regulares pré-definidas. Por exemplo, a expressão
-\texttt{\\d\{4\}/\\d4\\d4/\\d4} é usada para identificar os períodos de tempo, enquanto a expressão
-\texttt{(\\d{3})(\\d{2})KT} é utilizada para extrair a direção e velocidade do vento.
+
+\begin{verbatim}
+[0-9]{4}/[0-9]{4} 
+\end{verbatim}
+
+é usada para identificar os períodos de tempo, enquanto a expressão
+
+\begin{verbatim}
+[0-9]{3}([0-9]{2})KT
+\end{verbatim}
+
+é utilizada para extrair a direção e velocidade do vento.
 
 Assim como no METAR, as informações são organizadas em tuplas que contêm a string original
 e sua decodificação correspondente. Essas tuplas são então enviadas para um sistema de
@@ -145,7 +155,7 @@ complexidade temporal desta operação depende do número de caracteres da expre
 Considerando que as expressões regulares utilizadas no TAF também são simples, a complexidade
 temporal de decodificação de um TAF pode ser representada por:
 
-$$ O_{decode_TAF}(p * n)$$
+$$ O_{decode_{TAF}}(p * n)$$
 
 Onde:
 
