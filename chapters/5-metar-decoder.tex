@@ -55,17 +55,17 @@ A informação de vento pode também conter a letra G (gust) para rajadas e a le
 caso de haver variação de direção. Por exemplo, um METAR com os itens \texttt{10016G21KT 080V120} informa que 
 há rajadas de até 21 kt e a direção do vento pode variar de 80 a 120 graus. Existem outros aeroportos que podem 
 usar outras unidades para a velocidade do vento, mas no Brasil só é usado nós (kt). Para obter essas informações 
-usamos o regex \texttt{([0-9]{3}[0-9]{2}G{[0-9]{2}})} e \texttt{([0-9]{3})V([0-9]{3})}.
+usamos o regex \verb|([0-9]{3}[0-9]{2}G{[0-9]{2}}) e \verb|([0-9]{3})V([0-9]{3})|.
 
 \texttt{9999} significa visibilidade ilimitada (maior ou igual a 10 km). Se fosse 6000, a visibilidade seria de 
-6 km. Por ser sempre quatro algarismos, o regex \texttt{([0-9]{4})} consegue capturar essa informação.
+6 km. Por ser sempre quatro algarismos, o regex \verb|([0-9]{4})| consegue capturar essa informação.
 
 \texttt{30/25} Temperatura 30°C e ponto de orvalho 25°C. Caso a temperatura seja negativa, a letra M é adicionada 
 antes do número. M2/M5 significa temperatura -2°C e ponto de orvalho -5°C \cite{METAR-help}. O regex usado é
 \texttt{(M?[0-9]{2})/(M?[0-9]{2})}
 
 \texttt{Q1012} O altímetro do avião deve ser referenciado para 1012 hectopascal. Também pode ser usada a unidade 
-polegadas de mercúrio (mmHg), mas no Brasil esta não é usada no METAR. O regex é \texttt{(Q[0-9]{4})}
+polegadas de mercúrio (mmHg), mas no Brasil esta não é usada no METAR. O regex é \verb|(Q[0-9]{4})|
 
 \texttt{SCT025} Nuvens espalhadas (3/8 a 4/8 do céu com nuvens) em 2500 pés de altitude. 025 se refere ao nível 
 de voo (Flight Level), que é a altitude acima do nível médio do mar com divisão exata por 100.
@@ -75,7 +75,7 @@ que há nuvens convectivas significativas \cite{decea-mil}.
 
 \texttt{BKN100} Nuvens broken (5/8 a 7/8 do céu com nuvens) em 10000 pés de altitude.
 
-Existe também o tipo OVC (overcast) que se refere a totalmente encoberto. O regex usado é \texttt{([A-Z]{3})([0-9]{3})(TCU)?}.
+Existe também o tipo OVC (overcast) que se refere a totalmente encoberto. O regex usado é \verb|([A-Z]{3})([0-9]{3})(TCU)?|.
 O primeiro grupo de captura é comparado com "FEW", "BKN", "SCT" e "OVC".
 
 \section{Algoritmo}
@@ -134,43 +134,3 @@ E como é mostrado na página:
   \label{fig:metar-30-08}
   \end{center}
 \end{figure}
-
-\section{Complexidade Temporal}
-Considerando que todas as expressões usadas são simples, isto é, não levam a backtracking, 
-por não usarem operadores "*" ou "+",
-a complexidade temporal para executar a função \texttt{re.findall()} do Python é
-
-$$ O_{findall}(m + n) $$
-
-\begin{verbatim}
-m := quantidade de caracteres da expressão regex
-n := quantidade de caracteres da string a ser analisada
-\end{verbatim}
-
-Se temos que testar todas as expressões para cada item do METAR, a complexidade será
-
-$$ O_{decode}(p * q * (m + n)) $$
-
-\begin{verbatim}
-m := quantidade de caracteres da expressão regex
-n := quantidade de caracteres da string do METAR a ser analisado
-p := quantidade de itens do METAR
-q := quantidade de expressões regex no programa
-\end{verbatim}
-
-
-A maior expressão regex deste decoder é 
-
-\[
-\texttt{([A-Z]\{3\})(\textbackslash d\{3\})(CB|TCU)*}
-\] 
-
-com 26 caracteres. Para efeitos práticos este é um valor muito pequeno então podemos assumir m constante.
-
-Sabemos que o número de expressões é 11, também um valor que pode ser assumindo contante, logo
-q é igual à 1, portanto.
-
-$$ O_{decode}(p * 1 * (1 + n)) $$
-$$ O_{decode}(p * n) $$
-
-Apenas as variáveis "p" e "n" dependem de valores externos. 

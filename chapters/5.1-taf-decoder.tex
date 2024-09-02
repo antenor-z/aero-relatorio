@@ -144,25 +144,3 @@ templating Jinja2, para a geração da página HTML.
     ]
 ]
 \end{verbatim}
-
-\section{Complexidade Temporal}
-
-A complexidade temporal da decodificação de um TAF segue um padrão similar ao do METAR.
-A função \texttt{re.findall()} é utilizada para identificar e extrair informações, e a
-complexidade temporal desta operação depende do número de caracteres da expressão regular
-(m) e da string do TAF a ser analisada (n).
-
-Considerando que as expressões regulares utilizadas no TAF também são simples, a complexidade
-temporal de decodificação de um TAF pode ser representada por:
-
-$$ O_{decode_{TAF}}(p * n)$$
-
-Onde:
-
-\begin{verbatim}
-p := Quantidade de itens do TAF.
-n := Quantidade de caracteres da string do TAF.
-\end{verbatim}
-
-Como no caso do METAR, as variáveis "p" e "n" são as que influenciam diretamente a
-complexidade do algoritmo.
