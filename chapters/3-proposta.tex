@@ -46,14 +46,25 @@ fazer uso de um banco em memória como intermediário.
 
 Os aeródromos podem, ao longo do tempo, mudarem alguma frequência e outras
 informações, como o número da pista, que muda a depender da variação do norte magnético,
-uma ampliação da pista, etc.
-Atualmente, o código precisa ser alterado para atualizar estas informações.
-Desejo implementar um sistema diretamente no site, com uma autenticação por
-senha e TOTP, para que seja possível mudar qualquer informação no banco.
+uma ampliação da pista faz a informação de comprimento precisar ser alterada...
+
+O código precisava ser alterado para atualizar estas informações.
+É implementado um sistema administrativo no site, com uma autenticação por
+senha e TOTP, para que seja possível mudar qualquer informação no banco mesmo
+por pessoas que não saibam programar.
+
+Esta parte administrativa, possui controle de permissões. Ao criar uma
+conta, eu informo quais aeroportos esta conta pode alterar. Também posso
+dizer que esta é uma conta "super" que pode alterar todos os aeroportos
+e também criar e apagar um aeroporto.
 
 Através de uma API do serviço americano National Weather Service, são coletadas 
 as informações atuais de meteorologia. Estas informações (que vêm em um formato
 chamado METAR) são processadas pelo backend e mostradas ao usuário de uma forma 
-fácil de entender. Esta parte em específico possui um código de difícil manutenção.
-Desejo refatorar esta parte e adicionar suporte para a maior parte de códigos
+fácil de entender. Esta parte em específico possuia um código de difícil manutenção.
+Foi refatorada esta parte e adicionado suporte para a maior parte de códigos
 da especificação do METAR.
+
+Ao longo do tempo, acessava o site, e caso visse alguma parte do METAR sem explicação,
+adicionava no algorítmo. Atualmente todas as informações são explicadas para
+os aeródromos brasileiros. Mais informações no capítulo de "Decodificação do METAR".

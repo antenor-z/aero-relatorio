@@ -1,9 +1,9 @@
 \chapter{Arquitetura}
 
 A arquitetura foi pensada para ser implementada com o Docker e Docker Compose. Cada
-programa que precisa ser executado é rodado em um serviço separado. Exceto o Uvicorn,
-todos os outros serviços usam imagens prontas do Docker Hub, o que oferece mais segurança
-com as atualizações constantes.
+programa que é executado é rodado em um serviço separado, portanto se o banco de dados,
+por exemplo, tiver que ser reiniciado consigo usar o comando \texttt{docker compose down && docker compose up -d}
+para reiniciar apenas este container em específico.
 
 \begin{figure}[ht]
     \begin{center}
