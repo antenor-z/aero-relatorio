@@ -62,7 +62,7 @@ linha.
         & VARCHAR (50)
         \\ \hline
         StateAbbreviation
-        & Abreviature de duas letra do estado. Ambas as letras maiúsculas.
+        & Abreviature de duas letras do estado. Ambas as letras maiúsculas.
         & VARCHAR(2)
         \\ \hline
 \end{longtable}
@@ -368,7 +368,7 @@ L, C e R. C para a pista central.
 
         Frequency (PK)
         & A frequência em MHz multiplicada por 1000. Já que as frequências de comunicação possuem 
-        três digitos decimais, multiplicamos por mil para armazenar em inteiro de ponto fixo. 
+        três dígitos decimais, multiplicamos por mil para armazenar em inteiro de ponto fixo. 
         ICAO e frequency formam chave primária e usar um DECIMAL para uma PK, não é muito eficiente. 
         Note que uma frequência, não necessariamente é única em todo o país, para distâncias longas, 
         onde não há risco de interferência, é possível haver frequências repetidas.

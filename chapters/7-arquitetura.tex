@@ -51,7 +51,7 @@ classe de resposta é "HTMLResponse".
 \lstinputlisting[label=cod:plot, title={a}, caption={a}, language=Python]{code/html_resp.py}
 
 \subsection{Proxy NGINX}
-O NGINX faz o HTTPS funcionar, dá suporte ao HTTP/2 e ao cabeçalho HTTP keep-alive. Quando
+O NGINX realiza o SSL, dá suporte ao HTTP/2 e ao cabeçalho HTTP keep-alive. Quando
 utilizava o Gunicorn, ele só tinha suporte ao primeiro, e a documentação do Gunicorn não
 recomendava que ele estivesse diretamente ligado à Internet \cite{nginx-gunicorn}. O Uvicorn,
 no momento em que este texto foi escrito, não suporta HTTP/2, mas suporta o keep-alive. No
@@ -102,17 +102,17 @@ aproximadamente metade da memória primária (RAM) em idle.
 \section{Operações Síncronas e Assíncronas}
 
 Existem operações que ocorrem quando o usuário acessa uma página e outras que
-ocorrem de tempos em tempos independetemente dos acessos (assíncronas). Fiz
+ocorrem de tempos em tempos independentemente dos acessos (assíncronas). Fiz
 esta separação para garantir que as APIs externas (METAR e TAF) sejam acessadas 
 apenas quando
 necessário sem que uma quantidade grande de acessos ao meu site sobrecarregue as estas APIs.
 
-O desenho dos plots com dados histórico é uma operação que demora aproximadamente
+O desenho dos plots com dados históricos é uma operação que demora aproximadamente
 3 segundos por aeródromo, então faço esta operação em background e deixo o 
 arquivo .svg já pronto em uma pasta específica.
 
-A seguir esta descrito quando ocorre estas operações assíncronas. Note que são
-feita com mais frequencia que o necessário para se ter certeza que uma informação não
+A seguir está descrito quando ocorrem estas operações assíncronas. Note que são
+feitas com mais frequência que o necessário para se ter certeza que uma informação não
 ficará muito tempo desatualizada caso ocorra algum atraso para atualização do METAR/TAF.
 
 \begin{longtable}{|p{3cm}|p{4cm}|p{4cm}|}
@@ -164,8 +164,8 @@ ficará muito tempo desatualizada caso ocorra algum atraso para atualização do
 \item O usuário realiza uma requisição para a rota raiz, "/info/\{icao\}", "/taf/\{icao\}"
 ou "/history/\{icao\}"
 \item Um servidor NGINX funcionando como proxy realiza o limite de requisições por segundo
-e bloqueia user-agents que aparentem serem robôs. Caso a requisição passe pelo filtro, é
-realizado um proxy-pass psara o servidor Uvicorn.
+e bloqueia user-agents que aparentam serem robôs. Caso a requisição passe pelo filtro, é
+realizado um proxy-pass para o servidor Uvicorn.
 \item Para a rota raiz, é feito um SELECT no banco para pegar informações de todos os
 aeroportos. Na rota "/info/\{icao\}", é feito um SELECT-WHERE na tabela METAR, ILS, Communication, Runway...
 Na rota "/taf/\{icao\}" é feito o mesmo, mas na tabela TAF. Para a rota "/history/\{icao\}"
@@ -181,7 +181,7 @@ No momento de atualizar os METARs e TAFs os seguintes passos acontecem.
 
 \begin{enumerate}
 \item É feita uma requisição para a API do Aviation Weather pedindo o METAR para os aeroportos
-cadastrados esta API permite informar uma lista de ICAOs sepados por vírgula.
+cadastrados esta API permite informar uma lista de ICAOs separados por vírgula.
 O mesmo é feito com outra rota desta API que responde com os TAFs.
 \item A API responde.
 \item Os METARs e TAFs atualizados são gravados no banco.

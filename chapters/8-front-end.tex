@@ -3,7 +3,7 @@
 Como falado no capítulo da arquitetura, a página é gerada no lado do servidor, então o que 
 é retornado para cada rota é um HTML já pronto. Acredito que, para o meu caso, é mais 
 performático fazer assim do que usar páginas com Javascript que fazem requisição para uma API REST.
-Além disso o desenvolvimento é mais rápido já que não é necessário codificar o front-end.
+Além disso, o desenvolvimento é mais rápido já que não é necessário codificar o front-end.
 Para um projeto individual isto tem funcionado bem, mas claro que, para um projeto com
 mais pessoas, seria melhor fazer uma API REST já teríamos um time para back-end e outro
 para front-end.
@@ -19,7 +19,7 @@ Perceba que não há problema de acoplamento fazendo deste modo, pois não há c
 escrito dentro do backend. Como já dito, o que é passado para o Jinja é algo equivalente a JSON.
 Transformar este backend em uma API REST não seria muito difícil.
 
-Um página template é um arquivo HTML com \textit{placeholders} que serão substituídos pelos 
+Uma página template é um arquivo HTML com \textit{placeholders} que serão substituídos pelos 
 \textit{kwargs} de mesmo nome. O Jinja2 tem estruturas de repetição para que um código HTML 
 possa ser repetido usando valores da lista. E, no caso de dicionários e listas, é fácil acessar 
 os valores. Neste projeto, para exibir a lista de frequência, o seguinte código é usado.
@@ -30,8 +30,7 @@ os valores. Neste projeto, para exibir a lista de frequência, o seguinte códig
 é armazenada no banco como um inteiro de ponto fixo (como dito no capítulo de modelo de dados), 
 foi criado o filtro "frequency3" para exibir o número corretamente. Um "filtro" no Jinja 
 é apenas uma função que recebe e retorna
-uma string. O filtro é chamado usando a sintaxe "\{\{variavel | funcao\}\}". Para os que tem
-experiência com Linux é parecido com a ideia do operador "pipe".
+uma string. O filtro é chamado usando a sintaxe "\{\{variavel | funcao\}\}".
 
 
 Note que caso a variável "isAdmin" seja definida, um botão de alterar a frequência aparece. Este
