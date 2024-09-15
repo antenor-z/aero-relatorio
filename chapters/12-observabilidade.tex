@@ -13,6 +13,15 @@ ao receber o arquivo de log, gera um arquivo HTML como saída.
 \lstinputlisting[label=cod
 , title={GoAccess}, caption={Comando para executar o GoAccess}, language=bash]{code/goaccess.sh}
 
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=400pt]{img/dashboard.png}
+    \caption{Dashboard do GoAccess, o grande número de acessos é devido ao teste de carga que estava executando}
+    \label{fig:cloudflare-stat.png}
+    \end{center}
+\end{figure}
+
 Observe que o arquivo de log que estou acessando é \verb|/var/log/nginx/nginx-access.log|. Isso foi 
 necessário porque a imagem Docker do NGINX que uso por padrão cria um link simbólico de \verb|/var/log/nginx/access.log| 
 para \verb|/dev/stdout|, o que impossibilitava o acesso ao arquivo. Para contornar esse problema, 
