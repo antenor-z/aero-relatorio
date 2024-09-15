@@ -1,0 +1,1 @@
+goaccess /var/log/nginx/nginx-access.log -o /var/log/goaccess/report.html --log-format=COMBINED
