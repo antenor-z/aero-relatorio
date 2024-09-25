@@ -1,16 +1,18 @@
+% Revisão OK 25/09
 \chapter{Sistemas Similares}
-Os EFBs possuem funções variadas como cálculo de combustível, de performance, etc.
-Para aeronaves mais novas, como o Airbus A320, é difícil realizar cálculos
-de performance e combustível, pois não é disponibilizado ao público como este cálculo é
-feito. Ferramentas encontradas na Internet \cite{a320-perf} normalmente fazem engenharia
-reversa, e portanto, podem apresentar resultados diferentes de um cálculo
-oficial.
+Os EFBs possuem funções variadas como cálculo de combustível, gasto de combustível
+em voo, velocidades de decolagem, etc. Para aeronaves mais novas, como o Airbus 
+A320neo, é difícil implementar o cálculo de performance e combustível, pois não 
+é disponibilizado ao público como este cálculo é feito. Ferramentas encontradas 
+na Internet \cite{a320-perf} normalmente fazem engenharia reversa, e portanto, 
+podem apresentar resultados diferentes de um cálculo oficial feito no aplicativo
+de tablet.
 
-Nos simuladores de voo para computador pessoal, algumas aeronaves
-simulam este equipamento como o Airbus A320neo desenvolvido pela
-\textit{FlyByWire Simulations}. Apesar de ser uma aeronave \textit{freeware}, ela 
-é bem sofisticada chegando ao nível de realismo da \textit{Fenix Simulations}
-ou da \textit{ToLiss Simulations}, duas produtoras com modelos pagos do A320.
+Nos simuladores de voo para computador pessoal, algumas aeronaves simulam partes
+deste quipamento como o Airbus A320neo desenvolvido pela \textit{FlyByWire Simulations}. 
+Apesar de ser uma aeronave \textit{freeware}, ela é bem sofisticada chegando ao 
+nível de realismo da \textit{Fenix Simulations} ou da \textit{ToLiss Simulations}, 
+duas produtoras com modelos pagos do A320.
 
 \begin{figure}[ht]
     \begin{center}
@@ -20,16 +22,18 @@ ou da \textit{ToLiss Simulations}, duas produtoras com modelos pagos do A320.
     \end{center}
 \end{figure}
 
-O METAR é uma string codificada com as condições meteorológicas de um aeródromo.
+Uma das informações importantes para a realização de um voo é o METAR. Trata-se 
+de uma string codificada com as condições meteorológicas atuais de um aeródromo. 
 Todos os pilotos aprendem a ler um METAR.
 
-Contudo, o METAR do aeródromo não se encontra disponível no EFB.
-É possível usar o computador de bordo da aeronave (FMC) e conseguir
-esta informação. Também é possível sintonizar na frequência do ATIS,
-mas isto só funcionará se o avião já estiver perto do aeródromo.
+Contudo, o METAR do aeródromo não se encontra disponível no EFB. É possível usar
+ o computador de bordo da aeronave (FMC) e conseguir esta informação. Também é 
+ possível sintonizar na frequência do ATIS, mas isto só funcionará se o avião
+ estiver perto do aeródromo.
 
-O que muitos jogadores fazem é acessar o AISWEB (\url{https://aisweb.decea.mil.br/}) , sistema oficial brasileiro
-de informações aeronáuticas. 
+O que muitos jogadores de simuladores de voo fazem é acessar o AISWEB 
+(\url{https://aisweb.decea.mil.br/}), sistema oficial brasileiro de informações
+aeronáuticas. 
 
 \begin{figure}[ht]
     \begin{center}
@@ -39,10 +43,9 @@ de informações aeronáuticas.
     \end{center}
 \end{figure}
 
-É um site extremamente completo e usado em operações reais, mas para o jogador iniciante seria 
-de valia uma interface mais simples.
-
-O AISWEB exibe o METAR no aeroporto, mas não explica para o que cada campo serve.
+É um site extremamente completo e usado em operações reais, mas para o jogador 
+iniciante seria de valia uma interface mais simples. O AISWEB exibe o METAR no 
+aeroporto, mas não explica para o que cada campo serve.
 
 \begin{figure}[ht]
     \begin{center}
@@ -52,10 +55,11 @@ O AISWEB exibe o METAR no aeroporto, mas não explica para o que cada campo serv
     \end{center}
 \end{figure}
 
-O site METAR-TAF (\url{https://metar-taf.com/}) é o decoder mais conhecido, possui uma interface 
-gráfica bem construída
-e muito fácil de entender, mas não possui a lista de frequência dos aeroportos e
-de radionavegação.
+O site METAR-TAF (\url{https://metar-taf.com/}) é um decoder bem conhecido, possui
+uma interface gráfica bem construída e muito fácil de entender, mas não possui a
+lista de frequência dos aeroportos e de radionavegação. Como o nome deste sugere,
+também é disponibilizado o TAF que é parecido com o METAR, mas o TAF é uma 
+previsão das condições.
 
 \begin{figure}[ht]
     \begin{center}
