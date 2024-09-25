@@ -1,29 +1,40 @@
+% Revisão OK 25/09
 \chapter{Princípios norteadores}
 
-Para este projeto segui os seguintes princípios por ordem de prioridade começando pela maior
-prioridade.
+Para este projeto segui os seguintes princípios por ordem de prioridade começando
+pela maior prioridade.
 
 \section{Exatidão da Informação Apresentada}
-Não devem haver erros na explicação do METAR, TAF e nas informações do aeródromo. Claro que não
-é possível aderir a este princípio em 100\% dos casos, pois uma informação de aeroporto pode mudar.
-No entanto, comparo constantemente minhas informações com o AISWeb e, em caso de alterações,
-é possível fazê-las facilmente pela área restrita do site.
+Não devem haver erros na explicação do METAR, TAF e nas informações do aeródromo. 
+Claro que não é possível aderir a este princípio em 100\% dos casos, pois uma 
+informação de aeroporto pode mudar. No entanto, comparo constantemente minhas 
+informações com o AISWeb e, em caso de alterações, é possível fazê-las facilmente
+pela área restrita do site.
 
-\section{Rapidez no Carregamento das Páginas} Nenhum arquivo externo como .js, .css, .ttf, etc., 
-é coletado externamente. Os arquivos estáticos estão no servidor. A geração das páginas inclusive dos
-gráficos é feita
-no lado do servidor.
-O que precisa rodar no lado do cliente, como pesquisas e tooltips, é
-implementado com JavaScript puro.
+\section{Rapidez no Carregamento das Páginas} Nenhum arquivo externo como .js, 
+.css, .ttf, etc., é coletado externamente. Os arquivos estáticos estão no servidor. 
+A geração das páginas inclusive dos gráficos é feita no lado do servidor. O que 
+precisa rodar no lado do cliente, como pesquisas e tooltips, é implementado com 
+JavaScript puro.
 
-Os gráficos com informações históricas são construídos de forma assíncrona, e os dados de METAR
-e TAF são coletados da API do Aviation Weather e inseridos no banco de dados também de forma
-assíncrona. Assim, quando o usuário carrega a página, essas informações já estão prontas para o envio.
+Os gráficos com informações históricas são construídos de forma assíncrona, e os
+dados de METAR e TAF são coletados da API do Aviation Weather e inseridos no
+banco de dados também de forma assíncrona. Assim, quando o usuário carrega a 
+página, essas informações já estão prontas para o envio.
 
-\section{Facilidade de Uso do Sistema} A diagramação das páginas é feita considerando que o usuário
-pode não ter um conhecimento avançado em aviação, mas deseja acessar todas as informações de um
-aeródromo. Essas informações estão divididas em três páginas para cada aeródromo, para que a
-visualização não fique sobrecarregada.
+Como será visto no capítulo de arquitetura existe uma proxy reversa com NGINX,
+esta proxy faz cache das páginas, então se uma página é recarregada muitas vezes
+seguidas o NGINX entrega a página salva no cache. O cache está configurado para
+ser invalidado em um minuto, então, no pior caso, as informações ficam com um 
+minuto de atraso. A informação que atualiza com mais frequência é o METAR. A
+atualização ocorre de hora em hora, então o atraso de um minuto, no máximo, é
+aceitável.
+
+\section{Facilidade de Uso do Sistema} A diagramação das páginas é feita
+considerando que o usuário pode não ter um conhecimento avançado em aviação, mas
+deseja acessar todas as informações de um aeródromo. Essas informações estão 
+divididas em três páginas para cada aeródromo, para que a visualização não fique 
+sobrecarregada.
 
 Para um aeroporto do Galeão com ICAO SBGL, temos as seguintes páginas:
 
