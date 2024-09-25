@@ -1,0 +1,17 @@
+\chapter{Interface de Administração}
+
+\section{Validações de dados}
+Na hora de inserir e editar qualquer informação de um aeródromo, ocorrem várias
+validações. A maioria é feita usando o próprio anotator do FastAPI.
+
+\lstinputlisting[label=cod
+, title={GoAccess}, caption={Comando para executar o GoAccess}, language=bash]{code/edit_comm.py}
+
+Na rota acima a frequência tem que ser um número de 108000 até 137000 (ambos
+inclusive). Caso a condição não seja satisfeita uma exceção RequestValidationError
+é levantada pelo próprio FastAPI. Tenho um handler que coleta esta exceção e
+renderiza um template com o erro para o usuário.
+
+\lstinputlisting[label=cod
+, title={GoAccess}, caption={Comando para executar o GoAccess}, language=bash]{code/req_validation_error.py}
+
