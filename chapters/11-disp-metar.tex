@@ -1,13 +1,16 @@
+% Revisão OK 30/09
 \chapter{Disponibilidade do METAR}
 
-Durante as enchentes de grandes proporções no Rio Grande do Sul ocorridas em maio de 2024, grande
-parte da capital Porto Alegre ficou alagada. O Aeroporto Internacional Salgado Filho fechou, já
-que grande parte do pátio e da pista ficaram debaixo de água, impossibilitando pousos e decolagens.
-Algumas aeronaves particulares foram danificadas pela água.
+Durante as enchentes de grandes proporções no Rio Grande do Sul ocorridas em maio 
+de 2024, grande parte da capital Porto Alegre ficou alagada. O Aeroporto 
+Internacional Salgado Filho fechou. Já que grande parte do pátio e da pista 
+ficaram debaixo de água estavam impossibilitados pousos e decolagens. Algumas 
+aeronaves particulares foram danificadas pela água.
 
-Com o aeroporto fechado, o METAR não era mais emitido. Porém, a API do Aviation Weather não
-respondia com um código HTTP de erro ou de não encontrado, mas sim com código 200 e uma string
-vazia como resposta. Para o aeroporto, a seguinte tela aparecia:
+Com o aeroporto fechado, o METAR não era mais emitido. Porém, a API do Aviation 
+Weather não respondia com um código HTTP de erro ou de não encontrado, mas sim 
+com código de sucesso (200) e uma string vazia como resposta. Com isso, a decodificação
+do METAR falhava. Para este aeroporto, a seguinte tela aparecia:
 
 \begin{figure}[ht]
     \begin{center}
@@ -17,12 +20,18 @@ vazia como resposta. Para o aeroporto, a seguinte tela aparecia:
     \end{center}
 \end{figure}
 
-Quando o módulo de decodificação do METAR tentava buscar o dia e hora na string do METAR, esta
-não existia. Então, quando tentava buscar certo índice no resultado do regex, o resultado era None.
-Então a exceção ValueError era levantada.
+Quando o módulo de decodificação do METAR tentava buscar o dia e hora na string 
+do METAR, esta não existia. Então, quando tentava buscar certo índice nos grupos 
+captura, este não existia. Então a exceção IndexError era levantada.
 
-Já que todo METAR deve possuir o item com o dia e a hora zulu, caso este não exista, a função de
-decodificação do METAR retorna uma mensagem de METAR indisponível.
+Já que todo METAR deve possuir o item com o dia e a hora zulu, caso este não 
+exista, agora função de decodificação do METAR retorna o seguinte valor:
+
+\begin{verbatim}
+[(" ", "METAR indisponível.")]
+\end{verbatim}
+
+Este valor consegue ser interpretado pelo template.
 
 \begin{figure}[ht]
     \begin{center}
