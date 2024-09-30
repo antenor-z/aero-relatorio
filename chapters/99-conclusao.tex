@@ -1,16 +1,30 @@
 \chapter{Conclusão e Próximos Passos}
 
-O desenvolvimento deste projeto busca juntar as funcionalidades comumente usadas na 
-simulação de voo em uma plataforma acessível e amigável, buscando promover um 
+Como conclusão digo que foi um projeto muito interessante de se fazer já que 
+gosto tanto da área de programação para web como a de aviação. É o meu primeiro 
+projeto open-source grande e os utilizadores podem melhorar o produto mesmo não 
+sabendo de programação já que na parte inferior da página principal há um e-mail 
+de contato para que me sejam enviadas elogios, críticas e sugestões.
+
+O desenvolvimento deste projeto buscou juntar as funcionalidades comumente usadas 
+na simulação de voo em uma plataforma acessível e amigável, buscando promover um 
 maior nível de realismo na simulação de voo, aspecto desejado por quem leva
 a simulação de voo "a sério".
 
-A arquitetura implementada, utilizando Docker e Docker Compose, garante uma 
-implementação modular, segura e, com o uso do Git, de fácil deploy caso seja 
-necessário trocar o ISP no futuro. O uso de um banco de dados como
-o MariaDB e da funcionalidade Docker Secrets para armazenar as senhas, proporciona um 
-ambiente robusto para o projeto.
-O uso de uma VPS modesta para hospedagem do projeto em produção demonstra a 
-viabilidade do sistema em ambientes com recursos limitados.
+Vários assuntos que não conhecia aprendi com este projeto incluindo:
 
-... TODO
+\begin{itemize}
+\item Fazer uma página de observabilidade
+\item Fazer um teste de carga
+\item Usar cache direto no NGINX para evitar que o site saia do ar em períodos 
+de muitos acessos
+\item Implementar hash de senha com salt usando o biblioteca bcrypt
+\item Usar autenticação de dois fatores TOTP
+\item Traduzir mensagens de erros do Pydantic para o Português para que possam 
+ser mostrados para o usuário.
+\end{itemize}
+
+Acredito fortemente que este foi um projeto muito proveitoso devido aos 
+conhecimentos de programação web que adquiri que serão de grande valia no meu 
+trabalho que também é de desenvolvimento web, mas, já que o site está público 
+servirá como uma vitrine para outras potenciais oportunidades de carreira.
