@@ -34,8 +34,47 @@ o que é totalmente inaceitável para um código de produção.
 \end{figure}
 
 
-Uma ideia seria utilizar um banco de dados em memória, como o Redis, para fazer 
-cache das respostas. No entanto, isso demandaria tempo de desenvolvimento. Então, 
+Uma ideia é utilizar um banco de dados em memória, como o Redis, para fazer 
+cache das respostas. Fiz um decorator Python chamado cache\_it() que verifica se
+já não existe uma reposta no Redis. 
+
+O código do decorator é o seguinte:
+
+\lstinputlisting[label=cod:metar, title={Código do decorator de cache}, caption={a}, language=Python]{code/cache.py}
+
+Ele é aplicado nas funções:
+
+\begin{itemize}
+    \item async def get\_info(icao):
+    \item async def get\_metar(icao: str) -> tuple[str, str]:
+    \item async def get\_taf(icao: str) -> tuple[str, str]:
+\end{itemize}
+
+Note que são funções que apenas recebem icao como parâmetro, então fazendo a chave
+do Redis ser \verb|<ICAO>:<NOME_DA_FUNCAO>| conseguimos a unicidade. Cada chave é 
+configurada apenas expirar em uma hora, mas normalmente, antes disso a função
+trash\_it(icao) é chamada.
+
+Ela remove todos os registros com chave iniciando no
+icao informado no parâmetro. Todas as funções que atualizam o metar e o taf chamam
+a trash\_it(). Já que estas funções atualizam informações para todos os aerodromos,
+todo o cache é invalidado. Todas as funções de administração também invalidam o cache,
+mas apenas para 
+o aeródromo alterado. Se um ILS de SBCT, por exemplo, é alterado, todo o cache
+para SBCT é invalidado.
+
+Contudo, o teste no Locust revelou apenas uma pequena melhora principalmente no
+início.
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=400pt]{img/locust-cache-redis.png}
+    \caption{Teste de carga no Locust}
+    \label{fig:locust-no-cache}
+    \end{center}
+\end{figure}
+
+Devido a isto, 
 pensei em uma forma de fazer cache da resposta completa. Existem bibliotecas que 
 se integram com o FastAPI como middleware, e, ao adicionar um decorador antes da
 definição da rota, é possível configurar um cache com o tempo definido pelo 
@@ -43,7 +82,8 @@ programador. Contudo, essas bibliotecas não estão sendo mantidas, o que traz o
 risco de pararem de funcionar sem aviso.
 
 Devido a este risco, optei por uma solução mais declarativa, em vez de implementar
-algo próprio.
+algo próprio. Também queria ter que não depender de um sevidor Python, que, por
+usar uma liguagem intepretada, será mais lento que algo executado nativamente.
 
 Como já tenho o NGINX funcionando como proxy reverso, utilizei o próprio NGINX 
 para realizar o cache das respostas. Configurei o cache com um tempo de um minuto, 
