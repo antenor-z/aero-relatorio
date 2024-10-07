@@ -177,7 +177,36 @@ As validações para está rota são:
 
 São as frequências que são usadas para navegação, ao sintonizar
 na frequência de uma antena VOR o avião pode voar diretamente para
-ela.
+ela. O nome de um localizador VOR é sempre formando por três letras
+maíusculas.
+
+As validações para esta rota são:
+\begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
+    \caption{Rotas: /area/restrita/SBBH/edit e /area/restrita/add} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+        Frequência
+        & Type: Number (não deve ter vírgula a frequência 108,000MHz é digitada como 108000)
+        & Deve ser de 108000 até 137000 (ambos inclusivos)
+        \\ \hline
+        Ident
+        & \verb|^[A-Z]{3}$|
+        & \verb|^[A-Z]{3}$|
+        \\ \hline
+\end{longtable}
+
+\section {Adicionar/editar frequências de ILS}
+
 
 As validações para esta rota são:
 \begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
@@ -203,9 +232,6 @@ As validações para esta rota são:
         & Existe na lista de tipos especificada acima
         \\ \hline
 \end{longtable}
-
-Adicionar ILS
-Apagar ILS
 
 
 Um campo existente na tabela de aeródromo é o isPublished. Ele é usado para, no 
