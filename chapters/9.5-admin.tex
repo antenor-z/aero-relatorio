@@ -164,7 +164,7 @@ As validações para está rota são:
     \hline
     \endlastfoot
         Frequência
-        & Type: Number (não deve ter vírgula a frequência 108,000MHz é digitada como 108000)
+        & Deve ser de 108000 até 137000 (ambos inclusivos) (não deve ter vírgula a frequência 108,000MHz é digitada como 108000)
         & Deve ser de 108000 até 137000 (ambos inclusivos)
         \\ \hline
         Tipo
@@ -196,8 +196,8 @@ As validações para esta rota são:
     \hline
     \endlastfoot
         Frequência
-        & Type: Number (não deve ter vírgula a frequência 108,000MHz é digitada como 108000)
-        & Deve ser de 108000 até 137000 (ambos inclusivos)
+        & Deve ser de 1080 até 1180 (ambos inclusivos)
+        & Deve ser de 1080 até 1180 (ambos inclusivos)
         \\ \hline
         Ident
         & \verb|^[A-Z]{3}$|
@@ -223,13 +223,29 @@ As validações para esta rota são:
     \endfoot
     \hline
     \endlastfoot
-        Frequência
-        & Type: Number (não deve ter vírgula a frequência 108,000MHz é digitada como 108000)
-        & Deve ser de 108000 até 137000 (ambos inclusivos)
+        Ident
+        & Regex: \verb|^[A-Z]{3}$|
+        & Regex: \verb|^[A-Z]{3}$|
         \\ \hline
-        Tipo
+        Cabeçeira
+        & Regex: \verb|^\d{2}[LRC]?$|
+        & Regex: \verb|^\d{2}[LRC]?$|
+        \\ \hline
+        Frequência
+        & De 1080 até 1180 (ambos inclusive)
+        & De 1080 até 1180 (ambos inclusive)
+        \\ \hline
+        Categoria
         & Menu dropdown (select/option)
         & Existe na lista de tipos especificada acima
+        \\ \hline
+        Curso final
+        & Type: Number
+        & Inteiro
+        \\ \hline
+        Minimum
+        & Type: Number
+        & Inteiro
         \\ \hline
 \end{longtable}
 
