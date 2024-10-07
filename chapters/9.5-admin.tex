@@ -1,17 +1,222 @@
 \chapter{Interface de Administração}
 
-\section{Validações de dados}
-Na hora de inserir e editar qualquer informação de um aeródromo, ocorrem várias
-validações. A maioria é feita usando o próprio anotator do FastAPI.
+O Aero possui uma interface administrativa na rota \verb|/area/restrita|. No login,
+o usuário deve digitar seu nome de usuário, senha e código TOTP (a autenticação
+de dois fatores por tempo). A senha é armazenada no banco com hash e salt usando 
+o padrão bcrypt. No banco é armazenado uma string que contém o algorítmo de hash
+usado, o hash em si e o salt. 
 
-\lstinputlisting[label=cod
-, title={GoAccess}, caption={Comando para executar o GoAccess}, language=bash]{code/edit_comm.py}
+Para o TOTP é utilizada a biblioteca pyOTP, durante a criação de usuário, um 
+aplicativo compatível decodifica o QRcode mostrado, a chave privada é armazenada 
+no banco. O script monitor.py permite fazer diversas operações de máximo privilégio 
+incluindo criar, alterar senha e TOTP e apagar usuários. Estas tarefas não são 
+feitas com frequência. O que é feito com maior frequência e a adição de aeroportos 
+e alteração deles.
 
-Na rota acima a frequência tem que ser um número de 108000 até 137000 (ambos
-inclusive). Caso a condição não seja satisfeita uma exceção RequestValidationError
-é levantada pelo próprio FastAPI. Tenho um handler que coleta esta exceção e
-renderiza um template com o erro para o usuário.
+\begin{figure}[ht]
+    \begin{center}
+    \includesvg[width=\linewidth]{img/admin.png}
+    \caption{Sistema de máximo privilégio}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
 
-\lstinputlisting[label=cod
-, title={GoAccess}, caption={Comando para executar o GoAccess}, language=bash]{code/req_validation_error.py}
+Um usuário com o \verb|isSuper| em verdadeiro pode adicionar e remover aerodromos 
+bem como editar e remover qualquer aeródromo. Um usuário normal pode apenas alterar 
+aerodromos com ICAO fazendo parte da lista autorizada para ele no momento da criação
+de sua conta.
 
+O login é mantido via cookie assinado com padrão JWT de forma que não é custoso 
+(não envolve acesso ao banco) verificar se está logado. É usada a biblioteca padrão 
+do fastAPI já que é assinada automaticamente.
+Ao estar logado na tela inicial aparece dois botões o de logout e o de adicionar 
+aeródromo. Caso o usuário não seja super o segundo botão não aparece e, obviamente 
+a rota GET e POST de adicionar aeródromo retorna um erro.
+
+\begin{figure}[ht]
+    \begin{center}
+    \includesvg[width=\linewidth]{img/area-restrita-root.png}
+    \caption{Tela inicial da área logada}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
+
+\section {Adicionar/editar aeródromo}
+Caso tenha permissão a rota de
+https://aero.a4barros.com/area/restrita/add permite adicionar um aeródromo. 
+
+\begin{figure}[ht]
+    \begin{center}
+    \includesvg[width=\linewidth]{img/area-restrita-aerodrome.png}
+    \caption{Tela de adicionar / editar um aeródromo}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
+
+Obviamente o botão de apagar aparece apenas na tela de edição.
+
+Todos os campos possuem algum tipo de validação tanto via HTML quando via servidor. 
+Caso o HTML fosse alterado via developer tools, mesmo que rotas de administração 
+são acessíveis apenas por usuários autorizados, ainda assim não seria possível 
+para um bad actor adicionar no banco um record inválido.
+
+As validações para está rota são:
+\begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
+    \caption{Rotas: /area/restrita/<icao>/edit e /area/restrita/add} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+        ICAO
+        & Regex: \verb|[A-Z]{4}|
+        & Regex: \verb|[A-Z]{4}|
+        \\ \hline
+        Nome do aerodromo
+        & Type: Text
+        & String
+        \\ \hline
+        Latitude
+        & Regex: \verb|-?[0-9]*\.[0-9]{6}|
+        & Regex: \verb|-?[0-9]*\.[0-9]{6}|
+        \\ \hline
+        Longitude
+        & Regex: \verb|-?[0-9]*\.[0-9]{6}|
+        & Regex: \verb|-?[0-9]*\.[0-9]{6}|
+        \\ \hline
+        Cidade
+        & Type: Text
+        & Verificar se a cidade existe do estado via API do IBGE
+        \\ \hline 
+        Estado
+        & Menu dropdown (select/option)
+        & Existe na lista de estados do Brasil
+        \\ \hline 
+\end{longtable}
+
+\section {Adicionar/editar pista}
+
+As validações para está rota são:
+\begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
+    \caption{Rotas: https://aero.a4barros.com/area/restrita/<icao>/runway/<heading>/edit e https://aero.a4barros.com/area/restrita/<icao>/runway/add} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+        Cabeçeira 1
+        & Regex: \verb|^\d{2}[LRC]?$| (dois números mais R,L ou C opcional)
+        & Regex: \verb|^\d{2}[LRC]?$|, os número de cabeceiras opostas
+        tem que somar 18 e caso haja letra uma precisa ser R, a outra L ou
+        ambas C.
+        \\ \hline
+        Cabeçeira 2
+        & O mesmo da cabeceira 1
+        & O mesmo da cabeceira 1
+        \\ \hline
+        Comprimento
+        & Tipo: Number
+        & Regex: De 100 até 5000 (ambos inclusivos)
+        \\ \hline
+        Largura
+        & Tipo: De 20 até 80 (ambos inclusivos)
+        & Regex: \verb|-?[0-9]*\.[0-9]{6}|
+        \\ \hline 
+        Tipo do pavimento
+        & Menu dropdown (select/option)
+        & Existe na lista de pavimentos salva do banco
+        \\ \hline 
+\end{longtable}
+
+\section {Adicionar/editar frequências de comunicações}
+
+São as frequências que devem ser usadas na comunicação da
+aeronave possuem uma frequência em MHz e um tipo que pode
+ser: torre, operações, solo, rampa, ATIS e tráfego.
+
+As validações para está rota são:
+\begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
+    \caption{Rotas: https://aero.a4barros.com/area/restrita/<icao>/communication/<freq>/edit e https://aero.a4barros.com/area/restrita/<icao>/runway/add} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+        Frequência
+        & Type: Number (não deve ter vírgula a frequência 108,000MHz é digitada como 108000)
+        & Deve ser de 108000 até 137000 (ambos inclusivos)
+        \\ \hline
+        Tipo
+        & Menu dropdown (select/option)
+        & Existe na lista de tipos especificada acima
+        \\ \hline
+\end{longtable}
+
+\section {Adicionar/editar frequências de VOR}
+
+São as frequências que são usadas para navegação, ao sintonizar
+na frequência de uma antena VOR o avião pode voar diretamente para
+ela.
+
+As validações para esta rota são:
+\begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
+    \caption{Rotas: /area/restrita/SBBH/edit e /area/restrita/add} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {{\tablename\ \thetable{} -- Continuação da página anterior}} \\
+    \hline
+    \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
+    \endhead
+    \hline \multicolumn{3}{|r|}{{Continua na próxima página}} \\ \hline
+    \endfoot
+    \hline
+    \endlastfoot
+        Frequência
+        & Type: Number (não deve ter vírgula a frequência 108,000MHz é digitada como 108000)
+        & Deve ser de 108000 até 137000 (ambos inclusivos)
+        \\ \hline
+        Tipo
+        & Menu dropdown (select/option)
+        & Existe na lista de tipos especificada acima
+        \\ \hline
+\end{longtable}
+
+Adicionar ILS
+Apagar ILS
+
+
+Um campo existente na tabela de aeródromo é o isPublished. Ele é usado para, no 
+ato de criação, o aeródromo não aparecer vazio para o usuário final. Enquanto este 
+campo está em false apenas usuários logados conseguem ver. Ao serem adicionadas 
+as pistas, comunicações, VOR e ILS o botão de publicar pode ser pressionado fazendo 
+esta variável ir para true, mostrando o aeródromo para todos que acessarem.
+Quando um aeródromo é adicionado seu METAR e TAF não são atualizados automaticamente. 
+É necessário que os trabalhos agendados pelo APS (Advanced Python Scheduler) 
+atualizem estas informações. A função de atualização de gráficos (update_images()) 
+também é executada. Mesmo que, no início, exista apenas um METAR, o gráfico pode 
+ser gerado sem problemas. Mas quando adiciono um aeródromo costumo esperar um 
+tempo até publicá-lo, para termos vários METARs salvos deixando o gráfico com vários 
+pontos no tempo.
