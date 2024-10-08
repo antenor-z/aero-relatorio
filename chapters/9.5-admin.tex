@@ -15,7 +15,7 @@ e alteração deles.
 
 \begin{figure}[ht]
     \begin{center}
-    \includesvg[width=\linewidth]{img/admin.png}
+    \includegraphics[width=0.8\linewidth]{img/create-user-script.png}
     \caption{Sistema de máximo privilégio}
     \label{fig:max-priv-sys}
     \end{center}
@@ -35,11 +35,25 @@ a rota GET e POST de adicionar aeródromo retorna um erro.
 
 \begin{figure}[ht]
     \begin{center}
-    \includesvg[width=\linewidth]{img/area-restrita-root.png}
+    \includegraphics[width=\linewidth]{img/area-restrita-root.png}
     \caption{Tela inicial da área logada}
     \label{fig:max-priv-sys}
     \end{center}
 \end{figure}
+
+Ao entrar em um aerodromo, caso tenha permissão de altera-lo, a seguinte tela
+é mostrada.
+
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=\linewidth]{img/admin-root.png}
+    \caption{Tela de aeródromo da área logada}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
+
+Pressionado nos botões verdes, é possível criar e alterar qualquer dado do
+aeroporto. Dentro da edição de um dado é possível, apaga-lo.
 
 \section {Adicionar/editar aeródromo}
 Caso tenha permissão a rota de
@@ -47,7 +61,7 @@ https://aero.a4barros.com/area/restrita/add permite adicionar um aeródromo.
 
 \begin{figure}[ht]
     \begin{center}
-    \includesvg[width=\linewidth]{img/area-restrita-aerodrome.png}
+    \includegraphics[width=\linewidth]{img/area-restrita-aerodrome.png}
     \caption{Tela de adicionar / editar um aeródromo}
     \label{fig:max-priv-sys}
     \end{center}
@@ -103,9 +117,17 @@ As validações para está rota são:
 
 \section {Adicionar/editar pista}
 
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=0.7\linewidth]{img/admin-edit-runway.png}
+    \caption{Tela de adicionar / editar uma pista}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
+
 As validações para está rota são:
 \begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
-    \caption{Rotas: https://aero.a4barros.com/area/restrita/<icao>/runway/<heading>/edit e https://aero.a4barros.com/area/restrita/<icao>/runway/add} \\
+    \caption{Adicionar/editar informações pistas} \\
     \hline
     \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
     \endfirsthead
@@ -119,8 +141,8 @@ As validações para está rota são:
     \hline
     \endlastfoot
         Cabeçeira 1
-        & Regex: \verb|^\d{2}[LRC]?$| (dois números mais R,L ou C opcional)
-        & Regex: \verb|^\d{2}[LRC]?$|, os número de cabeceiras opostas
+        & Regex: \verb|^\d{2}[LRC]?$| (dois números mais R, L ou C opcionalmente)
+        & Regex: \verb|^\d{2}[LRC]?$|, os números de cabeceiras opostas
         tem que somar 18 e caso haja letra uma precisa ser R, a outra L ou
         ambas C.
         \\ \hline
@@ -129,12 +151,12 @@ As validações para está rota são:
         & O mesmo da cabeceira 1
         \\ \hline
         Comprimento
-        & Tipo: Number
-        & Regex: De 100 até 5000 (ambos inclusivos)
+        & De 100 até 5000 (ambos inclusivos)
+        & De 100 até 5000 (ambos inclusivos)
         \\ \hline
         Largura
-        & Tipo: De 20 até 80 (ambos inclusivos)
-        & Regex: \verb|-?[0-9]*\.[0-9]{6}|
+        & De 20 até 80 (ambos inclusivos)
+        & De 100 até 5000 (ambos inclusivos)
         \\ \hline 
         Tipo do pavimento
         & Menu dropdown (select/option)
@@ -148,9 +170,17 @@ São as frequências que devem ser usadas na comunicação da
 aeronave possuem uma frequência em MHz e um tipo que pode
 ser: torre, operações, solo, rampa, ATIS e tráfego.
 
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=0.7\linewidth]{img/admin-edit-comm.png}
+    \caption{Tela de adicionar / editar uma frequência de comunicação}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
+
 As validações para está rota são:
-\begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
-    \caption{Rotas: https://aero.a4barros.com/area/restrita/<icao>/communication/<freq>/edit e https://aero.a4barros.com/area/restrita/<icao>/runway/add} \\
+\begin{longtable}{|p{3cm}|p{4.5cm}|p{4.5cm}|}
+    \caption{Editar comunicações} \\
     \hline
     \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
     \endfirsthead
@@ -164,7 +194,7 @@ As validações para está rota são:
     \hline
     \endlastfoot
         Frequência
-        & Deve ser de 108000 até 137000 (ambos inclusivos) (não deve ter vírgula a frequência 108,000MHz é digitada como 108000)
+        & Deve ser de 108000 até 137000 (ambos inclusivos) (não deve ter vírgula. Por exemplo, a frequência 108,000MHz é digitada como 108000)
         & Deve ser de 108000 até 137000 (ambos inclusivos)
         \\ \hline
         Tipo
@@ -180,9 +210,17 @@ na frequência de uma antena VOR o avião pode voar diretamente para
 ela. O nome de um localizador VOR é sempre formando por três letras
 maíusculas.
 
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=0.7\linewidth]{img/admin-edit-vor.png}
+    \caption{Tela de adicionar / editar um VOR}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
+
 As validações para esta rota são:
 \begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
-    \caption{Rotas: /area/restrita/SBBH/edit e /area/restrita/add} \\
+    \caption{RAdicionar/editar frequências de VOR} \\
     \hline
     \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
     \endfirsthead
@@ -207,10 +245,17 @@ As validações para esta rota são:
 
 \section {Adicionar/editar frequências de ILS}
 
+\begin{figure}[ht]
+    \begin{center}
+    \includegraphics[width=0.7\linewidth]{img/admin-edit-ils.png}
+    \caption{Tela de adicionar / editar um ILS}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
 
 As validações para esta rota são:
 \begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
-    \caption{Rotas: /area/restrita/SBBH/edit e /area/restrita/add} \\
+    \caption{Adicionar/editar frequências de ILS} \\
     \hline
     \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
     \endfirsthead
@@ -257,7 +302,7 @@ as pistas, comunicações, VOR e ILS o botão de publicar pode ser pressionado f
 esta variável ir para true, mostrando o aeródromo para todos que acessarem.
 Quando um aeródromo é adicionado seu METAR e TAF não são atualizados automaticamente. 
 É necessário que os trabalhos agendados pelo APS (Advanced Python Scheduler) 
-atualizem estas informações. A função de atualização de gráficos (update_images()) 
+atualizem estas informações. A função de atualização de gráficos (update\_images()) 
 também é executada. Mesmo que, no início, exista apenas um METAR, o gráfico pode 
 ser gerado sem problemas. Mas quando adiciono um aeródromo costumo esperar um 
 tempo até publicá-lo, para termos vários METARs salvos deixando o gráfico com vários 
