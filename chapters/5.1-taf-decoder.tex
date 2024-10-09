@@ -1,12 +1,11 @@
 \chapter{Decodificação do TAF}
 
-O TAF (Terminal Aerodrome Forecast) é uma informação meteorológica que fornece
-previsões para aeroportos, sendo uma ferramenta crucial para a aviação. Diferente
+O TAF (Terminal Aerodrome Forecast) é um protocolo que fornece
+previsões para aeroportos. Diferente
 do METAR, que relata as condições meteorológicas atuais, o TAF projeta o que se
-espera para as próximas horas e/ou dias. Ele é composto por diversas seções,
-cada uma contendo informações específicas sobre as condições previstas para o
-período. Uma diferença em relação ao METAR é que o TAF se entende por várias linhas.
-A partir da segunda linha temos os grupos temporais. Tudo que está em uma linha
+espera para as próximas horas e/ou dias. Uma diferença em relação ao METAR é que o 
+TAF se entende por várias linhas.
+A partir da segunda linha temos os chamados grupos temporais. Tudo que está em uma linha
 são condições que irão ocorrer dentro de uma faixa de tempo. 
 
 Neste capítulo, será apresentado um exemplo de TAF, sua decodificação,
@@ -22,27 +21,25 @@ de 2024 às 09:00Z foi:
   BECMG 0104/0106 15010KT RMK PHD
 \end{verbatim}
 
-Vamos decodificar este TAF passo a passo:
-310900Z significa que este TAF foi gerado dia 31 às 09:00 ou seis da manhã em 
-horário local. 3112/0112 diz o período válido desta informação: do dia 31 às 
+\texttt{310900Z} significa que este TAF foi gerado dia 31 às 09:00 UTC. 3112/0112 diz 
+o período válido desta informação: do dia 31 às 
 12 horas até dia primeiro às 12 horas. 15010KT indica um vento de 10 nós vindo 
 da direção 150 graus. Não há nuvens e a visualidade é máxima é usado o acrônimo 
-CAVOK (Ceiling Altitude and Visibility OK) para indicar isto.
+CAVOK (Ceiling Altitude and Visibility OK, Teto e Visibilidade OK) para indicar isto.
 
-A temperatura mínima será de 24 graus dia 01 às 08:00 (UTC) e a máxima será 
+\texttt{TX31/3115Z TN24/0108Z} A temperatura mínima será de 24 graus dia 01 às 08:00 (UTC) e a máxima será 
 de 31 graus no dia 31 as 15:00 (UTC).
 
 A seguir vem os grupos de previsão, cada um em uma linha.
 
-BECMG 3115/3117 11015KT FEW025: Dia 31 das 15 às 17 horas UTC terá vento de 
+\texttt{BECMG 3115/3117 11015KT FEW025}: Dia 31 das 15 às 17 horas UTC terá vento de 
 15 nós com 110 graus. E haverá poucas nuvens na altitude no nível 025 ou 2500 pés.
 
-BECMG 0104/0106 15010KT RMK PHD : dia primeiro de setembro das 04:00 as 06:00, 
+\texttt{BECMG 0104/0106 15010KT RMK PHD} : dia primeiro de setembro das 04:00 as 06:00, 
 o vento será de 10 nós com 150 graus.
 
 RMK adiciona uma observação (remark). O trigrama PHD representa a identificação 
-do previsor que
-gerou este TAF. É algo específico do Brasil [16].
+do previsor que gerou este TAF. É algo específico do Brasil [16].
 
 É claro que há muitos outros itens possíveis dentro da especificação. PROB30 em 
 um grupo de previsão, por exemplo, informa que as informações nesta linha tem 
