@@ -115,6 +115,10 @@ A seguir está descrito quando ocorrem estas operações assíncronas. Note que 
 feitas com mais frequência que o necessário para se ter certeza que uma informação não
 ficará muito tempo desatualizada caso ocorra algum atraso para atualização do METAR/TAF.
 
+O jitter de 30 segundos serve para adicionar um offset aletório no tempo para que
+a atualização não ocorra exatamente no segundo zero onde provavelmente o servidor
+do Aviation Weather estará sobre uma carga maior.
+
 \begin{longtable}{|p{3cm}|p{4cm}|p{4cm}|}
     \caption{Operações assíncronas} \\
     \hline
@@ -130,7 +134,7 @@ ficará muito tempo desatualizada caso ocorra algum atraso para atualização do
     \hline
     \endlastfoot
         update\_metars
-        & De vinte em vinte minutos
+        & De vinte em vinte minutos com jitter de 30 segundos
         & Normalmente um novo METAR é disponibilizado em cada hora, mas é possível ter um METAR a cada meia hora
         ou até menos. Para cada ICAO presente na tabela Aerodrome, cria-se um novo registro na tabela METAR
         com o novo METAR obtido caso este seja mais novo que o último presente no banco (é
@@ -144,7 +148,7 @@ ficará muito tempo desatualizada caso ocorra algum atraso para atualização do
         \\ \hline
 
         update\_images
-        & De vinte em vinte minutos
+        & De vinte em vinte minutos com jitter de 30 segundos
         & Criação dos plots. Obviamente precisa ter a mesma frequência da atualização de METAR.
         \\ \hline
 
