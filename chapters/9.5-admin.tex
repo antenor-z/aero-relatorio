@@ -1,14 +1,12 @@
 \chapter{Interface de Administração}
 
-O Aero possui uma interface administrativa na rota \verb|/area/restrita|. No login,
+O Aero possui uma interface administrativa com login em \verb|/area/restrita|. 
+Para se autenticar,
 o usuário deve digitar seu nome de usuário, senha e código TOTP (a autenticação
 de dois fatores por tempo). A senha é armazenada no banco com hash e salt usando 
-o padrão bcrypt. No banco é armazenado uma string que contém o algorítmo de hash
-usado, o hash em si e o salt. 
+o padrão bcrypt. Para o TOTP é utilizada a biblioteca pyOTP. 
 
-Para o TOTP é utilizada a biblioteca pyOTP, durante a criação de usuário, um 
-aplicativo compatível decodifica o QRcode mostrado, a chave privada é armazenada 
-no banco. O script monitor.py permite fazer diversas operações de máximo privilégio 
+O script monitor.py permite fazer diversas operações de máximo privilégio 
 incluindo criar, alterar senha e TOTP e apagar usuários. Estas tarefas não são 
 feitas com frequência. O que é feito com maior frequência e a adição de aeroportos 
 e alteração deles.

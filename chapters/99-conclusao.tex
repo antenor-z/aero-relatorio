@@ -1,14 +1,16 @@
-\chapter{Conclusão e Próximos Passos}
+\chapter{Conclusão}
 
 Como conclusão digo que foi um projeto muito interessante de se fazer já que 
 gosto tanto da área de programação para web como a de aviação. É o meu primeiro 
-projeto open-source grande e os utilizadores podem melhorar o produto mesmo não 
-sabendo de programação já que na parte inferior da página principal há um e-mail 
+projeto open-source grande e os utilizadores podem melhorar o produto mesmo sendo
+leigos em programação já que na parte inferior da página principal há um e-mail 
 de contato para que me sejam enviadas elogios, críticas e sugestões.
 
-O desenvolvimento deste projeto buscou juntar as funcionalidades comumente usadas 
-na simulação de voo em uma plataforma acessível e amigável, buscando promover um 
-maior nível de realismo na simulação de voo, aspecto desejado por quem leva
+Explorei também um pouco do frontend área que não tinha tanta familiaridade.
+
+Acredito que o objetivo do projeto foi alcançado. O Aero busca juntar as funcionalidades 
+comumente usadas na simulação de voo em uma plataforma acessível e amigável, 
+trazendo um maior nível de realismo na simulação de voo, aspecto desejado por quem leva
 a simulação de voo "a sério".
 
 Vários assuntos que não conhecia aprendi com este projeto incluindo:
@@ -16,15 +18,24 @@ Vários assuntos que não conhecia aprendi com este projeto incluindo:
 \begin{itemize}
 \item Fazer uma página de observabilidade
 \item Fazer um teste de carga
+\item Usar o Docker Secrets para armazenar senhas ao invés do ".env"
 \item Usar cache direto no NGINX para evitar que o site saia do ar em períodos 
 de muitos acessos
-\item Implementar hash de senha com salt usando o biblioteca bcrypt
-\item Usar autenticação de dois fatores TOTP
+\item Armazenar hash de senha com salt o padrão bcrypt
+\item Implementar autenticação de dois fatores TOTP
 \item Traduzir mensagens de erros do Pydantic para o Português para que possam 
 ser mostrados para o usuário.
 \end{itemize}
 
 Acredito fortemente que este foi um projeto muito proveitoso devido aos 
 conhecimentos de programação web que adquiri que serão de grande valia no meu 
-trabalho que também é de desenvolvimento web, mas, já que o site está público 
+trabalho que também é o backend de um PWA. Além disso, já que o site está público 
 servirá como uma vitrine para outras potenciais oportunidades de carreira.
+
+\section {Código completo}
+
+O código fonte na integra do Aero pode ser visto acessando o seguinte link: \url{https://github.com/antenor-z/aero}
+
+O código LaTeX que gerou este documento está disponível em: \url{https://github.com/antenor-z/aero-relatorio}
+
+Por fim, o código apresentação de slides feita no Beamer está disponível em: \url{https://github.com/antenor-z/aero-presentation}
