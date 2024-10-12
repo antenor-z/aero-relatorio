@@ -1,23 +1,27 @@
+% Revisão OK 12/10
 \chapter{Modelo de Dados}
 
-Nesta seção, explica-se o modelo de dados desenvolvido para o projeto, abordando sua estrutura 
-lógica e os componentes principais. O objetivo deste modelo é garantir flexibilidade para futuras alterações e 
-manutenções, proporcionando uma base sólida e expansível para o aero.
+Nesta seção, explica-se o modelo de dados desenvolvido para o projeto, abordando 
+sua estrutura lógica e os componentes principais. O objetivo deste modelo é garantir 
+flexibilidade para futuras alterações e manutenções, proporcionando uma base sólida 
+e expansível para o Aero.
 
 \section{Modelo Lógico}
 
-O modelo de dados foi feito de forma que futuras alterações
-possam ser absorvidas facilmente. Abaixo está o diagrama entidade-relacionamento no qual
-o nome no topo do retângulo identifica o nome da tabela. A lista abaixo mostra
-as colunas dessas tabelas, a sigla PK denota \textit{chave primária} e FK \textit{chave estrangeira}.
+O modelo de dados foi feito de forma que futuras alterações possam ser absorvidas 
+facilmente. Abaixo está o diagrama entidade-relacionamento no qual o nome no topo 
+do retângulo identifica o nome da tabela. A lista abaixo do nome mostra as colunas 
+dessas tabelas, a sigla PK denota \textit{chave primária} e FK \textit{chave estrangeira}.
 
 Uma relação é denotada pelas setas ligando duas tabelas. A cardinalidade da relação é indicada
 pelos números entre parênteses. 
 
-Para a relação \texttt{Aerodrome-ILS}, temos (1, 1) para (0, n), significando que um aeródromo pode
-ter zero ou mais frequências de ILS e esta só pode ser de um único aeródromo.
+Para a relação \texttt{Aerodrome-ILS}, temos (1, 1) para (0, n), significando que 
+um aeródromo pode ter zero ou mais frequências de ILS e esta só pode ser de um único 
+aeródromo.
 
-Já na relação \texttt{Aerodrome} com \texttt{Runway}, um aeródromo deve ter \texttt{uma ou mais} pistas.
+Já na relação \texttt{Aerodrome} com \texttt{Runway}, um aeródromo deve ter \texttt{uma ou mais} pistas
+e uma pista pertence a um único aeródromo.
 
 \pagebreak
 
@@ -29,17 +33,16 @@ Já na relação \texttt{Aerodrome} com \texttt{Runway}, um aeródromo deve ter 
     \end{center}
 \end{figure}
 
-Note que as tabelas "CommunicationType", "ILSCategory" e "PavementType" poderiam ser substituídas
-por colunas enum nas tabelas "Communication", "ILS" e "Runway", porém a manutenção seria difícil
-\cite{table-enum},
-pois teríamos que alterar a estrutura das tabelas (possivelmente tirando o sistema do ar) caso 
-fosse necessário adicionar um tipo novo
-de comunicação, por exemplo. Fazendo com uma tabela externa é necessário apenas adicionar uma nova
-linha.
+Note que as tabelas "CommunicationType", "ILSCategory" e "PavementType" poderiam 
+ser substituídas por colunas enum nas tabelas "Communication", "ILS" e "Runway", 
+porém a manutenção seria difícil \cite{table-enum}, pois teríamos que alterar a 
+estrutura das tabelas (possivelmente tirando o Aero do ar) caso fosse necessário 
+adicionar um tipo novo de comunicação, por exemplo. Fazendo com uma tabela externa 
+é necessário apenas adicionar uma nova linha.
 
 \section{Tabelas}
 
-\begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
+\begin{longtable}{|p{3.2cm}|p{6.4cm}|p{3cm}|}
     \caption{State} \\
     \hline
     \textbf{Nome} & \textbf{Descrição} & \textbf{Tipo} \\ \hline
@@ -62,7 +65,7 @@ linha.
         & VARCHAR (50)
         \\ \hline
         StateAbbreviation
-        & Abreviature de duas letras do estado. Ambas as letras maiúsculas.
+        & Abreviatura de duas letras do estado. Ambas as letras maiúsculas.
         & VARCHAR(2)
         \\ \hline
 \end{longtable}
@@ -138,7 +141,7 @@ linha.
 
         IsPublished 
         & Se for falso o aeródromo não aparece no site. Serve para que os aerodromos
-        recém-criado não aparecam enquanto outras informações ainda não foram cadastradas.
+        recém-criados não aparecam enquanto outras informações ainda não foram cadastradas.
         & Boolean
         \\ \hline
 \end{longtable}
@@ -285,7 +288,7 @@ externos ficarão para fora da área da pista, sobre o gramado.
         & VARCHAR(3)
         \\ \hline
 
-        Head2 (PK) 
+        Head2
         & O mesmo, mas para o outra cabeceira.
         & VARCHAR(3)
         \\ \hline
@@ -326,6 +329,8 @@ Por exemplo, no Santos Dumont, de costas para o Pão de Açúcar, temos as cabec
 Não temos aeroportos com três pistas paralelas no Brasil, mas são usadas as letras
 L, C e R. C para a pista central.
 
+As duas tabelas a seguir falam sobre as frequências que a aeronave precisará
+sintonizar durante suas operações no aeródromo.
 
 \begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
     \caption{CommunicationType} \\
@@ -389,8 +394,9 @@ L, C e R. C para a pista central.
 \end{longtable}
 
 
-Esta tabela lista as diferentes categorias de Sistema de Pouso por Instrumentos
- (Instrument Landing System).
+As duas tabelas a seguir lista as diferentes categorias de Sistema de Pouso por 
+Instrumentos (Instrument Landing System). Para as cabeceiras com este sistema é 
+possível pousar mesmo sem ter a pista no visual.
 
  \begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
     \caption{ILSCategory} \\
@@ -450,7 +456,7 @@ Esta tabela lista as diferentes categorias de Sistema de Pouso por Instrumentos
     \\ \hline
 
     RunwayHead
-    & Para qual pista este ILS se refere.
+    & Para qual cabeceira este ILS se refere.
     & VARCHAR(3)
     \\ \hline
 
@@ -505,13 +511,13 @@ está caindo em desuso.
         \\ \hline
 
         Frequency (PK)
-        & A frequência de operação do VOR/DME em MHz multiplicada por 10.
+        & A frequência de operação do VOR/DME em MHz multiplicada por 10. Forma 
+        chave primária junto com ICAO.
         & INTEGER
         \\ \hline
 
         Ident 
-        & Identificação única do VOR/DME para aquele aeródromo. Forma chave primária
-        junto com ICAO.
+        & Identificação única do VOR/DME para aquele aeródromo.
         & VARCHAR(3)
         \\ \hline
 
@@ -554,5 +560,6 @@ de usuário com senha e TOTP bem com gerenciar as permissões de cada usuário.
 
     IsSuper & Indica se o usuário pode criar e apagar aeroportos. Se verdadeiro,
     este usuário pode editar qualquer aeroporto, ignorando a lista CanEditAirportsList. 
+    Apenas este tipo de usuário pode apagar o aeródromo inteiro ou criar um novo.
     & Boolean \\ \hline
 \end{longtable}

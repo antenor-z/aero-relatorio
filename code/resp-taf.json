@@ -1,0 +1,51 @@
+{
+    "icao": "SBGL",
+    "taf":"251600Z 2518/2624 23012KT 8000 BKN020 BKN030 TN16/2609Z TX20/2615Z \n  
+    TEMPO 2518/2521 23012G25KT 5000 DZ BR BKN015 BKN020 \n  TEMPO 2521/2524 25010KT 
+    4000 RA BR BKN010 BKN020 \n  TEMPO 2600/2612 22008KT 3100 RA BR BKN007 BKN015 \n  
+    BECMG 2612/2614 26007KT 7000 BKN016 BKN023 \n  BECMG 2618/2620 32005KT BKN017 
+    RMK PGA","decoded": [
+        [
+            "251600Z",
+            "Disponibilizado em 16:00Z no dia 25"
+        ],
+        ...
+        [
+            "TN16/2609Z",
+            "A temperatura mínima é de 16°C prevista de ocorrer dia 26 as 09:00 (UTC)"
+        ],
+        [
+            "TX20/2615Z",
+            "A temperatura máxima é de 20°C prevista de ocorrer dia 26 as 15:00 (UTC)"
+        ],
+        [
+            [
+                "TEMPO 2518/2521",
+          "Condições temporárias previstas do dia 25 as 18:00 (UTC) até dia 25 as 21: 00 (UTC)"],[
+                    "23012G25KT",
+                    "Vento proa 230° com velocidade 12 nós (kt) e <b>rajadas</b> de 25 nós."
+                ],
+                [
+                    "5000",
+                    "Visibilidade 5000 metros"
+                ],
+                [
+                    "DZ",
+                    "Chuvisco moderada."
+                ],
+                [
+                    "BR",
+                    "Névoa úmida moderada."
+                ],
+                [
+                    "BKN015",
+                    "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>1500</b> pés de altitude. "
+                ],
+                [
+                    "BKN020",
+                    "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> pés de altitude. "
+                ]
+            ],
+       ...
+            ]
+        }

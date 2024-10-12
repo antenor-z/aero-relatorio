@@ -1,0 +1,20 @@
+{
+    "airports": [
+        [
+            "Presidente Juscelino Kubitschek",
+            "SBBR",
+            "Bras\u00edlia"
+        ],
+        [
+            "Tancredo Neves",
+            "SBCF",
+            "Belo Horizonte"
+        ],
+        [
+            "Afonso Pena",
+            "SBCT",
+            "Curitiba"
+        ],
+  ...
+    ]
+}

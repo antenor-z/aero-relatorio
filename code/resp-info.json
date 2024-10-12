@@ -1,0 +1,79 @@
+{
+    "info": {
+        "AerodromeName": "Pinto Martins",
+        "Latitude": -3.7764,
+        "Longitude": -38.532041,
+        "IsPublished": true,
+        "runways": [
+            {
+                "Head1": "13",
+                "Head2": "31",
+                "RunwayLength": 2755,
+                "RunwayWidth": 45,
+                "PavementCode": "ASP"
+            }
+        ],
+        "ils": [
+            {
+                "Ident": "IFO",
+                "RunwayHead": "13",
+                "Frequency": 1103,
+                "Category": "I",
+                "CRS": 126,
+                "Minimum": 200
+            }
+        ],
+        "vor": [
+            {
+                "Ident": "FLZ",
+                "Frequency": 1141
+            }
+        ],
+        "communication": [
+            {
+                "Frequency": 121500,
+                "CommType": "Torre"
+            },
+            {
+                "Frequency": 121950,
+                "CommType": "Solo"
+            },
+            {
+                "Frequency": 122500,
+                "CommType": "Operações"
+            },
+            {
+                "Frequency": 127700,
+                "CommType": "ATIS"
+            }
+        ]
+    },
+    "icao": "SBFZ",
+    "metar": "050100Z 10010KT 9999 BKN020 26/22 Q1014",
+    "go_back": "/",
+    "decoded": [
+        [
+            "050100Z",
+            "METAR válido para dia 5 as 1:00 (UTC)"
+        ],
+        [
+            "10010KT",
+            "Vento proa <b>100</b>° com velocidade <b>10</b> nós (kt)."
+        ],
+        [
+            "9999",
+            "Visibilidade ilimitada"
+        ],
+        [
+            "BKN020",
+            "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> pés ""de altitude. "
+        ],
+        [
+            "26/22",
+            "Temperatura <b>26</b>°C e ponto de orvalho <b>22</b>°C."
+        ],
+        [
+            "Q1014",
+            "O altímetro deve ser ajustado para <b>1014</b> hPa (29.94 ""inHg)")
+        ]
+    }

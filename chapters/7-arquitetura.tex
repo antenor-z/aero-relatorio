@@ -1,9 +1,7 @@
 \chapter{Arquitetura}
 
 A arquitetura foi pensada para ser implementada com o Docker e Docker Compose. Cada
-programa que é executado é rodado em um serviço separado, portanto se o banco de dados,
-por exemplo, tiver que ser reiniciado consigo usar o comando \texttt{docker compose down \&\& docker compose up -d}
-para reiniciar apenas este container em específico.
+programa que é executado é rodado em um serviço separado.
 
 \begin{figure}[ht]
     \begin{center}
