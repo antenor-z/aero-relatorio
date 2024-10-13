@@ -5,7 +5,7 @@ programa que é executado é rodado em um serviço separado.
 
 \begin{figure}[ht]
     \begin{center}
-    \includegraphics[width=\linewidth]{img/diagrama-arquitetura.png}
+    \includegraphics[width=\linewidth]{img/arquitetura.png}
     \caption{Modelo de Arquitetura}
     \label{fig:arquitetura}
     \end{center}
@@ -37,7 +37,14 @@ da indústria é extremamente confiável. Preferi usar ele, pois estou mais fami
 os comandos dele como \texttt{show tables} e \texttt{describe Aerodrome} do que os do PostgreSQL,
 por exemplo, que seriam \texttt{\textbackslash dt} e \texttt{\textbackslash d+ Aerodrome}.
 
-\section{FastAPI}
+\subsection{Redis}
+Para um banco gravado em memória secundária, tempo de acesso pode prejudicar a 
+performance do site durante picos de acessos. Para diminuir o tempo de resposta das
+funções que usam o banco
+de dados foi implementado um decorator Python para salvar as respostas em um banco
+em memória, no caso o Redis. Mais informações no capítulo de teste de carga.
+
+\subsection{FastAPI}
 
 O site foi construído com a framework FastAPI. Tanto para desenvolvimento quanto para produção, 
 é utilizado o servidor embutido do FastAPI, o Uvicorn. A configuração padrão funcionou bem ao
@@ -57,6 +64,7 @@ entanto, como tenho outros projetos na mesma máquina, utilizo subdomínios. Tod
 resolvem para a mesmo IP/máquina via "A RECORD", mas na configuração
 do NGINX, o bloco de servidor com o hostname aero.a4barros.com é redirecionado para o
 endereço interno "http://aero:5000".
+
 
 
 \begin{figure}[ht]
@@ -154,13 +162,18 @@ do Aviation Weather estará sobre uma carga maior.
 
 \section{Diagrama de sequência}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.5\linewidth]{img/diagrama-tempo.png}
     \caption{Diagrama de sequência}
     \label{fig:tempo}
     \end{center}
 \end{figure}
+
+Para não poluir o diagrama não foi incluído o Redis, mas ele ficaria entre
+o Uvicorn e o MariaDB. Primeiro é tentando o Redis caso a chave exista, o banco
+não é acessado. Existem operações que invalidam o cache como será mostrado
+ainda neste capítulo.
 
 \begin{enumerate}
 \item O usuário realiza uma requisição para a rota raiz, "/info/\{icao\}", "/taf/\{icao\}"
@@ -183,15 +196,16 @@ No momento de atualizar os METARs e TAFs os seguintes passos acontecem.
 
 \begin{enumerate}
 \item É feita uma requisição para a API do Aviation Weather pedindo o METAR para os aeroportos
-cadastrados esta API permite informar uma lista de ICAOs separados por vírgula.
-O mesmo é feito com outra rota desta API que responde com os TAFs.
-\item A API responde.
-\item Os METARs e TAFs atualizados são gravados no banco.
+cadastrados esta API permite informar uma lista de ICAOs separados por vírgula;
+O mesmo é feito com outra rota desta API que responde com os TAFs;
+\item A API responde;
+\item Os METARs e TAFs atualizados são gravados no banco;
+\item O cache para todos os ICAOs são invalidados.
 \end{enumerate}
 
 Para gerar as plotagens com informações históricas os seguintes passos acontecem.
 \begin{enumerate}
-    \item É feito um query para o banco pedir os 10 últimos METARs de cada aeródromo.
-    \item O banco responde. A biblioteca matplotlib é usada para criar os plots que são salvo como SVGs 
+    \item É feito um query para o banco pedir os 10 últimos METARs de cada aeródromo;
+    \item O banco responde. A biblioteca matplotlib é usada para criar os plots que são salvos como SVGs 
     no path /static/plots.
 \end{enumerate}

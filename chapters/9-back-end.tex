@@ -51,4 +51,32 @@ possa exibir ou ocultar cada grupo. Conforme mostra a imagem abaixo.
     \end{center}
 \end{figure}
 
+\section{Rota: /descent}
+
+Página estática onde é possível calcular o perfil de descida. Dada a altitude
+inicial, altitude final, velocidade e razão de descida (graus o pés) por minuto
+é retornado a distância horizonal requerida e o tempo requerido para fazer esta
+descida. O cálculo é feito apenas com JavaScript na própria página.
+
+\section{Rota: /wind}
+Dada a direção da pista, a direção do vento e velocidade do vento, é calculada
+a componente paralela e perpendicular do vetor de vento em relação a aeronave.
+Consulte a capítulo de front end para ver imagens da interface desta e das outras
+rotas.
+
+\section{Rota: /windcalc}
+Usada pela rota anterior para calcular as componentes do vento. Para a chamada
+\verb|/windcalc/?wind_dir=100&wind_speed=3&runway_head=90| a resposta será
+
+\verb|{"cross":0.52,"head":2.95,"angle":10.0}|
+
+Os valores retornados serão mostrados para o usuário como números e também serão
+usados para modificar uma imagem SVG que mostra graficamente a influência das
+componentes de vento.
+
+\section{Rota: /wind/\{icao\}}
+Parecida com a rota anterior, mas considera cada cabeceira do aerodromo selecionado
+e o vento atual.
+
+
 
