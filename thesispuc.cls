@@ -1035,7 +1035,7 @@
 \newcommand{\puc@coverpresentedforphduk}{Thesis presented to the \puc@coverprogram{} in
   partial fulfillment of the requirements for the degree of Doutor em \puc@program.}
 
-\newcommand{\puc@coverpresentedformsc}{Relatório de Projeto Final, apresentado ao \puc@coverprogram{} como requisito parcial para a obtenção do titulo de Bacharel em Engenharia da Computação. }
+\newcommand{\puc@coverpresentedformsc}{Relatório de Projeto Final, apresentado ao \puc@coverprogram{} como requisito parcial para a obtenção do título de Bacharel em Engenharia da Computação. }
 
 \newcommand{\puc@coverpresentedformscuk}{Thesis presented to the \puc@coverprogram{} in
   partial fulfillment of the requirements for the degree of Mestre em \puc@program.}
