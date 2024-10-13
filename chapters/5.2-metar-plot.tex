@@ -18,27 +18,7 @@ temperatura, ponto de orvalho, velocidade do vento, direção do vento, ajuste a
 Os resultados da consulta são transformados em uma lista de dicionários, onde 
 cada dicionário contém essas seis informações.
 
-\begin{verbatim}
-    metar_data = [
-        {
-            "temperature": 20 ,
-            "dew_point": 15,
-            "wind_speed": 12,
-            "wind_direction": 120,
-            "qnh": 1030,
-            "visibility": 9999,
-        },
-        {
-            "temperature": 21 ,
-            "dew_point": 13,
-            "wind_speed": 5,
-            "wind_direction": 129,
-            "qnh": 1028,
-            "visibility": 9999,
-        },
-        ...
-    ]
-\end{verbatim}
+\lstinputlisting[label=cod:meta-data, language=Python]{code/metar-data.json}
 
 
 Essa lista é então passada para a biblioteca \texttt{matplotlib}, que gera três 

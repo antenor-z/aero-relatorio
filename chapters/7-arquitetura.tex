@@ -33,12 +33,10 @@ Tanto os bancos como o servidor Gunicorn usam este método para terem acesso às
 \subsection{MariaDB}
 Este banco de dados relacional guarda toda a informação fixa sobre os aeródromos e as dinâmicas
 como o METAR e TAF conforme explicado no capítulo de modelo de dados. É um banco tradicional
-da indústria é extremamente confiável. Preferi usar ele, pois estou mais familiarizado com 
-os comandos dele como \texttt{show tables} e \texttt{describe Aerodrome} do que os do PostgreSQL,
-por exemplo, que seriam \texttt{\textbackslash dt} e \texttt{\textbackslash d+ Aerodrome}.
+da indústria é extremamente confiável.
 
 \subsection{Redis}
-Para um banco gravado em memória secundária, tempo de acesso pode prejudicar a 
+Para um banco gravado em memória secundária, o tempo de acesso pode prejudicar a 
 performance do site durante picos de acessos. Para diminuir o tempo de resposta das
 funções que usam o banco
 de dados foi implementado um decorator Python para salvar as respostas em um banco
@@ -121,7 +119,7 @@ A seguir está descrito quando ocorrem estas operações assíncronas. Note que 
 feitas com mais frequência que o necessário para se ter certeza que uma informação não
 ficará muito tempo desatualizada caso ocorra algum atraso para atualização do METAR/TAF.
 
-O jitter de 30 segundos serve para adicionar um offset aletório no tempo para que
+O jitter de 30 segundos serve para adicionar um offset aleatório no tempo para que
 a atualização não ocorra exatamente no segundo zero onde provavelmente o servidor
 do Aviation Weather estará sobre uma carga maior.
 
@@ -179,7 +177,8 @@ ainda neste capítulo.
 \item O usuário realiza uma requisição para a rota raiz, "/info/\{icao\}", "/taf/\{icao\}"
 ou "/history/\{icao\}"
 \item Um servidor NGINX funcionando como proxy realiza o limite de requisições por segundo
-e bloqueia user-agents que aparentam serem robôs. Caso a requisição passe pelo filtro, é
+e bloqueia user-agents que aparentam serem robôs. Existe um limite de 3 requisições por
+minuto para a rota de login. Caso a requisição passe pelos filtros, é
 realizado um proxy-pass para o servidor Uvicorn.
 \item Para a rota raiz, é feito um SELECT no banco para pegar informações de todos os
 aeroportos. Na rota "/info/\{icao\}", é feito um SELECT-WHERE na tabela METAR, ILS, Communication, Runway...

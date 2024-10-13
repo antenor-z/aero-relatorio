@@ -28,7 +28,7 @@ A substituição da framework deu-se pelos seguintes motivos:
 \item Documentação bem mais detalhada do que a do Flask, com vários tutoriais sobre assuntos comumente usados, como autenticação e validação de dados;
 \item Pensado para validação de dados, se integra muito bem ao Pydantic;
 \item Servidor embutido (Uvicorn) extremamente fácil de configurar e suficiente para produção \cite{fast-api-prod}.
-No Flask é necessário configurar alguns parâmtros para o Guinicorn via o arquivo "gunicorn\_config.py";
+No Flask é necessário configurar alguns parâmetros para o Guinicorn via o arquivo "gunicorn\_config.py";
 \item Assíncrono, permitindo o uso junto com bibliotecas que utilizam asyncio;
 No Flask, para paralelismo, é necessário usar uma biblioteca como o Gevent.
 \end{itemize}
@@ -55,7 +55,7 @@ O código precisava ser alterado para atualizar estas informações. Será imple
  que seja possível mudar qualquer informação no banco mesmo por pessoas que não 
  saibam programar.
 
-Esta parte administrativa, possui controle de permissões. Ao criar uma conta, eu
- informo quais aeroportos esta conta pode alterar. Também posso dizer que esta é
+Esta parte administrativa, possui controle de permissões. Ao criar uma conta, é
+ informado quais aeroportos esta conta pode alterar. Também posso dizer que esta é
   uma conta "super" que pode alterar todos os aeroportos e também criar e apagar 
  aeroportos.

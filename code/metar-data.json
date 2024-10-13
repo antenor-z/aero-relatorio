@@ -1,0 +1,19 @@
+metar_data = [
+    {
+        "temperature": 20 ,
+        "dew_point": 15,
+        "wind_speed": 12,
+        "wind_direction": 120,
+        "qnh": 1030,
+        "visibility": 9999,
+    },
+    {
+        "temperature": 21 ,
+        "dew_point": 13,
+        "wind_speed": 5,
+        "wind_direction": 129,
+        "qnh": 1028,
+        "visibility": 9999,
+    },
+    ...
+]
