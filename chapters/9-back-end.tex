@@ -8,10 +8,10 @@ rotas de administração são explicadas na seção "Interface de Administraçã
 
 Página inicial, apresenta a lista de aeródromos para que o usuário escolha um. 
 Internamente, por meio do ORM, é feita a seleção dos campos \texttt{AerodromeName},
-\texttt{ICAO} e \texttt{City} dos aerodromos com isPublished como verdadeiro e o
+\texttt{ICAO} e \texttt{City} dos aeródromos com isPublished como verdadeiro e o
  resultado é posto em uma lista de tuplas que é enviada para o template.
 
-Para um usuário logado também são mostrados os aeróromos não publicados.
+Para um usuário logado também são mostrados os aeródromos não publicados.
 
 Exemplo do resultado enviado à ferramenta de template:
 
@@ -27,7 +27,7 @@ de resultado enviado ao Jinja2.
 
 
 \section{Rota: /history/\{ICAO\}}
-É uma página estatica com os gráficos históricos para os doze últimos METARs.
+É uma página estática com os gráficos históricos para os doze últimos METARs.
 Mais informações do capítulo "Plotagem do METAR Histórico".
 
 
@@ -60,7 +60,7 @@ descida. O cálculo é feito apenas com JavaScript na própria página.
 
 \section{Rota: /wind}
 Dada a direção da pista, a direção do vento e velocidade do vento, é calculada
-a componente paralela e perpendicular do vetor de vento em relação a aeronave.
+a componente paralela e perpendicular do vetor de vento em relação à aeronave.
 Consulte a capítulo de front end para ver imagens da interface desta e das outras
 rotas.
 
@@ -75,7 +75,7 @@ usados para modificar uma imagem SVG que mostra graficamente a influência das
 componentes de vento.
 
 \section{Rota: /wind/\{icao\}}
-Parecida com a rota anterior, mas considera cada cabeceira do aerodromo selecionado
+Parecida com a rota anterior, mas considera cada cabeceira do aeródromo selecionado
 e o vento atual.
 
 

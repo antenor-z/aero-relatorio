@@ -19,16 +19,16 @@ e alteração deles.
     \end{center}
 \end{figure}
 
-Um usuário com o \verb|isSuper| em verdadeiro pode adicionar e remover aerodromos 
+Um usuário com o \verb|isSuper| em verdadeiro pode adicionar e remover aeródromos 
 bem como editar e remover qualquer aeródromo. Um usuário normal pode apenas alterar 
-aerodromos com ICAO fazendo parte da lista autorizada para ele no momento da criação
+aeródromos com ICAO fazendo parte da lista autorizada para ele no momento da criação
 de sua conta.
 
 O login é mantido via cookie assinado com padrão JWT de forma que não é custoso 
 (não envolve acesso ao banco) verificar se está logado. É usada a biblioteca padrão 
 do fastAPI já que é assinada automaticamente.
 Ao estar logado na tela inicial aparece dois botões o de logout e o de adicionar 
-aeródromo. Caso o usuário não seja super o segundo botão não aparece e, obviamente 
+aeródromo. Caso o usuário não seja super o segundo botão não aparece e, obviamente, 
 a rota GET e POST de adicionar aeródromo retorna um erro.
 
 \begin{figure}[ht]
@@ -51,7 +51,7 @@ Ao entrar em um aerodromo, caso tenha permissão de altera-lo, a seguinte tela
 \end{figure}
 
 Pressionado nos botões verdes, é possível criar e alterar qualquer dado do
-aeroporto. Dentro da edição de um dado é possível, apaga-lo.
+aeroporto. Dentro da edição de um dado é possível, apagá-lo.
 
 \section {Adicionar/editar aeródromo}
 Caso tenha permissão a rota de
@@ -67,12 +67,12 @@ https://aero.a4barros.com/area/restrita/add permite adicionar um aeródromo.
 
 Obviamente o botão de apagar aparece apenas na tela de edição.
 
-Todos os campos possuem algum tipo de validação tanto via HTML quando via servidor. 
+Todos os campos possuem algum tipo de validação tanto via HTML quanto via servidor. 
 Caso o HTML fosse alterado via developer tools, mesmo que rotas de administração 
 são acessíveis apenas por usuários autorizados, ainda assim não seria possível 
 para um bad actor adicionar no banco um record inválido.
 
-As validações para está rota são:
+As validações para esta rota são:
 \begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
     \caption{Rotas: /area/restrita/<icao>/edit e /area/restrita/add} \\
     \hline
@@ -123,7 +123,7 @@ As validações para está rota são:
     \end{center}
 \end{figure}
 
-As validações para está rota são:
+As validações para esta rota são:
 \begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
     \caption{Adicionar/editar informações pistas} \\
     \hline
@@ -176,7 +176,7 @@ ser: torre, operações, solo, rampa, ATIS e tráfego.
     \end{center}
 \end{figure}
 
-As validações para está rota são:
+As validações para esta rota são:
 \begin{longtable}{|p{3cm}|p{4.5cm}|p{4.5cm}|}
     \caption{Editar comunicações} \\
     \hline
@@ -205,7 +205,7 @@ As validações para está rota são:
 
 São as frequências que são usadas para navegação, ao sintonizar
 na frequência de uma antena VOR o avião pode voar diretamente para
-ela. O nome de um localizador VOR é sempre formando por três letras
+ela. O nome de um localizador VOR é sempre formado por três letras
 maíusculas.
 
 \begin{figure}[ht]
@@ -218,7 +218,7 @@ maíusculas.
 
 As validações para esta rota são:
 \begin{longtable}{|p{3cm}|p{4.2cm}|p{4.2cm}|}
-    \caption{RAdicionar/editar frequências de VOR} \\
+    \caption{Adicionar/editar frequências de VOR} \\
     \hline
     \textbf{Campo} & \textbf{Frontend} & \textbf{Backend} \\ \hline
     \endfirsthead

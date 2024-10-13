@@ -22,7 +22,7 @@ do METAR falhava. Para este aeroporto, a seguinte tela aparecia:
 
 Quando o módulo de decodificação do METAR tentava buscar o dia e hora na string 
 do METAR, esta não existia. Então, quando tentava buscar certo índice nos grupos 
-captura, este não existia. Então a exceção IndexError era levantada.
+de captura, este não existia. Então a exceção IndexError era levantada.
 
 Já que todo METAR deve possuir o item com o dia e a hora zulu, caso este não 
 exista, agora função de decodificação do METAR retorna o seguinte valor:
