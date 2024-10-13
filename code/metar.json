@@ -1,0 +1,15 @@
+[
+    ('251600Z', 'METAR válido para dia 25 as 16:00 (UTC)'),
+    ('22011KT', 'Vento proa <b>220</b>° com velocidade <b>11</b> 
+    nós (kt).'),
+    ('9999', 'Visibilidade ilimitada'),
+    ('SCT017', 'Nuvens espalhadas (3/8 a 4/8 do céu com nuvens) em 
+    <b>1700</b> pés de altitude. '),
+    ('BKN023', 'Nuvens broken (5/8 a 7/8 do céu com nuvens) em 
+    <b>2300</b> pés de altitude. '),
+    ('OVC035', 'Totalmente encoberto em <b>3500</b> pés de altitude. '),
+    ('21/16', 'Temperatura <b>21</b>°C e ponto de orvalho <b>16
+    </b>°C.'),
+    ('Q1022', 'O altímetro deve ser ajustado para <b>1022</b> hPa 
+    (30.18 inHg)')
+]

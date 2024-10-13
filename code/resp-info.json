@@ -52,28 +52,6 @@
     "metar": "050100Z 10010KT 9999 BKN020 26/22 Q1014",
     "go_back": "/",
     "decoded": [
-        [
-            "050100Z",
-            "METAR válido para dia 5 as 1:00 (UTC)"
-        ],
-        [
-            "10010KT",
-            "Vento proa <b>100</b>° com velocidade <b>10</b> nós (kt)."
-        ],
-        [
-            "9999",
-            "Visibilidade ilimitada"
-        ],
-        [
-            "BKN020",
-            "Nuvens broken (5/8 a 7/8 do céu com nuvens) em <b>2000</b> pés ""de altitude. "
-        ],
-        [
-            "26/22",
-            "Temperatura <b>26</b>°C e ponto de orvalho <b>22</b>°C."
-        ],
-        [
-            "Q1014",
-            "O altímetro deve ser ajustado para <b>1014</b> hPa (29.94 ""inHg)")
-        ]
+        // Ver capítulo de Decodificação do METAR
+    ]
     }
