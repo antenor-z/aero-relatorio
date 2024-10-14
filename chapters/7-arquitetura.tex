@@ -48,10 +48,10 @@ O site foi construído com a framework FastAPI. Tanto para desenvolvimento quant
 é utilizado o servidor embutido do FastAPI, o Uvicorn. A configuração padrão funcionou bem ao
 longo do tempo. Como explicado com mais detalhes do capítulo "Proposta", apesar do FastAPI ser
 usado normalmente para a construção de APIs, ele pode retornar qualquer tipo de dado, inclusive
-imagens, vídeos e páginas HTML. Para páginas HTML precisa ser informado no decorator que A
+imagens, vídeos e páginas HTML. Para páginas HTML precisa ser informado no decorator que a
 classe de resposta é "HTMLResponse".
 
-\lstinputlisting[label=cod:plot, title={a}, caption={a}, language=Python]{code/html_resp.py}
+\lstinputlisting[label=cod:plot, title={Exemplo de Decorator}, caption={Exemplo de Decorator}, language=Python]{code/html_resp.py}
 
 \subsection{Proxy NGINX}
 O NGINX realiza o SSL, dá suporte ao HTTP/2 e ao cabeçalho HTTP keep-alive. Quando
@@ -147,7 +147,7 @@ do Aviation Weather estará sobre uma carga maior.
 
         update\_tafs
         & De três em três horas
-        & O mesmo só que para os TAFs. Os TAFs são atualizados com menos frequência que os METARs, Normalmente nos
+        & Os TAFs são atualizados com menos frequência que os METARs, Normalmente nos
         horários 00:00, 06:00, 12:00 e 18:00 UTC.
         \\ \hline
 
