@@ -1,7 +1,7 @@
 % Revisão OK 25/09
 \chapter{Sistemas Similares}
 Os EFBs possuem funções variadas como cálculo de combustível, gasto de combustível
-em voo, velocidades de decolagem, etc. Para aeronaves mais novas, como o Airbus 
+em voo, velocidades de decolagem, etc. \cite{wired-efb} Para aeronaves mais novas, como o Airbus 
 A320neo, é difícil implementar o cálculo de performance e combustível, pois não 
 é disponibilizado ao público como este cálculo é feito. Ferramentas encontradas 
 na Internet \cite{a320-perf} normalmente fazem engenharia reversa, e portanto, 
@@ -14,12 +14,13 @@ Apesar de ser uma aeronave \textit{freeware}, ela é bem sofisticada chegando ao
 nível de realismo da \textit{Fenix Simulations} ou da \textit{ToLiss Simulations}, 
 duas produtoras com modelos pagos do A320.
 
-\begin{figure}[ht]
-    \begin{center}
-    \includegraphics[width=400pt]{img/efb-a320.png}
-    \caption{Exemplo de um EFB no Flight Simulator 2020 na aeronave A320neo}
-    \label{fig:efb-a320}
-    \end{center}
+\begin{figure}%
+    \centering
+    \subfloat[\centering EFB no Flight Simulator 2020 na aeronave A320neo]{{\includegraphics[width=0.47\linewidth]{img/efb-a320.png} }}%
+    \qquad
+    \subfloat[\centering EFB real]{{\includegraphics[width=0.45\linewidth]{img/real-flight-bag.png} }}%
+    \caption{Exemplos de Electronic Flight Bag (EFB)}
+    \label{fig:example}%
 \end{figure}
 
 Uma das informações importantes para a realização de um voo é o METAR. Trata-se 
@@ -37,7 +38,7 @@ aeronáuticas.
 
 \begin{figure}[ht]
     \begin{center}
-    \includegraphics[width=400pt]{img/aisweb.png}
+    \includegraphics[width=350pt]{img/aisweb.png}
     \caption{AISWEB com informações de pista, frequências de comunicação e navegação para o Santos Dumont}
     \label{fig:aisweb}
     \end{center}
