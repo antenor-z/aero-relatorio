@@ -21,7 +21,7 @@ cada dicionário contém essas seis informações.
 \lstinputlisting[label=cod:meta-data, language=Python]{code/metar-data.json}
 
 
-Essa lista é então passada para a biblioteca \texttt{matplotlib}, que gera três 
+Essa lista é então passada para a biblioteca \texttt{\textit{matplotlib}}, que gera três 
 gráficos em um estilo personalizado para combinar com o tema escuro da página. 
 Cada gráfico combina duas informações. Temos dois eixos Y e eixo X compartilhado.
 Os gráficos são salvos como SVG na pasta de arquivos estáticos.
@@ -32,5 +32,5 @@ Ao carregar a página, as imagens são exibidas diretamente por meio de tags \te
  que apontam para os gráficos salvos na pasta estática.
 
 Como na consulta do METAR, esta tarefa é realizada assincronamente nos 
-minutos 0, 20, 40 (vide capítulo de arquitetura). Então, quando o usuário carrega a 
-página, as plotagens já encontram-se prontas seguindo o segundo princípio norteador.
+minutos 0, 20, 40 (vide capítulo de arquitetura). Quando o usuário carrega a 
+página, as plotagens já se encontram prontas seguindo o segundo princípio norteador.

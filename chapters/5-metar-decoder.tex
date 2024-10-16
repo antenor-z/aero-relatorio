@@ -10,8 +10,8 @@ no aeródromo \cite{metar-weather-gov}, a cada hora é publicado um novo METAR q
 é válido para aquela hora. Em casos excepcionais, quando as condições de tempo 
 estiverem mudando repentinamente, um METAR pode ser atualizado a cada meia hora
  \cite{METAR-speci} ou menos, o autor já viu o METAR do aeroporto do Galeão sendo atualizado
- na hora cheia e depois no minuto 16. Nas próximas seções será apresentado um 
- exemplo de METAR e sua decodificação bem como uma explicação do algoritmo.
+ na hora cheia e depois no minuto 16. Nas próximas seções, será apresentado um 
+ exemplo de METAR e sua decodificação bem como uma explicação do algorítmo.
 
 \section{Exemplo}
 O METAR no aeroporto de Fortaleza (Pinto Martins)\cite{METAR-sbfz}, no dia 17 de 
@@ -19,8 +19,8 @@ abril de 2024 às 10:54 foi
 
 \texttt{SBFZ 171300Z 15010KT 9999 BKN019 SCT025 FEW030TCU BKN100 30/25 Q1011}.
 
-"SBFZ" se refere ao código ICAO (International Civil Aviation Organization) do 
-aeroporto, não confundir com o código IATA (International Air Transport Association) 
+"SBFZ" se refere ao código ICAO (\textit{International Civil Aviation Organization}) do 
+aeroporto, não confundir com o código IATA (\textit{International Air Transport Association}) 
 que é formado por três letras. O aeroporto Pinto Martins possui o código IATA FOR, 
 o Santos Dumont SDU e o Galeão GIG. O público leigo parece conhecer mais este 
 código, mas na aviação costuma-se usar mais o código ICAO, pois \textit{todos} os 
@@ -37,7 +37,7 @@ METAR será válido até às 13:59, quando será substituído pelo METAR inician
 "SBFZ 171400Z". Pode haver alteração antes em caso de mudança repentina de condições 
 atmosféricas.
 
-Note que a seguinte expressão regular com três grupos de captura consegue extrair 
+Note-se que a seguinte expressão regular com três grupos de captura consegue extrair 
 o dia, a hora e o minuto:
 
 \begin{verbatim}
@@ -128,7 +128,7 @@ que é mapeada para a frase
   Vento \$1° com \$2 nós e rajadas de até \$3 nós
 \end{verbatim}
 
-com os grupos de captura do regex supracitado. Então será gerada uma tupla
+com os grupos de captura do regex supracitado. Então, será gerada uma tupla
 \texttt{(27008G16KT, Vento 270° com 8 nós e rajadas de até 16 nós)}. O retorno do 
 algoritmo será uma lista de tuplas enviada à ferramenta de templating
 de página Jinja.

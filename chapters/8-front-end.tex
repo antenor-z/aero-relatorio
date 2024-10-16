@@ -1,39 +1,47 @@
 \chapter{Front-end}
 
-Como falado no capítulo da arquitetura, a página é gerada no lado do servidor, então o que 
-é retornado para cada rota é um HTML já pronto. Acredito que, para o meu caso, é mais 
-performático fazer assim do que usar páginas com Javascript que fazem requisição para uma API REST.
-Além disso, o desenvolvimento é mais rápido já que não é necessário codificar o front-end.
-Para um projeto individual isto tem funcionado bem, mas claro que, para um projeto com
-mais pessoas, seria melhor fazer uma API REST já teríamos um time para back-end e outro
+Como mencionado no capítulo da arquitetura, a página é gerada no lado do servidor. Então o que 
+é retornado para cada rota, é um HTML já pronto. O autor decidiu fazer desta forma
+como experimentação da funcionalidade de template e porque acredita ser mais 
+performático fazer desta forma.
+
+As \textit{frameworks} atuais de frontend como React e Vue pela experiência profissional do autor
+são lentas para fazer a build e lentas para carregar a página. Isto parece ser devido
+as muitas dependências com outras bibliotecas.
+ O objetivo para este projeto conforme o segundo princípio norteador é o carregamento rápido.
+
+Além disso, o desenvolvimento é mais rápido, já que não é necessário codificar o front-end.
+Para um projeto individual isto tem funcionado bem, mas claro que, para um projeto mais
+complexo com
+mais pessoas envolvidas, seria melhor fazer uma API REST já teríamos um time para back-end e outro
 para front-end.
 
 De todo modo, no final da execução de uma rota, um dicionário Python é gerado, algo que 
 poderia ser facilmente convertido para um JSON usando a função \texttt{dumps()} da 
 biblioteca \texttt{json} do próprio Python. No caso desta aplicação, este dicionário é 
-enviado para o template usando a função \texttt{render\_template()} da biblioteca Jinja2, 
+enviado para o template usando a função \texttt{render\_template()} da biblioteca \textit{Jinja2}, 
 que recebe o nome da página HTML com o template e um número qualquer de \textit{kwargs} (argumentos nomeados) 
 que podem ter qualquer tipo serializável, incluindo dicionários.
 
-Perceba que não há problema de acoplamento fazendo deste modo, pois não há código HTML sendo 
+Perceba que não há problema de mistura entre controlador e visão. Pois não há HTML sendo 
 escrito dentro do backend. Como já dito, o que é passado para o Jinja é algo equivalente a JSON.
 Transformar este backend em uma API REST não seria muito difícil.
 
 Uma página template é um arquivo HTML com \textit{placeholders} que serão substituídos pelos 
-\textit{kwargs} de mesmo nome. O Jinja2 tem estruturas de repetição para que um código HTML 
+\textit{kwargs} de mesmo nome. O \textit{Jinja2} tem estruturas de repetição para que um código HTML 
 possa ser repetido usando valores da lista. E, no caso de dicionários e listas, é fácil acessar 
 os valores. Neste projeto, para exibir a lista de frequência, o seguinte código é usado.
 
 \lstinputlisting[label=cod:jinja-comm,title={Template de comunicação com o Jinja},caption={Template de comunicação com o Jinja},language=HTML]{code/jinja-comm.html}
 
-É possível fazer operações e formatações simples no Jinja2. Já que a frequência 
+É possível fazer operações e formatações simples no \textit{Jinja2}. Já que a frequência 
 é armazenada no banco como um inteiro de ponto fixo (como dito no capítulo de modelo de dados), 
 foi criado o filtro "frequency3" para exibir o número corretamente. Um "filtro" no Jinja 
 é apenas uma função que recebe e retorna
 uma string. O filtro é chamado usando a sintaxe "\{\{variavel | funcao\}\}".
 
 
-Note que caso a variável "isAdmin" seja definida, um botão de alterar a frequência aparece. Este
+Note-se que, caso a variável "isAdmin" seja definida, um botão de alterar a frequência aparece. Este
 e outros botões de adição e edição são mostrados quando existe uma seção de usuário aberta para que o administrador
 consiga editar um aeródromo.
 

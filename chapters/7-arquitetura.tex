@@ -1,7 +1,7 @@
 \chapter{Arquitetura}
 
-A arquitetura foi pensada para ser implementada com o Docker e Docker Compose. Cada
-programa que é executado é rodado em um serviço separado.
+A arquitetura foi pensada para ser implementada com o \textit{\textit{Docker}} e \textit{\textit{Docker} Compose}. Cada
+programa executado é rodado em um serviço separado.
 
 \begin{figure}[ht]
     \begin{center}
@@ -11,19 +11,19 @@ programa que é executado é rodado em um serviço separado.
     \end{center}
 \end{figure}
 
-\section{Docker Network}
-A porta 5000 do Uvicorn não estará disponível para todos os serviços. Por segurança, é usada a função de
+\section{\textit{Docker} Network}
+A porta 5000 do \textit{Uvicorn} não estará disponível para todos os serviços. Por segurança, é usada a função de
 "network". Observe no diagrama que a proxy NGINX compartilha com o Gunicorn a rede "net", para o NGINX,
-o Uvicorn não pode ser acessado por \texttt{localhost:5000}, e sim por \texttt{http://aero:5000}, "aero"
-sendo o nome do serviço no Docker Compose. Na máquina host e em containers que não tenham a rede
-configurada para estas, não conseguem ver o Uvicorn.
+o \textit{Uvicorn} não pode ser acessado por \texttt{localhost:5000}, e sim por \texttt{http://aero:5000}, "aero"
+sendo o nome do serviço no \textit{Docker} Compose. Na máquina host e em containers que não tenham a rede
+configurada para estas, não conseguem ver o \textit{Uvicorn}.
 
 
-\section{Docker Secrets}
+\section{\textit{Docker} Secrets}
 
-Para aumentar a segurança de acesso ao banco, é usada a funcionalidade "secrets". Nela, no Docker Compose,
-você informa um arquivo de texto no host onde estará uma senha, uma senha por arquivo. No mesmo Compose,
-você informa quais serviços têm acesso a cada senha. Caso o serviço de banco de dados, por exemplo, tenha
+Para aumentar a segurança de acesso ao banco, é usada a funcionalidade "secrets". Nela, no \textit{Docker} Compose,
+é informado um arquivo de texto no host, onde estará uma senha, uma senha por arquivo. No mesmo Compose,
+informa-se quais serviços têm acesso a cada senha. Caso o serviço de banco de dados, por exemplo, tenha
 acesso a senha db-password.txt, será feito um bind do arquivo db-password.txt no host para o "/run/secret/db-password.txt"
 no guest.
 Tanto os bancos como o servidor Gunicorn usam este método para terem acesso às senhas dos bancos.
@@ -42,11 +42,11 @@ funções que usam o banco
 de dados foi implementado um decorator Python para salvar as respostas em um banco
 em memória, no caso o Redis. Mais informações no capítulo de teste de carga.
 
-\subsection{FastAPI}
+\subsection{\textit{FastAPI}}
 
-O site foi construído com a framework FastAPI. Tanto para desenvolvimento quanto para produção, 
-é utilizado o servidor embutido do FastAPI, o Uvicorn. A configuração padrão funcionou bem ao
-longo do tempo. Como explicado com mais detalhes do capítulo "Proposta", apesar do FastAPI ser
+O site foi construído com a framework \textit{FastAPI}. Tanto para desenvolvimento quanto para produção, 
+é utilizado o servidor embutido do \textit{FastAPI}, o \textit{Uvicorn}. A configuração padrão funcionou bem ao
+longo do tempo. Como explicado com mais detalhes do capítulo "Proposta", apesar do \textit{FastAPI} ser
 usado normalmente para a construção de APIs, ele pode retornar qualquer tipo de dado, inclusive
 imagens, vídeos e páginas HTML. Para páginas HTML precisa ser informado no decorator que a
 classe de resposta é "HTMLResponse".
@@ -56,7 +56,7 @@ classe de resposta é "HTMLResponse".
 \subsection{Proxy NGINX}
 O NGINX realiza o SSL, dá suporte ao HTTP/2 e ao cabeçalho HTTP keep-alive. Quando
 utilizava o Gunicorn, ele só tinha suporte ao primeiro, e a documentação do Gunicorn não
-recomendava que ele estivesse diretamente ligado à Internet \cite{nginx-gunicorn}. O Uvicorn,
+recomendava que ele estivesse diretamente ligado à Internet \cite{nginx-gunicorn}. O \textit{Uvicorn},
 no momento em que este texto foi escrito, não suporta HTTP/2, mas suporta o keep-alive. No
 entanto, como tenho outros projetos na mesma máquina, utilizo subdomínios. Todos os subdomínios
 resolvem para a mesmo IP/máquina via "A RECORD", mas na configuração
@@ -75,7 +75,7 @@ endereço interno "http://aero:5000".
 
 \section{Produção}
 O site se encontra em produção no endereço https://aero.a4barros.com. Ele está hospedado em uma VPS
-da Oracle Cloud Infrastructure com as seguintes características de hardware:
+da \textit{Oracle Cloud Infrastructure} com as seguintes características de hardware:
 
 \begin{itemize}
     \item \textbf{CPU:} AMD EPYC 7551 (2 cores) @ 1.996GHz
@@ -92,13 +92,13 @@ da Oracle Cloud Infrastructure com as seguintes características de hardware:
     \end{center}
 \end{figure}
 
-Mesmo com uma configuração bastante modesta, o sistema roda sete containers Docker, usando 
-aproximadamente metade da memória primária (RAM) em idle.
+Mesmo com uma configuração bastante modesta, o sistema roda sete containers \textit{Docker}, usando 
+aproximadamente metade da memória primária (RAM) em \textit{idle}.
 
 \begin{figure}[ht]
     \begin{center}
     \includegraphics[width=400pt]{img/containers.png}
-    \caption{Containers Docker em execução}
+    \caption{Containers \textit{Docker} em execução}
     \label{fig:containers}
     \end{center}
 \end{figure}
@@ -106,17 +106,17 @@ aproximadamente metade da memória primária (RAM) em idle.
 \section{Operações Síncronas e Assíncronas}
 
 Existem operações que ocorrem quando o usuário acessa uma página e outras que
-ocorrem de tempos em tempos independentemente dos acessos (assíncronas). Fiz
-esta separação para garantir que as APIs externas (METAR e TAF) sejam acessadas 
+ocorrem de tempos em tempos independentemente dos acessos (assíncronas). Fez-se
+tal separação para garantir que as APIs externas (METAR e TAF) sejam acessadas 
 apenas quando
-necessário sem que uma quantidade grande de acessos ao meu site sobrecarregue as estas APIs.
+necessário sem que uma quantidade grande de acessos ao site sobrecarregue as estas APIs.
 
 O desenho dos plots com dados históricos é uma operação que demora aproximadamente
-3 segundos por aeródromo, então faço esta operação em background e deixo o 
+3 segundos por aeródromo, então faz-se esta operação em background e deixa-se o 
 arquivo .svg já pronto em uma pasta específica.
 
-A seguir está descrito quando ocorrem estas operações assíncronas. Note que são
-feitas com mais frequência que o necessário para se ter certeza que uma informação não
+A seguir, está descrito quando ocorrem estas operações assíncronas. Note-se que são
+feitas com mais frequência que o necessário, para se ter certeza que uma informação não
 ficará muito tempo desatualizada caso ocorra algum atraso para atualização do METAR/TAF.
 
 O jitter de 30 segundos serve para adicionar um offset aleatório no tempo para que
@@ -139,15 +139,15 @@ do Aviation Weather estará sobre uma carga maior.
     \endlastfoot
         update\_metars
         & De vinte em vinte minutos com jitter de 30 segundos
-        & Normalmente um novo METAR é disponibilizado em cada hora, mas é possível ter um METAR a cada meia hora
+        & Normalmente, um novo METAR é disponibilizado a cada hora, mas é possível ter um METAR a cada meia hora
         ou até menos. Para cada ICAO presente na tabela Aerodrome, cria-se um novo registro na tabela METAR
-        com o novo METAR obtido caso este seja mais novo que o último presente no banco (é
+        com o novo METAR obtido, caso este seja mais novo que o último presente no banco (é
         verificada a coluna updatedOn).
         \\ \hline
 
         update\_tafs
         & De três em três horas
-        & Os TAFs são atualizados com menos frequência que os METARs, Normalmente nos
+        & Os TAFs são atualizados com menos frequência que os METARs, normalmente nos
         horários 00:00, 06:00, 12:00 e 18:00 UTC.
         \\ \hline
 
@@ -169,7 +169,7 @@ do Aviation Weather estará sobre uma carga maior.
 \end{figure}
 
 Para não poluir o diagrama não foi incluído o Redis, mas ele ficaria entre
-o Uvicorn e o MariaDB. Primeiro é tentando o Redis caso a chave exista, o banco
+o \textit{Uvicorn} e o MariaDB. Primeiro é tentando o Redis caso a chave exista, o banco
 não é acessado. Existem operações que invalidam o cache como será mostrado
 ainda neste capítulo.
 
@@ -177,16 +177,16 @@ ainda neste capítulo.
 \item O usuário realiza uma requisição para a rota raiz, "/info/\{icao\}", "/taf/\{icao\}"
 ou "/history/\{icao\}"
 \item Um servidor NGINX funcionando como proxy realiza o limite de requisições por segundo
-e bloqueia user-agents que aparentam serem robôs. Existe um limite de 3 requisições por
+e bloqueia user-agents que aparentam ser robôs. Existe um limite de 3 requisições por
 minuto para a rota de login. Caso a requisição passe pelos filtros, é
-realizado um proxy-pass para o servidor Uvicorn.
+realizado um proxy-pass para o servidor \textit{Uvicorn}.
 \item Para a rota raiz, é feito um SELECT no banco para pegar informações de todos os
 aeroportos. Na rota "/info/\{icao\}", é feito um SELECT-WHERE na tabela METAR, ILS, Communication, Runway...
 Na rota "/taf/\{icao\}" é feito o mesmo, mas na tabela TAF. Para a rota "/history/\{icao\}"
 não há acesso ao banco.
 A ORM é usada para isto, portanto os comandos SQL não aparecem diretamente no código.
 \item O banco de dados responde à requisição.
-\item O servidor envia as informações necessárias ao Jinja2 para a geração da página.
+\item O servidor envia as informações necessárias ao \textit{Jinja2} para a geração da página.
 \item A página HTML é gerada.
 \item O usuário recebe esta página.
 \end{enumerate}
@@ -202,9 +202,9 @@ O mesmo é feito com outra rota desta API que responde com os TAFs;
 \item O cache para todos os ICAOs são invalidados.
 \end{enumerate}
 
-Para gerar as plotagens com informações históricas os seguintes passos acontecem.
+Para gerar as plotagens com informações históricas, os seguintes passos acontecem.
 \begin{enumerate}
     \item É feito um query para o banco pedir os 10 últimos METARs de cada aeródromo;
-    \item O banco responde. A biblioteca matplotlib é usada para criar os plots que são salvos como SVGs 
+    \item O banco responde. A biblioteca \textit{matplotlib} é usada para criar os plots que são salvos como SVGs 
     no path /static/plots.
 \end{enumerate}

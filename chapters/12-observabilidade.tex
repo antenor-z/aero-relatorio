@@ -28,7 +28,7 @@ como saída.
 \end{figure}
 
 Observe que o arquivo de log que estou acessando é \verb|/var/log/nginx/nginx-access.log|. 
-Isso foi necessário porque a imagem Docker do NGINX que uso, por padrão, cria um 
+Isso foi necessário porque a imagem \textit{Docker} do NGINX que uso, por padrão, cria um 
 link simbólico de \verb|/var/log/nginx/access.log| para \verb|/dev/stdout|, o que 
 impossibilitava o acesso ao arquivo. Para contornar esse problema, precisei 
 configurar o arquivo de configuração do NGINX para que os logs de acesso fossem 
@@ -45,7 +45,7 @@ queria manter essa porta aberta, optei por criar um script shell que recria essa
 página a cada 3 minutos.
 
 \lstinputlisting[label=cod
-, title={GoAccess}, caption={Comando para executar o GoAccess a cada 3 minutos}, language=bash]{code/goaccess.Dockerfile}
+, title={GoAccess}, caption={Comando para executar o GoAccess a cada 3 minutos}, language=bash]{code/goaccess.\textit{Docker}file}
 
 Em média, o GoAccess consegue processar 101.245,3 linhas de log por segundo 
 \cite{goaccess-speed}, então executá-lo a cada três minutos para a quantidade de 

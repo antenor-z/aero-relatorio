@@ -9,7 +9,7 @@ e expansível para o Aero.
 \section{Modelo Lógico}
 
 O modelo de dados foi feito de forma que futuras alterações possam ser absorvidas 
-facilmente. Abaixo está o diagrama entidade-relacionamento no qual o nome no topo 
+facilmente. Abaixo está o diagrama entidade-relacionamento, no qual o nome no topo 
 do retângulo identifica o nome da tabela. A lista abaixo do nome mostra as colunas 
 dessas tabelas, a sigla PK denota \textit{chave primária} e FK \textit{chave estrangeira}.
 
@@ -33,7 +33,7 @@ e uma pista pertence a um único aeródromo.
     \end{center}
 \end{figure}
 
-Note que as tabelas "CommunicationType", "ILSCategory" e "PavementType" poderiam 
+Note-se que as tabelas "CommunicationType", "ILSCategory" e "PavementType" poderiam 
 ser substituídas por colunas enum nas tabelas "Communication", "ILS" e "Runway", 
 porém a manutenção seria difícil \cite{table-enum}, pois teríamos que alterar a 
 estrutura das tabelas (possivelmente tirando o Aero do ar) caso fosse necessário 
@@ -171,7 +171,7 @@ adicionar um tipo novo de comunicação, por exemplo. Fazendo com uma tabela ext
         \\ \hline
 
         ValidOn (PK)
-        & Timestamp com o momento que este METAR é válido. É construído a
+        & \textit{Timestamp} com o momento que este METAR é válido. É construído a
         partir do item do metar "ddhhmmZ" em que "dd" é o dia e "hhmm" é
         a hora zulu (UTC). O mês e ano são o mês e ano atuais do sistema.
         & DATETIME
@@ -204,7 +204,7 @@ adicionar um tipo novo de comunicação, por exemplo. Fazendo com uma tabela ext
         \\ \hline
 
         ValidOn (PK)
-        & Timestamp com o momento que este TAF é válido. É construído a
+        & \textit{Timestamp} com o momento que este TAF é válido. É construído a
         partir do item do TAF "ddhhmmZ" em que "dd" é o dia e "hhmm" é
         a hora zulu (UTC). O mês e ano são o mês e ano atuais do sistema.
         & DATETIME
@@ -278,7 +278,7 @@ externos ficarão para fora da área da pista, sobre o gramado.
 
         ICAO (FK e PK) 
         & O código ICAO do aeródromo ao qual a pista está associada, utilizado como chave estrangeira 
-        fazendo a ligação com a tabela 'Aerodrome'.
+        fazendo a ligação com a tabela '\textit{Aerodrome}'.
         & VARCHAR(4)
         \\ \hline
 
@@ -289,7 +289,7 @@ externos ficarão para fora da área da pista, sobre o gramado.
         \\ \hline
 
         Head2
-        & O mesmo, mas para o outra cabeceira.
+        & O mesmo, mas para a outra cabeceira.
         & VARCHAR(3)
         \\ \hline
 
@@ -304,7 +304,7 @@ externos ficarão para fora da área da pista, sobre o gramado.
         \\ \hline
 
         PavementCode (FK)
-        & O tipo de pavimento da pista, referenciando a tabela 'PavementType'.
+        & O tipo de pavimento da pista, referenciando a tabela '\textit{PavementType}'.
         & VARCHAR(3)
         \\ \hline
 
@@ -349,7 +349,7 @@ sintonizar durante suas operações no aeródromo.
 
         CommType (PK)
         & O tipo de comunicação, podendo ser "Torre", "Solo", "ATIS", "Tráfego" ou "Operação".
-        Mais adiante outros tipos podem ser adicionados.
+        Mais adiante, outros tipos podem ser adicionados.
         & VARCHAR(10)
         \\ \hline
 
@@ -373,21 +373,21 @@ sintonizar durante suas operações no aeródromo.
 
         ICAO (PK e FK)
         & O código ICAO do aeródromo ao qual a frequência de comunicação está associada, utilizado 
-        como chave estrangeira referenciando a tabela 'Aerodrome'.
+        como chave estrangeira referenciando a tabela '\textit{Aerodrome}'.
         & VARCHAR(4)
         \\ \hline
 
         Frequency (PK)
         & A frequência em MHz multiplicada por 1000. Já que as frequências de comunicação possuem 
         três dígitos decimais, multiplicamos por mil para armazenar em inteiro de ponto fixo. 
-        ICAO e frequency formam chave primária e usar um DECIMAL para uma PK, não é muito eficiente. 
-        Note que uma frequência, não necessariamente é única em todo o país, para distâncias longas, 
+        ICAO e \textit{frequency} formam chave primária e usar um DECIMAL para uma PK, não é muito eficiente. 
+        Note-se que uma frequência, não necessariamente é única em todo o país, para distâncias longas, 
         onde não há risco de interferência, é possível haver frequências repetidas.
         & INTEGER
         \\ \hline
 
         CommType (FK)
-        & O tipo de comunicação, chave estrangeira para 'CommunicationType'.
+        & O tipo de comunicação, chave estrangeira para '\textit{CommunicationType}'.
         & VARCHAR(20)
         \\ \hline
 
@@ -438,7 +438,7 @@ possível pousar mesmo sem ter a pista no visual.
 
     ICAO (PK e FK)
     & O código ICAO do aeródromo ao qual o sistema de pouso está associado, utilizado 
-    como chave estrangeira referenciando a tabela 'Aerodrome'.
+    como chave estrangeira referenciando a tabela '\textit{Aerodrome}'.
     & VARCHAR(4)
     \\ \hline
 
@@ -450,7 +450,7 @@ possível pousar mesmo sem ter a pista no visual.
     \\ \hline
 
     Ident
-    & Identificação de três letras maisculas única do ILS para aquele aeródromo.
+    & Identificação de três letras maiúsculas única do ILS para aquele aeródromo.
     Aparece na carta aérea do procedimento ILS.
     & VARCHAR(3)
     \\ \hline
@@ -461,7 +461,7 @@ possível pousar mesmo sem ter a pista no visual.
     \\ \hline
 
     Category (FK)
-    & A categoria do ILS, referenciando a tabela 'ILSCategory'.
+    & A categoria do ILS, referenciando a tabela '\textit{ILSCategory}'.
     & VARCHAR(10)
     \\ \hline
 
@@ -474,11 +474,11 @@ possível pousar mesmo sem ter a pista no visual.
     Minimum
     & A altura mínima de decisão em pés para operação do ILS. A partir desta altura, é
     desligado o piloto automático e o resto da aproximação é feita manualmente.
-    Se a altitude da aeronave ficar abaixo deste valor e ainda não for possível 
-    ter visual da pista é obrigatória a arremetida.
+    Se a altitude da aeronave ficar abaixo deste valor, e ainda não for possível 
+    ter visual da pista, é obrigatória a arremetida.
     
-    Quando maior a categoria do ILS, maior a precisão do sistema, portanto a Minimus 
-    será mais baixa. Uma "CAT IIIC" (pronuncia-se cat três charlie), possui Minimus zero, 
+    Quando maior a categoria do ILS, maior a precisão do sistema, portanto a \textit{Minimus} 
+    será mais baixa. Uma "CAT IIIC" (pronuncia-se cat três charlie), possui \textit{Minimus} zero, 
     portanto a aeronave pode pousar de forma totalmente automática.
     & INTEGER
     \\ \hline
@@ -506,7 +506,7 @@ está caindo em desuso.
 
         ICAO (PK e FK)
         & O código ICAO do aeródromo ao qual o VOR/DME está associado, utilizado como 
-        chave estrangeira referenciando a tabela 'Aerodrome'.
+        chave estrangeira referenciando a tabela '\textit{Aerodrome}'.
         & VARCHAR(4)
         \\ \hline
 
@@ -545,8 +545,8 @@ de usuário com senha e TOTP bem como gerenciar as permissões de cada usuário.
 
     Name (PK) & Nome do usuário. Usado no login. & VARCHAR(30) \\ \hline
 
-    PasswordHash & Hash com salt da senha do usuário. A biblioteca bcrypt é usada
-    para criação do hash e autenticação. & VARCHAR(60) \\ \hline
+    PasswordHash & \textit{Hash} com \textit{salt} da senha do usuário. O padrão \textit{bcrypt} é usado
+    para criação do \textit{hash} e autenticação. & VARCHAR(60) \\ \hline
 
     TwoFactorKey & Chave privada para geração de código temporário de 6 dígitos
     comparado com o código digitado pelo usuário no momento do login. Pode ser nulo,
@@ -554,12 +554,12 @@ de usuário com senha e TOTP bem como gerenciar as permissões de cada usuário.
     verificação não é feita. & VARCHAR(32) \\ \hline
 
     CanEditAirports List & Lista separada por vírgulas dos ICAOs dos aeroportos que
-    este usuário tem permissão de alterar. Entenda "alterar" por criar, editar e
+    este usuário tem permissão de alterar. Entenda-se "alterar" por criar, editar e
     apagar informações internas de um aeroporto: pistas, frequências de rádios e
     de navegação. & VARCHAR(32) \\ \hline
 
     IsSuper & Indica se o usuário pode criar e apagar aeroportos. Se verdadeiro,
-    este usuário pode editar qualquer aeroporto, ignorando a lista CanEditAirportsList. 
+    este usuário pode editar qualquer aeroporto, ignorando a lista \textit{CanEditAirportsList}. 
     Apenas este tipo de usuário pode apagar o aeródromo inteiro ou criar um novo.
     & Boolean \\ \hline
 \end{longtable}

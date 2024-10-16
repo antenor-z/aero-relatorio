@@ -5,47 +5,48 @@ aplicação web que o usuário, mesmo que leigo em aviação, consiga usar sem
 dificuldades.
 
 Pelo fato da aviação necessitar ser um ambiente seguro e bastante regulado, considerando
-que meu projeto é apenas um protótipo, prefiro restringir o caso de uso apenas
+que o projeto é apenas um protótipo, prefiro restringir o caso de uso apenas
 para jogadores de simuladores de voo que desejam que a simulação seja parecida
-com o real. As páginas terão um aviso \textbf{"APENAS PARA USO EM SIMULADOR"}.
+com o real. Nas páginas do sistema, haverá um aviso \textbf{"APENAS PARA USO EM SIMULADOR"}.
 
-Dito isto, o sistema possui backend escrito na linguagem Python, fazendo uso da 
-framework FastAPI. Até a entrega do Projeto I, o backend era feito com Flask. 
-A escolha foi feita pela minha familiaridade com a framework. Porém, depois, 
-descobri a framework FastAPI no meu trabalho. Normalmente, ela não é usada para 
-fullstack, mas sim para fazer APIs REST, que retornam JSON na resposta de uma 
-requisição. Um frontend feito em alguma framework de JavaScript faria a requisição
+Dito isto, o sistema possui \textit{backend} escrito na linguagem \textit{Python}, 
+fazendo uso da 
+\textit{framework \textit{FastAPI}}. Até a entrega do Projeto I, o backend era feito em \textit{Flask}. 
+A escolha foi feita pela familiaridade com a framework. Porém, depois, 
+descobri a framework \textit{FastAPI} no meu trabalho. Normalmente, ela não é usada para 
+\textit{fullstack}, mas sim para fazer \textit{APIs REST}, que retornam \textit{JSON} na resposta de uma 
+requisição. Um \textit{frontend} feito em alguma framework de \textit{JavaScript} faria a requisição
  e atualizaria a página a partir dos dados recebidos.
 
-Contudo, é possível retornar qualquer tipo de dado no FastAPI, inclusive páginas 
-HTML. Como prefiro fazer a renderização de páginas no lado do servidor, continuei
-usando a funcionalidade de templates do Jinja2.
+Contudo, é possível retornar qualquer tipo de dado no \textit{\textit{FastAPI}}, inclusive páginas 
+HTML. Como preferiu-se fazer a renderização de páginas no lado do servidor, continuou-se
+o uso da funcionalidade de templates do \textit{\textit{Jinja2}}.
 
 A substituição da framework deu-se pelos seguintes motivos:
 
 \begin{itemize}
 \item Projeto mais maduro, continuamente mantido;
-\item Documentação bem mais detalhada do que a do Flask, com vários tutoriais sobre assuntos comumente usados, como autenticação e validação de dados;
+\item Documentação bem mais detalhada do que a do \textit{Flask}, com vários tutoriais sobre assuntos comumente usados, como autenticação e validação de dados;
 \item Pensado para validação de dados, se integra muito bem ao Pydantic;
-\item Servidor embutido (Uvicorn) extremamente fácil de configurar e suficiente para produção \cite{fast-api-prod}.
-No Flask é necessário configurar alguns parâmetros para o Guinicorn via o arquivo "gunicorn\_config.py";
+\item Servidor embutido (\textit{\textit{Uvicorn}}) extremamente fácil de configurar e suficiente para produção \cite{fast-api-prod}.
+No \textit{Flask} é necessário configurar alguns parâmetros para o \textit{Guinicorn} via o arquivo "gunicorn\_config.py";
 \item Assíncrono, permitindo o uso junto com bibliotecas que utilizam asyncio;
-No Flask, para paralelismo, é necessário usar uma biblioteca como o Gevent.
+No \textit{Flask}, para paralelismo, é necessário usar uma biblioteca como o Gevent.
 \end{itemize}
 
-No segundo semestre de 2023 comecei a fazer este projeto para uso próprio.
-O código está disponível em \url{https://github.com/antenor-z/aero}. Atualmente o
-projeto funciona, mas a arquitetura foi feita sem muito planejamento, as
+No segundo semestre de 2023 projeto comecou a ser desenvolvido inicialmente para uso próprio do autor.
+O código está disponível em \url{https://github.com/antenor-z/aero}. Atualmente, o
+projeto funciona razoavelmente bem, mas a arquitetura foi feita sem muito planejamento, as
 informações do aeroporto fazem parte do código.
 
 O usuário tem acesso a informações de frequência da torre, solo, tráfego, rampa
 e operações, bem como das frequências e dados para VOR (um sistema de radionavegação
 por antenas no solo), ILS (sistema de pouso por instrumentos) e informações de 
-pista. Neste trabalho quero, armazenar estas em um banco de dados relacional com 
-uma arquitetura bem planejada. Farei testes de desempenho simulando uma alta taxa 
+pista. Neste trabalho é desejado armazenar estas informações em um banco de dados relacional com 
+uma arquitetura bem planejada. São feitos testes de desempenho simulando uma alta taxa 
 de acesso.
 
-Os aeródromos podem, ao longo do tempo, mudarem alguma frequência e outras
+Os aeródromos podem, ao longo do tempo, mudar alguma frequência e outras
 informações, como o número da pista, que muda a depender da variação do norte 
 magnético, uma ampliação da pista faz a informação de comprimento precisar ser 
 alterada...
@@ -55,7 +56,7 @@ O código precisava ser alterado para atualizar estas informações. Será imple
  que seja possível mudar qualquer informação no banco mesmo por pessoas que não 
  saibam programar.
 
-Esta parte administrativa, possui controle de permissões. Ao criar uma conta, é
- informado quais aeroportos esta conta pode alterar. Também pode ser informado que
+Esta parte administrativa, possui controle de permissões. Ao criar uma conta, 
+informa-se quais aeroportos esta conta pode alterar. Também pode ser informado que
   esta é uma conta "super" que pode alterar todos os aeroportos e também criar e 
   apagar aeroportos.
