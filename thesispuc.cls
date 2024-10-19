@@ -885,7 +885,7 @@
 \newcommand{\abreviationsmode}[1]{\renewcommand{\puc@abreviationsmode}{#1}}
 
 \newboolean{hasepigraph}
-\setboolean{hasepigraph}{false}
+\setboolean{hasepigraph}{true}
 \newif\if@pucepigraph\@pucepigraphfalse
 \newcommand{\puc@epigraph}{}
 \newcommand{\epigraph}[1]{%
@@ -1556,9 +1556,9 @@
   \puc@showcopyrights%
   %
   \if@pucdedication
-    \puc@showdedication
+    %\puc@showdedication
   \fi
-  %% \puc@showacknowledgment%   %% ALTERACAO %%
+  \puc@showacknowledgment
   \if@brazilianlanguage
     \puc@showabstract%
     \puc@showabstractuk%       
