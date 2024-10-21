@@ -59,7 +59,7 @@ trash\_it(icao) é chamada.
 
 Ela remove todos os registros com chave iniciando no
 icao informado no parâmetro. Todas as funções que atualizam o metar e o taf chamam
-a trash\_it(). Já que estas funções atualizam informações para todos os aerodromos,
+a trash\_it(). Já que estas funções atualizam informações para todos os aeródromos,
 todo o cache é invalidado. Todas as funções de administração também invalidam o cache,
 mas apenas para 
 o aeródromo alterado. Se um ILS de SBCT, por exemplo, é alterado, todo o cache
@@ -77,18 +77,18 @@ início.
 \end{figure}
 
 Devido a isto, 
-pensei em uma forma de fazer cache da resposta completa. Existem bibliotecas que 
+pensou-se em uma forma de fazer cache da resposta completa. Existem bibliotecas que 
 se integram com o \textit{FastAPI} como middleware, e, ao adicionar um decorador antes da
 definição da rota, é possível configurar um cache com o tempo definido pelo 
 programador. Contudo, essas bibliotecas não estão sendo mantidas, o que traz o 
 risco de pararem de funcionar sem aviso.
 
-Devido a este risco, optei por uma solução mais declarativa, em vez de implementar
-algo próprio. Também queria ter que não depender de um servidor Python, que, por
+Devido a este risco, optou-se por uma solução mais declarativa, em vez de implementar
+algo próprio. Também queria-se ter que não depender de um servidor Python, que, por
 usar uma linguagem interpretada, será mais lento que algo executado nativamente.
 
-Como já tenho o NGINX funcionando como proxy reverso, utilizei o próprio NGINX 
-para realizar o cache das respostas. Configurei o cache com um tempo de um minuto, 
+Como já existe o NGINX funcionando como proxy reverso, utilizou-se o próprio NGINX 
+para realizar o cache das respostas. Configurou-se o cache com um tempo de um minuto, 
 ou seja, no pior caso, a informação ficará desatualizada por até 1 minuto. Como 
 o METAR é atualizado a cada hora, no pior cenário, alguém acessou a página com 
 o METAR às 17:59:59, e essa informação seria armazenada no cache. Às 18:00:00 

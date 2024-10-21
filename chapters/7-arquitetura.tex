@@ -58,7 +58,7 @@ O NGINX realiza o SSL, dá suporte ao HTTP/2 e ao cabeçalho HTTP keep-alive. Qu
 utilizava o Gunicorn, ele só tinha suporte ao primeiro, e a documentação do Gunicorn não
 recomendava que ele estivesse diretamente ligado à Internet \cite{nginx-gunicorn}. O \textit{Uvicorn},
 no momento em que este texto foi escrito, não suporta HTTP/2, mas suporta o keep-alive. No
-entanto, como tenho outros projetos na mesma máquina, utilizo subdomínios. Todos os subdomínios
+entanto, como há outros projetos do autor na mesma máquina, ultilizam-se subdomínios. Todos os subdomínios
 resolvem para a mesmo IP/máquina via "A RECORD", mas na configuração
 do NGINX, o bloco de servidor com o hostname aero.a4barros.com é redirecionado para o
 endereço interno "http://aero:5000".

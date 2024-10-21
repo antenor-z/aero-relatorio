@@ -5,7 +5,7 @@ aplicação web que o usuário, mesmo que leigo em aviação, consiga usar sem
 dificuldades.
 
 Pelo fato da aviação necessitar ser um ambiente seguro e bastante regulado, considerando
-que o projeto é apenas um protótipo, prefiro restringir o caso de uso apenas
+que o projeto é apenas um protótipo, preferiu-se restringir o caso de uso apenas
 para jogadores de simuladores de voo que desejam que a simulação seja parecida
 com o real. Nas páginas do sistema, haverá um aviso \textbf{"APENAS PARA USO EM SIMULADOR"}.
 
@@ -13,13 +13,13 @@ Dito isto, o sistema possui \textit{backend} escrito na linguagem \textit{Python
 fazendo uso da 
 \textit{framework \textit{FastAPI}}. Até a entrega do Projeto I, o backend era feito em \textit{Flask}. 
 A escolha foi feita pela familiaridade com a framework. Porém, depois, 
-descobri a framework \textit{FastAPI} no meu trabalho. Normalmente, ela não é usada para 
+descobriu-se a framework \textit{FastAPI} no meu trabalho. Normalmente, ela não é usada para 
 \textit{fullstack}, mas sim para fazer \textit{APIs REST}, que retornam \textit{JSON} na resposta de uma 
 requisição. Um \textit{frontend} feito em alguma framework de \textit{JavaScript} faria a requisição
  e atualizaria a página a partir dos dados recebidos.
 
 Contudo, é possível retornar qualquer tipo de dado no \textit{\textit{FastAPI}}, inclusive páginas 
-HTML. Como preferiu-se fazer a renderização de páginas no lado do servidor, continuou-se
+HTML. Como se preferiu fazer a renderização de páginas no lado do servidor, continuou-se
 o uso da funcionalidade de templates do \textit{\textit{Jinja2}}.
 
 A substituição da framework deu-se pelos seguintes motivos:
@@ -34,7 +34,7 @@ No \textit{Flask} é necessário configurar alguns parâmetros para o \textit{Gu
 No \textit{Flask}, para paralelismo, é necessário usar uma biblioteca como o Gevent.
 \end{itemize}
 
-No segundo semestre de 2023 projeto comecou a ser desenvolvido inicialmente para uso próprio do autor.
+No segundo semestre de 2023, projeto começou a ser desenvolvido inicialmente para uso próprio do autor.
 O código está disponível em \url{https://github.com/antenor-z/aero}. Atualmente, o
 projeto funciona razoavelmente bem, mas a arquitetura foi feita sem muito planejamento, as
 informações do aeroporto fazem parte do código.

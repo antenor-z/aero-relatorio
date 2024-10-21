@@ -1,13 +1,13 @@
 % Revisão OK 25/09
 \chapter{Princípios norteadores}
 
-Para este projeto segue-se os seguintes princípios por ordem de prioridade começando
+Para este projeto seguem-se os seguintes princípios por ordem de prioridade começando
 pela maior prioridade.
 
 \section{Exatidão da Informação Apresentada}
 Não deve haver erros na explicação do METAR, TAF e nas informações do aeródromo. 
 Claro que não é possível aderir a este princípio em 100\% dos casos, pois uma 
-informação de aeroporto pode mudar. No entanto, é comparada constantemente as 
+informação de aeroporto pode mudar. No entanto, são comparadas constantemente as 
 informações locais com o AISWeb e, em caso de alterações, é possível alterá-las 
 facilmente pela área restrita do site. Normalmente, estas informações não 
 mudam com tanta frequência. Um aeroporto pode passar anos ou até décadas sem
@@ -24,8 +24,8 @@ dados de METAR e TAF são coletados da \textit{API} do \textit{Aviation Weather}
 banco de dados também de forma assíncrona. Assim, quando o usuário carrega a 
 página, essas informações já estão prontas para o envio.
 
-Como será visto no capítulo de arquitetura existe uma proxy reversa com NGINX,
-esta proxy faz cache das páginas, então se uma página é recarregada muitas vezes
+Como será visto no capítulo de arquitetura existe uma proxy reversa com NGINX.
+Esta proxy faz cache das páginas. Então se uma página é recarregada muitas vezes
 seguidas o NGINX entrega a página salva no cache. O cache está configurado para
 ser invalidado em um minuto, então, no pior caso, as informações ficam com um 
 minuto de atraso. A informação que atualiza com mais frequência é o METAR. A
