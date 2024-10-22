@@ -8,6 +8,14 @@ TAF se entende por várias linhas.
 A partir da segunda linha, temos os chamados grupos temporais. Tudo que está em uma linha
 são condições que irão ocorrer dentro de uma faixa de tempo. 
 
+Um grupo temporal pode começar com BECMG ou TEMPO.
+
+\begin{enumerate}
+\item BECMG: Indica uma mudança gradual e definitiva nas condições meteorológicas;
+\item TEMPO: Indica uma mudança temporária nas condições.
+\end{enumerate}
+
+
 Neste capítulo, será apresentado um exemplo de TAF, sua decodificação,
 e uma explicação do algoritmo utilizado.
 
@@ -45,7 +53,7 @@ do previsor que gerou este TAF. É algo específico do Brasil [16].
 um grupo de previsão, por exemplo, informa que as informações nesta linha tem 
 30\% de chance de ocorrer.
 
-O objetivo do meu decodificador é explicar corretamente qualquer TAF brasileiro.
+O objetivo do decodificador é explicar corretamente qualquer TAF brasileiro.
 
 
 \section{Algoritmo}

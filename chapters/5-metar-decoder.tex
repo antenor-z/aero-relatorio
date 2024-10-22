@@ -27,8 +27,8 @@ código, mas na aviação costuma-se usar mais o código ICAO, pois \textit{todo
 aeródromos possuem um, enquanto o IATA só é presente em aeroportos onde há 
 processamento de bagagem \cite{iata-codes} \cite{icao-codes}.
 
-
-\texttt{171300Z} significa que este METAR se refere ao dia 17 às 13 horas e zero 
+\begin{itemize}
+\item \texttt{171300Z} significa que este METAR se refere ao dia 17 às 13 horas e zero 
 minuto zulu. Horário zulu é simplesmente o fuso horário da longitude de zero grau, 
 chamado de hora UTC ou Coordinated Universal Time \cite{UTC}. Para que não haja 
 confusão com fusos horários, a aviação usa o horário UTC. Em tempo
@@ -52,7 +52,7 @@ Com o METAR supracitado, os grupos de captura serão:
 \item Grupo 3 (minuto): 00
 \end{itemize}
 
-\texttt{15010KT} se refere à velocidade e direção do vento. Os três primeiros 
+\item \textbf{15010KT} se refere à velocidade e direção do vento. Os três primeiros 
 algarismos informam a direção na bússola, em graus, de onde o vento sopra, e os 
 últimos dois algarismos informam a velocidade do vento em nós (milhas náuticas por hora). 
 Neste caso, o vento vem da direção 150 graus com velocidade de dez nós. Com a 
@@ -70,12 +70,12 @@ aeroportos que podem usar outras unidades para a velocidade do vento, mas no
 Brasil só é usado nós (kt). Para obter essas informações usamos o regex 
 \verb|([0-9]{3}[0-9]{2}G{[0-9]{2}}) e \verb|([0-9]{3})V([0-9]{3})|.
 
-\texttt{9999} significa visibilidade ilimitada (maior ou igual a 10 km). Se fosse 
+\item \textbf{9999} significa visibilidade ilimitada (maior ou igual a 10 km). Se fosse 
 6000, a visibilidade seria de 
 6 km. Por ser sempre quatro algarismos, o regex \verb|([0-9]{4})| consegue capturar 
 essa informação.
 
-\texttt{30/25} Temperatura 30°C e ponto de orvalho 25°C. Caso a temperatura seja 
+\item \textbf{30/25} Temperatura 30°C e ponto de orvalho 25°C. Caso a temperatura seja 
 negativa, a letra M é adicionada antes do número. M2/M5 significa temperatura 
 -2°C e ponto de orvalho -5°C \cite{METAR-help}. O regex usado é
 
@@ -84,22 +84,24 @@ negativa, a letra M é adicionada antes do número. M2/M5 significa temperatura
 Observe o M opcional. É necessário depois fazer a substituição do M para o sinal
 de menos.
 
-\texttt{Q1012} O altímetro do avião deve ser ajustado para 1012 hectopascal. 
+\item \textbf{Q1012} O altímetro do avião deve ser ajustado para 1012 hectopascal. 
 Também pode ser usada a unidade polegadas de mercúrio (mmHg), mas no Brasil esta 
 não é usada no METAR. O regex é\verb|(Q[0-9]{4})|
 
-\texttt{SCT025} Nuvens espalhadas (3/8 a 4/8 do céu com nuvens) em 2500 pés de 
+\item \textbf{SCT025} Nuvens espalhadas (3/8 a 4/8 do céu com nuvens) em 2500 pés de 
 altitude. 025 se refere ao nível de voo (Flight Level), que é a altitude acima 
 do nível médio do mar com divisão exata por 100.
 
-\texttt{FEW030TCU} Poucas nuvens (1/8 a 2/8 do céu com nuvens) em 3000 pés de 
+\item \textbf{FEW030TCU} Poucas nuvens (1/8 a 2/8 do céu com nuvens) em 3000 pés de 
 altitude. O sufixo TCU significa que há nuvens convectivas significativas \cite{decea-mil}.
 
-\texttt{BKN100} Nuvens broken (5/8 a 7/8 do céu com nuvens) em 10000 pés de altitude.
+\item \textbf{BKN100} Nuvens broken (5/8 a 7/8 do céu com nuvens) em 10000 pés de altitude.
 
 Existe também o tipo OVC (overcast) que se refere a totalmente encoberto. O regex 
 usado é \verb|([A-Z]{3})([0-9]{3})(TCU)?|. O primeiro grupo de captura é comparado 
 com "FEW", "BKN", "SCT" e "OVC".
+
+\end{itemize}
 
 \section{Algoritmo}
 
