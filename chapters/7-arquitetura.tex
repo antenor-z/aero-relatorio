@@ -15,7 +15,7 @@ o uso da funcionalidade de templates do \textit{\textit{Jinja2}}.
 
 A substituição da framework deu-se pelos seguintes motivos:
 
-\begin{itemize}
+\begin{enumerate}
 \item Projeto mais maduro, continuamente mantido;
 \item Documentação bem mais detalhada do que a do \textit{Flask}, com vários tutoriais sobre assuntos comumente usados, como autenticação e validação de dados;
 \item Pensado para validação de dados, se integra muito bem ao Pydantic;
@@ -23,7 +23,7 @@ A substituição da framework deu-se pelos seguintes motivos:
 No \textit{Flask} é necessário configurar alguns parâmetros para o \textit{Guinicorn} via o arquivo "gunicorn\_config.py";
 \item Assíncrono, permitindo o uso junto com bibliotecas que utilizam asyncio;
 No \textit{Flask}, para paralelismo, é necessário usar uma biblioteca como o Gevent.
-\end{itemize}
+\end{enumerate}
 
 A arquitetura foi pensada para ser implementada com o \textit{\textit{Docker}} e \textit{\textit{Docker} Compose}. Cada
 programa executado é rodado em um serviço separado.
