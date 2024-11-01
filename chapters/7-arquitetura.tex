@@ -2,16 +2,16 @@
 
 O sistema possui backend escrito na linguagem Python, 
 fazendo uso da 
-\textit{framework FastAPI}. Até a entrega do Projeto I, o backend era feito em Flask. 
+framework FastAPI. Até a entrega do Projeto I, o backend era feito em Flask. 
 A escolha foi feita pela familiaridade com a framework. Porém, depois, 
 descobriu-se a framework FastAPI no meu trabalho. Normalmente, ela não é usada para 
-fullstack, mas sim para fazer \textit{APIs REST}, que retornam JSON na resposta de uma 
+fullstack, mas sim para fazer APIs REST, que retornam JSON na resposta de uma 
 requisição. Um frontend feito em alguma framework de JavaScript faria a requisição
  e atualizaria a página a partir dos dados recebidos.
 
 Contudo, é possível retornar qualquer tipo de dado no FastAPI, inclusive páginas 
 HTML. Como se preferiu fazer a renderização de páginas no lado do servidor, continuou-se
-o uso da funcionalidade de templates do \textit{\textit{Jinja2}}.
+o uso da funcionalidade de templates do Jinja2.
 
 A substituição da framework deu-se pelos seguintes motivos:
 
@@ -19,7 +19,7 @@ A substituição da framework deu-se pelos seguintes motivos:
 \item Projeto mais maduro, continuamente mantido;
 \item Documentação bem mais detalhada do que a do Flask, com vários tutoriais sobre assuntos comumente usados, como autenticação e validação de dados;
 \item Pensado para validação de dados, se integra muito bem ao Pydantic;
-\item Servidor embutido (\textit{Uvicorn}) extremamente fácil de configurar e suficiente para produção \cite{fast-api-prod}.
+\item Servidor embutido (Uvicorn) extremamente fácil de configurar e suficiente para produção \cite{fast-api-prod}.
 No Flask é necessário configurar alguns parâmetros para o Guinicorn via o arquivo "gunicorn\_config.py";
 \item Assíncrono, permitindo o uso junto com bibliotecas que utilizam asyncio;
 No Flask, para paralelismo, é necessário usar uma biblioteca como o Gevent.
