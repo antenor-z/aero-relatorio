@@ -4,7 +4,7 @@
 Nesta seção, explica-se o modelo de dados desenvolvido para o projeto, abordando 
 sua estrutura lógica e os componentes principais. O objetivo deste modelo é garantir 
 flexibilidade para futuras alterações e manutenções, proporcionando uma base sólida 
-e expansível para o Aero.
+e expansível para o projeto.
 
 \section{Modelo Lógico}
 
@@ -39,6 +39,101 @@ porém a manutenção seria difícil \cite{table-enum}, pois teríamos que alter
 estrutura das tabelas (possivelmente tirando o Aero do ar) caso fosse necessário 
 adicionar um tipo novo de comunicação, por exemplo. Fazendo com uma tabela externa 
 é necessário apenas adicionar uma nova linha.
+
+\section{Noções sobre o Funcionamento de um Aeródromo}
+
+Antes de discutir as tabelas, é interessante compreender algumas regras e 
+características básicas do funcionamento de um aeródromo. Isto certamente
+facilitará o entendimento das colunas das tabelas.
+
+Um aeródromo é a área destinada às operações de pouso, decolagem, e taxiamento 
+de aeronaves, abrangendo pátio, taxiways (vias de taxi) e pistas. O terminal de 
+passageiros, no entanto, não faz parte do aeródromo em si. Por isso, todos os 
+aeroportos são aeródromos, mas nem todo aeródromo é um aeroporto, pois nem todos 
+possuem infraestrutura para o atendimento de passageiros.
+
+\subsection{Pistas}
+
+Para o entendimento do funcionamento das pistas de pouso e decolagem, é importante 
+conhecer algumas de suas características essenciais, como comprimento e largura, 
+que impactam diretamente as operações das aeronaves.
+
+O comprimento da pista, por exemplo, influencia a quantidade de frenagem necessária 
+para uma aeronave parar com segurança após o pouso. Em pistas curtas, certos 
+modelos de aeronaves não podem pousar com segurança. Já a largura da pista limita 
+a envergadura máxima das aeronaves que podem operar nela. Em pistas muito estreitas, 
+uma aeronave de grande porte, como o Boeing 747, pode ter dificuldades adicionais: 
+os motores mais externos podem ultrapassar a área pavimentada, expondo-os a 
+materiais no gramado, o que aumenta o risco de ingestão de objetos.
+
+No caso de cabeceiras paralelas, ou seja, pistas que apontam para a mesma direção, 
+temos as seguintes configurações:
+
+\subsubsection{Pista Única}
+
+A numeração da cabeceira da pista é determinada pela sua orientação magnética, 
+dividida por 10 e arredondada. Por exemplo, em Fortaleza, a cabeceira com 
+orientação de 126 graus é numerada como 13 (126 dividido por 10 é igual a 
+12,6, que arredondamos para 13).
+
+\subsubsection{Pista Dupla}
+
+Para pistas paralelas duplas, são usadas as letras "L" (Left, esquerda) e "R" 
+(Right, direita) para distinguir as cabeceiras. No aeroporto Santos Dumont, por 
+exemplo, temos as cabeceiras 02L (esquerda) e 02R (direita), quando o observador 
+está de costas para o Pão de Açúcar.
+
+\subsubsection{Pista Tripla}
+
+Embora no Brasil não haja aeroportos com três pistas paralelas, em outros países, 
+onde existem pistas triplas, são utilizadas as letras "L" (left/esquerda), "C" 
+(center/central) e "R" (right/direita) para identificação das cabeceiras.
+
+\subsection{Comunicação}
+
+As frequências de comunicação em aeródromos utilizam modulação de amplitude (AM), com banda 
+de 118 MHz a 137 MHz. Cada aeródromo possui frequências específicas para cada fase 
+do voo, como autorização, taxi, decolagem, aproximação e pouso.
+
+Os tipos de frequência achadas em aeroportos do Brasil são:
+
+\begin{enumerate}
+\item Tráfego
+\item Torre
+\item Solo
+\item Rampa
+\item ATIS
+\item Operações
+\end{enumerate}
+
+Nesta trabalho, para cada aeroporto, são mostradas as frequencias usadas com seus
+tipos.
+
+\subsection{Navegação}
+
+As frequências de navegação são utilizadas pelos sistemas de localização do avião, 
+não transmitindo áudio, mas sim dados, dentro da faixa de 108 a 117.95 MHz. Esses 
+sistemas ajudam a determinar a posição e a trajetória da aeronave com precisão.
+
+\begin{itemize} 
+\item VOR (Very High Frequency Omnidirectional Range): Um sistema 
+de navegação baseado em uma antena no solo, o VOR permite que a aeronave 
+determine a direção que deve seguir para passar diretamente sobre a antena, 
+indicando essa direção em um instrumento específico na cabine. Na aviação isto
+é chamado de bloqueio de VOR. \cite{vor-block}
+
+\item ILS (Instrument Landing System): Sistema de aterrissagem por instrumentos 
+que transmite informações de orientação lateral (alinhamento com o eixo da pista) 
+e orientação vertical (ângulo de descida) específicas para cada cabeceira da pista. 
+Essas informações permitem uma aproximação precisa, mesmo em condições de baixa 
+ou nenhuma
+visibilidade. O ILS pode ser usado tanto para pouso manual, onde o piloto controla
+a aeronave seguindo 
+as indicações, quanto para pouso automático (auto land), caso a aeronave possua 
+esta capacidade. \cite{ils-train}
+\end{itemize}
+
+Neste trabalho são mostradas as frequências de ILS e VOR para cada aeroporto.
 
 \section{Dicionário de Dados}
 
@@ -251,16 +346,6 @@ GVL     Brita
 \end{verbatim}
 
 
-É importante conhecer as características dos tipos de pistas de 
-pouso e decolagem, pois seu comprimento determinará a quantidade de freio 
-necessária para parar uma determinada aeronave.
-
-Se a pista for muito curta, determinados modelos de avião não poderão pousar. 
-A largura da pista determina a envergadura máxima que uma aeronave pode ter 
-para operar nessa pista. Se uma pista for muito estreita, uma aeronave quadrimotora 
-como o Boeing 747 pode sofrer ingestão de materiais, já que os dois motores mais 
-externos ficarão para fora da área da pista, sobre o gramado.
-
 \begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
     \caption{Runway} \\
     \hline
@@ -310,27 +395,6 @@ externos ficarão para fora da área da pista, sobre o gramado.
 
 \end{longtable}
 
-Para cabeceiras paralelas, ou seja, que apontam para a mesma direção, temos:
-
-\subsection{Pista única}
-
-A proa em que a pista aponta, com divisão por 10 arredondada. Por exemplo, em Fortaleza,
-temos uma cabeceira com curso de 126 graus, dividindo por 10 temos 12,6, arredondando
-temos o número 13 da cabeceira.
-
-\subsection{Pista dupla}
-
-Para duas pistas paralelas, usamos L para a cabeceira da esquerda e R para a da direita.
-Por exemplo, no Santos Dumont, de costas para o Pão de Açúcar, temos as cabeceiras 02L 
-(na esquerda) e 02R (na direita).
-
-\subsection{Pista tripla}
-
-Não temos aeroportos com três pistas paralelas no Brasil, mas são usadas as letras
-L, C e R. C para a pista central.
-
-As duas tabelas a seguir falam sobre as frequências que a aeronave precisará
-sintonizar durante suas operações no aeródromo.
 
 \begin{longtable}{|p{3cm}|p{6.6cm}|p{3cm}|}
     \caption{CommunicationType} \\
