@@ -51,7 +51,7 @@ Para aumentar a segurança de acesso ao banco, é usada a funcionalidade "secret
 informa-se quais serviços têm acesso a cada senha. Caso o serviço de banco de dados, por exemplo, tenha
 acesso a senha db-password.txt, será feito um bind do arquivo db-password.txt no host para o "/run/secret/db-password.txt"
 no guest.
-Tanto os bancos como o servidor Gunicorn usam este método para terem acesso às senhas dos bancos.
+Tanto os bancos como o servidor Uvicorn usam este método para terem acesso às senhas dos bancos.
 
 \section{Serviços}
 
@@ -134,7 +134,7 @@ Existem operações que ocorrem quando o usuário acessa uma página e outras qu
 ocorrem de tempos em tempos independentemente dos acessos (assíncronas). Fez-se
 tal separação para garantir que as APIs externas (METAR e TAF) sejam acessadas 
 apenas quando
-necessário sem que uma quantidade grande de acessos ao site sobrecarregue as estas APIs.
+necessário sem que uma quantidade grande de acessos ao site sobrecarregue estas APIs.
 
 O desenho dos plots com dados históricos é uma operação que demora aproximadamente
 3 segundos por aeródromo, então faz-se esta operação em background e deixa-se o 
@@ -229,7 +229,7 @@ O mesmo é feito com outra rota desta API que responde com os TAFs;
 
 Para gerar as plotagens com informações históricas, os seguintes passos acontecem.
 \begin{enumerate}
-    \item É feito um query para o banco pedir os 10 últimos METARs de cada aeródromo;
+    \item É feito um query para o banco pedir os 12 últimos METARs de cada aeródromo;
     \item O banco responde. A biblioteca matplotlib é usada para criar os plots que são salvos como SVGs 
     no path /static/plots.
 \end{enumerate}
