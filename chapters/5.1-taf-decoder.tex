@@ -61,27 +61,44 @@ O objetivo do decodificador é explicar corretamente qualquer TAF brasileiro.
 
 O algoritmo para lidar com um TAF é semelhante ao utilizado para o METAR, porém adaptado
 para as especificidades das previsões temporais. O TAF é segmentado em diversas
-partes, cada uma sendo processada individualmente por expressões regulares para extrair as
-informações relevantes.
+partes, cada uma sendo processada individualmente com expressões regulares.
 
-Para cada item do TAF, o algoritmo tenta associar a string correspondente a uma descrição
-detalhada utilizando expressões regulares pré-definidas. Por exemplo, a expressão
+Para cada item do TAF, o algoritmo tenta associar a string correspondente a uma descrição.
+Por exemplo, a expressão
 
 \begin{verbatim}
-[0-9]{4}/[0-9]{4} 
+([0-9]{2})([0-9]{2})/([0-9]{2})([0-9]{2})
 \end{verbatim}
+
+Sendo:
+\begin{itemize}
+\item \$1: Dia início
+\item \$2: Hora início
+\item \$3: Dia fim
+\item \$4: Hora fim
+\end{itemize}
 
 é usada para identificar os períodos de tempo, enquanto a expressão
 
 \begin{verbatim}
-[0-9]{3}([0-9]{2})KT
+TX(M?[0-9]{2})/([0-9]{2})([0-9]{2})Z
 \end{verbatim}
 
-é utilizada para extrair a direção e velocidade do vento.
+Sendo:
+\begin{itemize}
+\item \$1: Temperatura máxima (M opcional indicando negativa)
+\item \$2: Dia em que a temperatura máxima vai ocorrer
+\item \$3: Hora em que a temperatura máxima vai ocorrer
+\end{itemize}
+
+é utilizada para extrair a temperatura máxima em um dia e hora.
 
 Assim como no METAR, as informações são organizadas em tuplas que contêm a string original
 e sua decodificação correspondente. Essas tuplas são então enviadas para um sistema de
 templating \textit{Jinja2}, para a geração da página HTML.
+
+Perceba no exemplo de resposta a seguir que os grupos temporais são agrupados,
+isto serve para que no front end possamos ocultar cada grupo.
 
 \section{Exemplo de Resposta}
 
