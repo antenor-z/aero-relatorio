@@ -21,11 +21,11 @@ do METAR falhava. Para este aeroporto, a seguinte tela aparecia:
 \end{figure}
 
 Quando o módulo de decodificação do METAR tentava buscar o dia e hora na string 
-do METAR, esta não existia. Então, quando tentava buscar certo índice nos grupos 
+do METAR, esta não existia. Então, quando tentava buscar o índice nos grupos 
 de captura, este não existia. Então a exceção IndexError era levantada.
 
 Já que todo METAR deve possuir o item com o dia e a hora zulu, caso este não 
-exista, agora função de decodificação do METAR retorna o seguinte valor:
+exista, a função de decodificação do METAR retorna o seguinte valor:
 
 \begin{verbatim}
 [(" ", "METAR indisponível.")]

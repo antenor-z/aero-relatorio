@@ -6,15 +6,26 @@ o usuário deve digitar seu nome de usuário, senha e código TOTP (a autentica�
 de dois fatores por tempo). A senha é armazenada no banco com hash e salt usando 
 o padrão bcrypt. Para o TOTP é utilizada a biblioteca pyOTP. 
 
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=\linewidth]{img/area-restrita-root.png}
+    \caption{Tela inicial da área logada}
+    \label{fig:max-priv-sys}
+    \end{center}
+\end{figure}
+
+Para criar e alterar as contas usa-se o script "monitor.py" executado dentro
+de um SSH.
 O script monitor.py permite fazer diversas operações de máximo privilégio 
-incluindo criar, alterar senha e TOTP e apagar usuários. Estas tarefas não são 
-feitas com frequência. O que é feito com maior frequência e a adição de aeroportos 
+incluindo criar, alterar senha e TOTP e apagar usuários. Forçar a atualização de
+METARs e TAFs também é possível. Tais tarefas não são 
+feitas com frequência. O que é feito com maior frequência é a adição de aeroportos 
 e alteração deles.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.8\linewidth]{img/create-user-script.png}
-    \caption{Sistema de máximo privilégio}
+    \caption{monitor.py}
     \label{fig:max-priv-sys}
     \end{center}
 \end{figure}
@@ -26,23 +37,16 @@ de sua conta.
 
 O login é mantido via cookie assinado com padrão JWT de forma que não é custoso 
 (não envolve acesso ao banco) verificar se está logado. É usada a biblioteca padrão 
-do \textit{fastAPI} já que é assinada automaticamente.
+do \textit{fastAPI} já que ela assina os cookies automaticamente.
 Ao estar logado, na tela inicial, dois botões são mostrados, o de logout e o de adicionar 
 aeródromo. Caso o usuário não seja super o segundo botão não aparece e, obviamente, 
 a rota GET e POST de adicionar aeródromo retorna um erro.
 
-\begin{figure}[ht]
-    \begin{center}
-    \includegraphics[width=\linewidth]{img/area-restrita-root.png}
-    \caption{Tela inicial da área logada}
-    \label{fig:max-priv-sys}
-    \end{center}
-\end{figure}
 
 Ao entrar em um aerodromo, caso tenha permissão de altera-lo, a seguinte tela
 é mostrada.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=\linewidth]{img/admin-root.png}
     \caption{Tela de aeródromo da área logada}
@@ -51,13 +55,12 @@ Ao entrar em um aerodromo, caso tenha permissão de altera-lo, a seguinte tela
 \end{figure}
 
 Pressionando nos botões verdes, é possível criar e alterar qualquer dado do
-aeroporto. Dentro da edição de um dado é possível, apagá-lo.
+aeroporto. Dentro da edição de um aeródromo é possível, apagá-lo.
 
 \section {Adicionar/editar aeródromo}
-Caso tenha permissão a rota de
-https://aero.a4barros.com/area/restrita/add permite adicionar um aeródromo. 
+Caso tenha permissão a rota \verb|/area/restrita/add| permite adicionar um aeródromo. 
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=\linewidth]{img/area-restrita-aerodrome.png}
     \caption{Tela de adicionar / editar um aeródromo}
@@ -105,7 +108,7 @@ As validações para esta rota são:
         \\ \hline
         Cidade
         & Type: Text
-        & Verificar se a cidade existe do estado via API do IBGE
+        & Verificar se a cidade existe no estado via API do IBGE
         \\ \hline 
         Estado
         & Menu dropdown (select/option)
@@ -115,7 +118,7 @@ As validações para esta rota são:
 
 \section {Adicionar/editar pista}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.7\linewidth]{img/admin-edit-runway.png}
     \caption{Tela de adicionar / editar uma pista}
@@ -154,7 +157,7 @@ As validações para esta rota são:
         \\ \hline
         Largura
         & De 20 até 80 (ambos inclusivos)
-        & De 100 até 5000 (ambos inclusivos)
+        & De 100 até 80 (ambos inclusivos)
         \\ \hline 
         Tipo do pavimento
         & Menu dropdown (select/option)
@@ -168,7 +171,7 @@ São as frequências que devem ser usadas na comunicação da
 aeronave possuem uma frequência em MHz e um tipo que pode
 ser: torre, operações, solo, rampa, ATIS e tráfego.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.7\linewidth]{img/admin-edit-comm.png}
     \caption{Tela de adicionar / editar uma frequência de comunicação}
@@ -197,18 +200,18 @@ As validações para esta rota são:
         \\ \hline
         Tipo
         & Menu dropdown (select/option)
-        & Existe na lista de tipos especificada acima
+        & Existe na lista de tipos de comunicações
         \\ \hline
 \end{longtable}
 
 \section {Adicionar/editar frequências de VOR}
 
-São as frequências que são usadas para navegação, ao sintonizar
+São as frequências usadas para navegação, ao sintonizar
 na frequência de uma antena VOR o avião pode voar diretamente para
 ela. O nome de um localizador VOR é sempre formado por três letras
 maíusculas.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.7\linewidth]{img/admin-edit-vor.png}
     \caption{Tela de adicionar / editar um VOR}
@@ -243,7 +246,7 @@ As validações para esta rota são:
 
 \section {Adicionar/editar frequências de ILS}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.7\linewidth]{img/admin-edit-ils.png}
     \caption{Tela de adicionar / editar um ILS}
@@ -280,7 +283,7 @@ As validações para esta rota são:
         \\ \hline
         Categoria
         & Menu dropdown (select/option)
-        & Existe na lista de tipos especificada acima
+        & Existe na lista de tipos de ILS
         \\ \hline
         Curso final
         & Type: Number
