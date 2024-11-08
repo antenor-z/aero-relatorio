@@ -1570,7 +1570,7 @@
   \fi
   \puc@showtables%
    \if@pucepigraph
-    \puc@showepigraph   %% ALTERACAO %%
+    %\puc@showepigraph   %% ALTERACAO %%
   \puc@setmargins@text%
   \if@puctight
   \else
